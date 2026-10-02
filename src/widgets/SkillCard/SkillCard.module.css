@@ -1,0 +1,202 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 324px;
+  min-height: 368px;
+  padding: 20px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: start;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: var(--color-disabled);
+  border-radius: 50%;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  color: var(--color-text-link);
+  font-family: var(--font-heading);
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.userColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.userNameRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs);
+}
+
+.name {
+  overflow: hidden;
+  color: var(--color-text);
+  font-family: var(--font-name);
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  line-height: var(--line-height-h3);
+  letter-spacing: -0.011em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.location {
+  overflow: hidden;
+  color: var(--color-caption);
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.favoriteButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  gap: var(--space-xs);
+  min-width: 24px;
+  min-height: 24px;
+  flex-shrink: 0;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.favoriteButton:hover:not(:disabled) {
+  color: inherit;
+}
+
+.favoriteButton:disabled {
+  cursor: default;
+}
+
+.favoriteButton:focus-visible {
+  outline: 2px solid var(--color-text-link);
+  outline-offset: 2px;
+}
+
+.favoriteIcon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.likeCount {
+  color: var(--color-caption);
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+}
+
+.skillsContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.skillsSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.skillsTitle {
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-h4);
+  font-weight: 700;
+  line-height: var(--line-height-h4);
+  letter-spacing: 0.02em;
+}
+
+.skillsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.skillTag,
+.additionalSkills {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 20px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.businessTag {
+  background-color: var(--color-tag-business);
+}
+
+.creativityTag {
+  background-color: var(--color-tag-creativity);
+}
+
+.languagesTag {
+  background-color: var(--color-tag-languages);
+}
+
+.educationTag {
+  background-color: var(--color-tag-education);
+}
+
+.homeTag {
+  background-color: var(--color-tag-home);
+}
+
+.healthTag {
+  background-color: var(--color-tag-health);
+}
+
+.defaultTag {
+  background-color: var(--color-disabled);
+}
+
+.additionalSkills {
+  color: var(--color-caption);
+  background-color: var(--color-tag-additional);
+}
+
+.detailsButton {
+  width: 100%;
+  margin-top: auto;
+}

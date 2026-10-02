@@ -1,0 +1,1 @@
+export { FiltersResult } from './FiltersResult'
