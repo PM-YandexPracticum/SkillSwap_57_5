@@ -1,58 +1,14 @@
-import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
-
 import { ButtonPrimary } from '@/shared/ui/ButtonPrimary'
 import { ButtonSecondary } from '@/shared/ui/ButtonSecondary'
+import { SearchSkills } from '@/features/search-skills'
 
 import logo from '@/shared/assets/icons/Logo.png'
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
 import moonIcon from '@/shared/assets/icons/moon.svg'
-import searchIcon from '@/shared/assets/icons/search.svg'
-
-import { useDebounce } from '@/shared/hooks/useDebounce'
 
 import styles from './Header.module.css'
 
 export function Header() {
-  const [searchParams, setSearchParams] = useSearchParams()
-
-  const searchQueryFromUrl = searchParams.get('search') ?? ''
-
-  const [searchQuery, setSearchQuery] = useState(searchQueryFromUrl)
-
-  const debouncedSearchQuery = useDebounce(searchQuery)
-
-  useEffect(() => {
-    const normalizedSearchQuery = debouncedSearchQuery.trim()
-
-    if (normalizedSearchQuery === '') {
-      if (!searchParams.has('search')) {
-        return
-      }
-
-      const nextSearchParams = new URLSearchParams(searchParams)
-      nextSearchParams.delete('search')
-      setSearchParams(nextSearchParams)
-      return
-    }
-
-    if (searchParams.get('search') === normalizedSearchQuery) {
-      return
-    }
-
-    const nextSearchParams = new URLSearchParams(searchParams)
-    nextSearchParams.set('search', normalizedSearchQuery)
-    setSearchParams(nextSearchParams)
-  }, [
-    debouncedSearchQuery,
-    searchParams,
-    setSearchParams,
-  ])
-
-  useEffect(() => {
-    setSearchQuery(searchQueryFromUrl)
-  }, [searchQueryFromUrl])
-
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -81,23 +37,7 @@ export function Header() {
           </button>
         </div>
 
-        <div className={styles.searchWrapper}>
-          <img
-            src={searchIcon}
-            alt=""
-            aria-hidden="true"
-            className={styles.searchIcon}
-          />
-
-          <input
-            type="search"
-            className={styles.searchInput}
-            placeholder="Искать навык"
-            aria-label="Поиск навыка"
-            value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
-          />
-        </div>
+        <SearchSkills />
 
         <div className={styles.rightSection}>
           <button
