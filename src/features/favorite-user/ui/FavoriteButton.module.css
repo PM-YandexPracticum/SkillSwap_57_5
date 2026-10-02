@@ -1,0 +1,40 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  gap: var(--space-xs);
+  min-width: 24px;
+  min-height: 24px;
+  flex-shrink: 0;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.button:hover:not(:disabled) {
+  color: inherit;
+}
+
+.button:disabled {
+  cursor: default;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-text-link);
+  outline-offset: 2px;
+}
+
+.icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.likeCount {
+  color: var(--color-caption);
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+}
