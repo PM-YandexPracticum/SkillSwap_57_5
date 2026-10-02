@@ -1,0 +1,189 @@
+.header {
+  width: 100%;
+  margin-bottom: 32px;
+  background-color: var(--color-bg);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  min-height: 104px;
+  padding: 0 36px;
+  gap: var(--space-xl);
+  margin: 0 auto;
+}
+
+.leftSection {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.logoButton {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.logo {
+  width: auto;
+  height: 48px;
+  object-fit: contain;
+}
+
+.skillsButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px 0;
+  color: var(--color-text);
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  line-height: var(--line-height-body);
+  white-space: nowrap;
+}
+
+.chevron {
+  width: 20px;
+  height: 20px;
+}
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px 12px 48px;
+  color: var(--color-text);
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  outline: none;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.searchInput::placeholder {
+  color: var(--color-caption);
+}
+
+.searchInput:focus {
+  border-color: var(--color-primary);
+}
+
+.searchInput::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+.rightSection {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.themeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.themeButton:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.themeButton:focus-visible,
+.skillsButton:focus-visible,
+.logoButton:focus-visible {
+  outline: 2px solid var(--color-text-link);
+  outline-offset: 2px;
+}
+
+.themeIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.loginButton,
+.registerButton {
+  white-space: nowrap;
+}
+
+@media (width <= 1100px) {
+  .container {
+    gap: var(--space-lg);
+  }
+
+  .leftSection {
+    gap: var(--space-lg);
+  }
+
+  .skillsButton {
+    display: none;
+  }
+
+  .searchWrapper {
+    max-width: none;
+  }
+}
+
+@media (width <= 720px) {
+  .container {
+    min-height: 72px;
+    padding-inline: 24px;
+    gap: var(--space-md);
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .searchWrapper {
+    min-width: 0;
+  }
+
+  .rightSection {
+    gap: var(--space-sm);
+  }
+
+  .themeButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .loginButton {
+    display: none;
+  }
+
+  .registerButton {
+    display: none;
+  }
+}
+
+@media (320px <= width <= 480px) {
+  .container {
+    padding-inline: 16px;
+  }
+}
