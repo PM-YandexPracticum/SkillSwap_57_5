@@ -1,4 +1,4 @@
-import type { Skill, SkillType, User, UserGender } from '@/shared/types'
+import type { SkillType, UserGender } from '@/shared/types'
 
 export type CatalogFilterMode = 'all' | SkillType
 
@@ -20,12 +20,4 @@ export interface ActiveFilter {
   type: 'mode' | 'gender' | 'city' | 'category' | 'subcategory'
   value: string
   categoryId?: string
-}
-
-export interface CatalogUser {
-  user: User
-  cityName: string
-  teachSkills: Skill[]
-  learnSkills: Skill[]
-  latestSkillCreatedAt: string
 }

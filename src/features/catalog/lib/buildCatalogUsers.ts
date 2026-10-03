@@ -1,6 +1,6 @@
 import type { City, Skill, User } from '@/shared/types'
 
-import type { CatalogUser } from './types'
+import type { CatalogUser } from '../model/types'
 
 export function buildCatalogUsers(
   users: User[],
@@ -29,8 +29,12 @@ export function buildCatalogUsers(
       return {
         user,
         cityName: cityNameById.get(user.cityId) ?? 'Город не указан',
-        teachSkills: userSkills.filter((skill) => skill.type === 'teach'),
-        learnSkills: userSkills.filter((skill) => skill.type === 'learn'),
+        teachSkills: userSkills.filter(
+          (skill) => skill.type === 'teach',
+        ),
+        learnSkills: userSkills.filter(
+          (skill) => skill.type === 'learn',
+        ),
         latestSkillCreatedAt,
       }
     })

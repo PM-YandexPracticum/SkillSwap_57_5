@@ -1,4 +1,10 @@
-import type { ActiveFilter, CatalogUser } from '@/pages/CatalogPage/model/types'
+import type {
+  ActiveFilter,
+} from '@/features/filter-catalog'
+
+import type {
+  CatalogCardData,
+} from '@/features/catalog'
 
 import { SkillCard } from '@/widgets/SkillCard'
 
@@ -8,9 +14,8 @@ import styles from './FiltersResult.module.css'
 
 interface FiltersResultProps {
   activeFilters: ActiveFilter[]
-  users: CatalogUser[]
+  users: CatalogCardData[]
   isAuthenticated: boolean
-  likedUserIds: string[]
   resultCount: number
   isSortedByNewest: boolean
   onRemoveFilter: (filter: ActiveFilter) => void
@@ -22,15 +27,12 @@ export function FiltersResult({
   activeFilters,
   users,
   isAuthenticated,
-  likedUserIds,
   resultCount,
   isSortedByNewest,
   onRemoveFilter,
   onSortToggle,
   onFavoriteToggle,
 }: FiltersResultProps) {
-  const likedUserIdSet = new Set(likedUserIds)
-
   return (
     <div className={styles.result}>
       <div className={styles.activeFilters}>
@@ -43,7 +45,11 @@ export function FiltersResult({
             aria-label={`Убрать фильтр ${filter.label}`}
           >
             <span>{filter.label}</span>
-            <span className={styles.removeIcon} aria-hidden="true">
+
+            <span
+              className={styles.removeIcon}
+              aria-hidden="true"
+            >
               ×
             </span>
           </button>
@@ -67,31 +73,35 @@ export function FiltersResult({
             aria-hidden="true"
           />
 
-          <span>{isSortedByNewest ? 'Сначала популярные' : 'Сначала новые'}</span>
+          <span>
+            {isSortedByNewest
+              ? 'Сначала популярные'
+              : 'Сначала новые'}
+          </span>
         </button>
       </div>
 
       {users.length > 0 ? (
         <ul className={styles.cardsGrid}>
-          {users.map(({ user, cityName, teachSkills, learnSkills }) => {
-            const isFavorite = likedUserIdSet.has(user.id)
-            const displayedLikeCount = user.likeCount + (isFavorite ? 1 : 0)
-
-            return (
-              <li key={user.id} className={styles.cardItem}>
-                <SkillCard
-                  user={user}
-                  cityName={cityName}
-                  teachSkills={teachSkills}
-                  learnSkills={learnSkills}
-                  isFavorite={isFavorite}
-                  likeCount={displayedLikeCount}
-                  isAuthenticated={isAuthenticated}
-                  onFavoriteToggle={() => onFavoriteToggle(user.id)}
-                />
-              </li>
-            )
-          })}
+          {users.map((catalogUser) => (
+            <li
+              key={catalogUser.user.id}
+              className={styles.cardItem}
+            >
+              <SkillCard
+                user={catalogUser.user}
+                cityName={catalogUser.cityName}
+                teachSkills={catalogUser.teachSkills}
+                learnSkills={catalogUser.learnSkills}
+                isFavorite={catalogUser.isFavorite}
+                likeCount={catalogUser.displayedLikeCount}
+                isAuthenticated={isAuthenticated}
+                onFavoriteToggle={() =>
+                  onFavoriteToggle(catalogUser.user.id)
+                }
+              />
+            </li>
+          ))}
         </ul>
       ) : (
         <p className={styles.emptyMessage}>
