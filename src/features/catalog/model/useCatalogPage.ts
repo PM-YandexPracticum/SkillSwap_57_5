@@ -47,12 +47,11 @@ interface UseCatalogPageResult {
   isAuthenticated: boolean
 
   sections: CatalogSection[]
+  isRecommendedLoading: boolean
   setRecommendedLoadMoreElement: (
     element: HTMLDivElement | null,
   ) => void
-  toggleSection: (
-    sectionId: CatalogSectionId,
-  ) => void
+  toggleSection: (sectionId: CatalogSectionId) => void
 
   filteredUsers: CatalogCardData[]
   resultCount: number
@@ -177,6 +176,7 @@ export function useCatalogPage(): UseCatalogPageResult {
 
   const {
     sections,
+    isRecommendedLoading,
     setRecommendedLoadMoreElement,
     toggleSection,
   } = useCatalogSections(
@@ -229,6 +229,7 @@ export function useCatalogPage(): UseCatalogPageResult {
 
     isLoading: catalogData.isLoading,
     errorMessage: catalogData.errorMessage,
+    isRecommendedLoading,
 
     handleModeChange,
     handleGenderChange,

@@ -4,7 +4,7 @@ import type {
 } from '@/features/catalog'
 
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
-
+import spinnerIcon from '@/shared/assets/icons/spinner.png'
 import { SkillCard } from '@/widgets/SkillCard'
 
 import styles from './Catalog.module.css'
@@ -12,6 +12,7 @@ import styles from './Catalog.module.css'
 interface CatalogProps {
   sections: CatalogSection[]
   isAuthenticated: boolean
+  isRecommendedLoading: boolean
   setRecommendedLoadMoreElement: (
     element: HTMLDivElement | null,
   ) => void
@@ -22,6 +23,7 @@ interface CatalogProps {
 export function Catalog({
   sections,
   isAuthenticated,
+  isRecommendedLoading,
   setRecommendedLoadMoreElement,
   onToggleSection,
   onFavoriteToggle,
@@ -29,26 +31,17 @@ export function Catalog({
   return (
     <div className={styles.content}>
       {sections.map((section) => (
-        <section
-          className={styles.section}
-          key={section.id}
-        >
+        <section className={styles.section} key={section.id}>
           <div className={styles.sectionHead}>
-            <h2 className={styles.sectionTitle}>
-              {section.title}
-            </h2>
+            <h2 className={styles.sectionTitle}>{section.title}</h2>
 
             {section.showAll && (
               <button
                 className={styles.viewAllButton}
                 type="button"
-                onClick={() =>
-                  onToggleSection(section.id)
-                }
+                onClick={() => onToggleSection(section.id)}
               >
-                {section.isExpanded
-                  ? 'Свернуть'
-                  : 'Смотреть все'}
+                {section.isExpanded ? 'Свернуть' : 'Смотреть все'}
 
                 <img
                   className={`${styles.chevronIcon} ${
@@ -78,9 +71,7 @@ export function Catalog({
                   likeCount={catalogUser.displayedLikeCount}
                   isAuthenticated={isAuthenticated}
                   onFavoriteToggle={() =>
-                    onFavoriteToggle(
-                      catalogUser.user.id,
-                    )
+                    onFavoriteToggle(catalogUser.user.id)
                   }
                 />
               </li>
@@ -88,10 +79,23 @@ export function Catalog({
           </ul>
 
           {section.id === 'recommended' && (
-            <div
-              className={styles.loadMoreTrigger}
-              ref={setRecommendedLoadMoreElement}
-            />
+            <>
+              {isRecommendedLoading && (
+                <div className={styles.spinnerWrapper}>
+                  <img
+                    className={styles.spinner}
+                    src={spinnerIcon}
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </div>
+              )}
+
+              <div
+                className={styles.loadMoreTrigger}
+                ref={setRecommendedLoadMoreElement}
+              />
+            </>
           )}
         </section>
       ))}

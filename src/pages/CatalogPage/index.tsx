@@ -28,6 +28,7 @@ export default function CatalogPage() {
 
     isLoading,
     errorMessage,
+    isRecommendedLoading,
 
     handleModeChange,
     handleGenderChange,
@@ -103,18 +104,11 @@ export default function CatalogPage() {
         ) : (
           <Catalog
             sections={sections}
-            isAuthenticated={
-              isAuthenticated
-            }
-            setRecommendedLoadMoreElement={
-              setRecommendedLoadMoreElement
-            }
-            onToggleSection={
-              toggleSection
-            }
-            onFavoriteToggle={
-              handleFavoriteToggle
-            }
+            isAuthenticated={isAuthenticated}
+            isRecommendedLoading={isRecommendedLoading}
+            setRecommendedLoadMoreElement={setRecommendedLoadMoreElement}
+            onToggleSection={toggleSection}
+            onFavoriteToggle={handleFavoriteToggle}
           />
         )}
       </div>

@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import {
   sortCatalogUsersByNewestSkill,
@@ -19,8 +25,11 @@ import type {
   CatalogSectionId,
 } from './types'
 
+const RECOMMENDED_LOADING_DELAY = 5000
+
 interface UseCatalogSectionsResult {
   sections: CatalogSection[]
+  isRecommendedLoading: boolean
   setRecommendedLoadMoreElement: (
     element: HTMLDivElement | null,
   ) => void
@@ -39,6 +48,13 @@ export function useCatalogSections(
 
   const [recommendedLoadMoreElement, setRecommendedLoadMoreElement] =
     useState<HTMLDivElement | null>(null)
+
+  const [isRecommendedLoading, setIsRecommendedLoading] =
+    useState(false)
+
+  const recommendedLoadingRef = useRef(false)
+  const recommendedLoadingTimerRef =
+    useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const popularUsers = useMemo(
     () => sortCatalogUsersByPopularity(catalogUsers),
@@ -76,6 +92,13 @@ export function useCatalogSections(
 
   useEffect(() => {
     setRecommendedVisibleCount(INITIAL_RECOMMENDED_SIZE)
+    setIsRecommendedLoading(false)
+    recommendedLoadingRef.current = false
+
+    if (recommendedLoadingTimerRef.current !== null) {
+      clearTimeout(recommendedLoadingTimerRef.current)
+      recommendedLoadingTimerRef.current = null
+    }
   }, [catalogUsers])
 
   useEffect(() => {
@@ -90,16 +113,15 @@ export function useCatalogSections(
       (entries) => {
         const [entry] = entries
 
-        if (!entry.isIntersecting) {
+        if (
+          !entry.isIntersecting ||
+          recommendedLoadingRef.current
+        ) {
           return
         }
 
-        setRecommendedVisibleCount((currentVisibleCount) =>
-          Math.min(
-            currentVisibleCount + RECOMMENDED_INCREMENT,
-            recommendedUsers.length,
-          ),
-        )
+        recommendedLoadingRef.current = true
+        setIsRecommendedLoading(true)
       },
       {
         rootMargin: '200px',
@@ -116,6 +138,40 @@ export function useCatalogSections(
     recommendedUsers.length,
     recommendedVisibleCount,
   ])
+
+  useEffect(() => {
+    if (!isRecommendedLoading) {
+      return
+    }
+
+    recommendedLoadingTimerRef.current = setTimeout(() => {
+      setRecommendedVisibleCount((currentVisibleCount) =>
+        Math.min(
+          currentVisibleCount + RECOMMENDED_INCREMENT,
+          recommendedUsers.length,
+        ),
+      )
+
+      recommendedLoadingRef.current = false
+      setIsRecommendedLoading(false)
+      recommendedLoadingTimerRef.current = null
+    }, RECOMMENDED_LOADING_DELAY)
+
+    return () => {
+      if (recommendedLoadingTimerRef.current !== null) {
+        clearTimeout(recommendedLoadingTimerRef.current)
+        recommendedLoadingTimerRef.current = null
+      }
+    }
+  }, [isRecommendedLoading, recommendedUsers.length])
+
+  useEffect(() => {
+    return () => {
+      if (recommendedLoadingTimerRef.current !== null) {
+        clearTimeout(recommendedLoadingTimerRef.current)
+      }
+    }
+  }, [])
 
   const setRecommendedLoadMoreElementRef = useCallback(
     (element: HTMLDivElement | null) => {
@@ -172,6 +228,7 @@ export function useCatalogSections(
 
   return {
     sections,
+    isRecommendedLoading,
     setRecommendedLoadMoreElement:
       setRecommendedLoadMoreElementRef,
     toggleSection,
