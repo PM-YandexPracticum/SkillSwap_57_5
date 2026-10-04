@@ -20,28 +20,12 @@
     "name": "Екатеринбург"
   },
   {
-    "id": "krasnodar",
-    "name": "Краснодар"
-  },
-  {
-    "id": "samara",
-    "name": "Самара"
-  },
-  {
-    "id": "rostov-on-don",
-    "name": "Ростов-на-Дону"
-  },
-  {
     "id": "nizhny-novgorod",
     "name": "Нижний Новгород"
   },
   {
-    "id": "voronezh",
-    "name": "Воронеж"
-  },
-  {
-    "id": "perm",
-    "name": "Пермь"
+    "id": "samara",
+    "name": "Самара"
   },
   {
     "id": "omsk",
@@ -52,11 +36,27 @@
     "name": "Уфа"
   },
   {
-    "id": "chelyabinsk",
-    "name": "Челябинск"
+    "id": "krasnodar",
+    "name": "Краснодар"
   },
   {
-    "id": "tyumen",
-    "name": "Тюмень"
+    "id": "rostov-on-don",
+    "name": "Ростов-на-Дону"
+  },
+  {
+    "id": "perm",
+    "name": "Пермь"
+  },
+  {
+    "id": "krasnoyarsk",
+    "name": "Красноярск"
+  },
+  {
+    "id": "vladivostok",
+    "name": "Владивосток"
+  },
+  {
+    "id": "sochi",
+    "name": "Сочи"
   }
 ]
