@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 
 import { fetchCategories } from '@/api/categories'
 import { fetchCities } from '@/api/cities'
-import { fetchUsers } from '@/api/users'
-import { loadSkills } from '@/entities/skill/model/skillsSlice'
+import { loadSkills } from '@/store/slices/skillsSlice'
+import { loadUsers } from '@/store/slices/usersSlice'
 import type { City } from '@/entities/city'
 import type { Skill } from '@/entities/skill'
 import type { SkillCategory } from '@/entities/category'
@@ -37,11 +37,17 @@ export function useCatalogData(): CatalogData {
     (state) => state.skills.error,
   )
 
-  const [users, setUsers] = useState<User[]>([])
-  const [usersStatus, setUsersStatus] =
-    useState<DataStatus>('idle')
-  const [usersError, setUsersError] =
-    useState<string | null>(null)
+  const users = useAppSelector(
+    (state) => state.users.items,
+  )
+
+  const usersStatus = useAppSelector(
+    (state) => state.users.status,
+  )
+
+  const usersError = useAppSelector(
+    (state) => state.users.error,
+  )
 
   const [cities, setCities] = useState<City[]>([])
   const [citiesStatus, setCitiesStatus] =
@@ -64,39 +70,10 @@ export function useCatalogData(): CatalogData {
   }, [dispatch, skillsStatus])
 
   useEffect(() => {
-    let isMounted = true
-
-    async function loadUsers() {
-      setUsersStatus('loading')
-      setUsersError(null)
-
-      try {
-        const loadedUsers = await fetchUsers()
-
-        if (!isMounted) {
-          return
-        }
-
-        setUsers(loadedUsers)
-        setUsersStatus('succeeded')
-      } catch {
-        if (!isMounted) {
-          return
-        }
-
-        setUsersStatus('failed')
-        setUsersError(
-          'Не удалось загрузить пользователей',
-        )
-      }
+    if (usersStatus === 'idle') {
+      dispatch(loadUsers())
     }
-
-    loadUsers()
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
+  }, [dispatch, usersStatus])
 
   useEffect(() => {
     let isMounted = true
