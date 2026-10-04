@@ -1,11 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import type { UserGender } from '@/shared/types'
+import type { UserGender } from '@/entities/user/model/types'
 
-import type {
-  CatalogFilterMode,
-  CatalogFilters,
-} from './types'
+import type { CatalogFilterMode, CatalogFilters } from './types'
 
 const initialState: CatalogFilters = {
   mode: 'all',
@@ -79,9 +76,7 @@ const filterSlice = createSlice({
         return
       }
 
-      const subcategoryIndex = selectedCategory.subcategoryIds.indexOf(
-        subcategoryId,
-      )
+      const subcategoryIndex = selectedCategory.subcategoryIds.indexOf(subcategoryId)
 
       if (subcategoryIndex === -1) {
         selectedCategory.subcategoryIds.push(subcategoryId)
@@ -111,9 +106,7 @@ const filterSlice = createSlice({
           break
 
         case 'city':
-          state.cityIds = state.cityIds.filter(
-            (cityId) => cityId !== filter.value,
-          )
+          state.cityIds = state.cityIds.filter((cityId) => cityId !== filter.value)
           break
 
         case 'category':
@@ -123,20 +116,18 @@ const filterSlice = createSlice({
           break
 
         case 'subcategory':
-          state.skillCategories = state.skillCategories.map(
-            (skillCategory) => {
-              if (skillCategory.categoryId !== filter.categoryId) {
-                return skillCategory
-              }
+          state.skillCategories = state.skillCategories.map((skillCategory) => {
+            if (skillCategory.categoryId !== filter.categoryId) {
+              return skillCategory
+            }
 
-              return {
-                ...skillCategory,
-                subcategoryIds: skillCategory.subcategoryIds.filter(
-                  (subcategoryId) => subcategoryId !== filter.value,
-                ),
-              }
-            },
-          )
+            return {
+              ...skillCategory,
+              subcategoryIds: skillCategory.subcategoryIds.filter(
+                (subcategoryId) => subcategoryId !== filter.value,
+              ),
+            }
+          })
           break
       }
     },

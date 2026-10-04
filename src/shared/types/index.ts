@@ -1,18 +1,13 @@
 // ─── Skill ───────────────────────────────────────────────
 
-export type SkillType = 'teach' | 'learn'
-
 export interface Skill {
   id: string
+  authorId: string
   title: string
-  description: string
-  type: SkillType
   categoryId: string
   subcategoryId: string
-  tags: string[]
-  imageUrl: string | null
-  authorId: string
-  createdAt: string
+  description: string
+  imageUrls: string[]
 }
 
 // ─── Category ────────────────────────────────────────────
@@ -41,13 +36,17 @@ export type UserGender = 'male' | 'female'
 
 export interface User {
   id: string
-  name: string
   email: string
-  avatarUrl: string | null
-  age: number
+  password: string
+  name: string
+  avatarUrl: string | undefined
+  birthDate: string
   gender: UserGender
   cityId: string
-  likeCount: number
+  about: string
+  learningSubcategoryIds: string[]
+  likesCount: number
+  favoriteUserIds: string[]
   createdAt: string
 }
 

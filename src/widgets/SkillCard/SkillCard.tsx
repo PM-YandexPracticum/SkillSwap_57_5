@@ -1,10 +1,11 @@
-import { ButtonPrimary } from '@/shared/ui/ButtonPrimary'
-import type { Skill, User } from '@/shared/types'
-
+import type { Skill } from '@/entities/skill/model/types'
+import type { User } from '@/entities/user/model/types'
+import { Button } from '@/shared/button'
 import { FavoriteButton } from '@/features/favorite-user'
 import { SkillTag } from '@/entities/skill'
 import { UserAvatar } from '@/entities/user'
 
+import { getAgeFromBirthDate } from '@/shared/lib/helpers'
 import styles from './SkillCard.module.css'
 
 interface SkillCardProps {
@@ -24,14 +25,13 @@ export function SkillCard({
   teachSkills,
   learnSkills,
   isFavorite = false,
-  likeCount = user.likeCount,
+  likeCount = typeof user.likesCount === 'number' ? user.likesCount : 0,
   isAuthenticated = false,
   onFavoriteToggle,
 }: SkillCardProps) {
   const visibleTeachSkills = teachSkills.slice(0, 1)
   const visibleLearnSkills = learnSkills.slice(0, 2)
-  const additionalLearnSkillsCount =
-    learnSkills.length - visibleLearnSkills.length
+  const additionalLearnSkillsCount = learnSkills.length - visibleLearnSkills.length
 
   return (
     <article className={styles.card}>
@@ -49,45 +49,44 @@ export function SkillCard({
 
           <div className={styles.userNameRow}>
             <h2 className={styles.name}>{user.name}</h2>
-
             <p className={styles.location}>
-              {cityName}, {user.age} лет
+              {cityName}, {getAgeFromBirthDate(user.birthDate)} лет
             </p>
           </div>
         </div>
       </div>
 
       <div className={styles.skillsContent}>
-        <div className={styles.skillsSection}>
-          <h3 className={styles.skillsTitle}>Может научить:</h3>
-
-          <div className={styles.skillsList}>
-            {visibleTeachSkills.map((skill) => (
-              <SkillTag key={skill.id} skill={skill} />
-            ))}
+        {visibleTeachSkills.length > 0 && (
+          <div className={styles.skillsSection}>
+            <h3 className={styles.skillsTitle}>Может научить:</h3>
+            <div className={styles.skillsList}>
+              {visibleTeachSkills.map((skill) => (
+                <SkillTag key={skill.id} skill={skill} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        <div className={styles.skillsSection}>
-          <h3 className={styles.skillsTitle}>Хочет научиться:</h3>
+        {(visibleLearnSkills.length > 0 || additionalLearnSkillsCount > 0) && (
+          <div className={styles.skillsSection}>
+            <h3 className={styles.skillsTitle}>Хочет научиться:</h3>
+            <div className={styles.skillsList}>
+              {visibleLearnSkills.map((skill) => (
+                <SkillTag key={skill.id} skill={skill} />
+              ))}
 
-          <div className={styles.skillsList}>
-            {visibleLearnSkills.map((skill) => (
-              <SkillTag key={skill.id} skill={skill} />
-            ))}
-
-            {additionalLearnSkillsCount > 0 && (
-              <span className={styles.additionalSkills}>
-                +{additionalLearnSkillsCount}
-              </span>
-            )}
+              {additionalLearnSkillsCount > 0 && (
+                <span className={styles.additionalSkills}>+{additionalLearnSkillsCount}</span>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
-      <ButtonPrimary className={styles.detailsButton}>
+      <Button variant="primary" className={styles.detailsButton}>
         Подробнее
-      </ButtonPrimary>
+      </Button>
     </article>
   )
 }

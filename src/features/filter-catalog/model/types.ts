@@ -1,6 +1,6 @@
-import type { SkillType, UserGender } from '@/shared/types'
+import type { UserGender } from '@/entities/user/model/types'
 
-export type CatalogFilterMode = 'all' | SkillType
+export type CatalogFilterMode = 'all' | 'teach' | 'learn'
 
 export interface CatalogSkillFilter {
   categoryId: string

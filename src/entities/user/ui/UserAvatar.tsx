@@ -1,5 +1,4 @@
 import type { User } from '@/shared/types'
-
 import styles from './UserAvatar.module.css'
 
 interface UserAvatarProps {
@@ -7,18 +6,24 @@ interface UserAvatarProps {
 }
 
 export function UserAvatar({ user }: UserAvatarProps) {
+  const isExternalImage =
+    user.avatarUrl?.startsWith('http://') || user.avatarUrl?.startsWith('https://')
+  const hasValidAvatar = isExternalImage
+
+  const displayName = user.name?.trim() ?? '?'
+  const initial = displayName.charAt(0).toUpperCase()
+
   return (
     <div className={styles.avatar}>
-      {user.avatarUrl ? (
+      {hasValidAvatar ? (
         <img
           src={user.avatarUrl}
-          alt={`Фото ${user.name}`}
+          alt={`Фото ${displayName}`}
           className={styles.avatarImage}
+          loading="lazy"
         />
       ) : (
-        <span className={styles.avatarPlaceholder}>
-          {user.name.charAt(0)}
-        </span>
+        <span className={styles.avatarPlaceholder}>{initial}</span>
       )}
     </div>
   )

@@ -1,15 +1,10 @@
 import { useState } from 'react'
 
-import type {
-  City,
-  SkillCategory,
-  UserGender,
-} from '@/shared/types'
+import type { UserGender } from '@/entities/user/model/types'
+import type { City } from '@/entities/city/model/types'
+import type { SkillCategory } from '@/entities/category/model/types'
 
-import {
-  countActiveFilters,
-  type CatalogFilters,
-} from '@/features/filter-catalog'
+import { countActiveFilters, type CatalogFilters } from '@/features/filter-catalog'
 
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
 import crossIcon from '@/shared/assets/icons/cross.svg'
@@ -26,11 +21,9 @@ interface FiltersBarProps {
   onGenderChange: (gender: UserGender | null) => void
   onCityToggle: (cityId: string) => void
   onCategoryToggle: (categoryId: string) => void
-  onSubcategoryToggle: (
-    categoryId: string,
-    subcategoryId: string,
-  ) => void
+  onSubcategoryToggle: (categoryId: string, subcategoryId: string) => void
   onReset: () => void
+  disabled?: boolean
 }
 
 export function FiltersBar({
@@ -43,45 +36,33 @@ export function FiltersBar({
   onCategoryToggle,
   onSubcategoryToggle,
   onReset,
+  disabled = false,
 }: FiltersBarProps) {
-  const [expandedCategoryIds, setExpandedCategoryIds] =
-    useState<string[]>([])
+  const [expandedCategoryIds, setExpandedCategoryIds] = useState<string[]>([])
 
-  const [areAllCitiesVisible, setAreAllCitiesVisible] =
-    useState(false)
+  const [areAllCitiesVisible, setAreAllCitiesVisible] = useState(false)
 
-  const visibleCities = areAllCitiesVisible
-    ? cities
-    : cities.slice(0, INITIAL_VISIBLE_CITIES)
+  const visibleCities = areAllCitiesVisible ? cities : cities.slice(0, INITIAL_VISIBLE_CITIES)
 
   const activeFiltersCount = countActiveFilters(filters)
 
-  const handleCategoryExpandToggle = (
-    categoryId: string,
-  ) => {
-    setExpandedCategoryIds(
-      (currentExpandedCategoryIds) => {
-        if (
-          currentExpandedCategoryIds.includes(categoryId)
-        ) {
-          return currentExpandedCategoryIds.filter(
-            (expandedCategoryId) =>
-              expandedCategoryId !== categoryId,
-          )
-        }
+  const handleCategoryExpandToggle = (categoryId: string) => {
+    setExpandedCategoryIds((currentExpandedCategoryIds) => {
+      if (currentExpandedCategoryIds.includes(categoryId)) {
+        return currentExpandedCategoryIds.filter(
+          (expandedCategoryId) => expandedCategoryId !== categoryId,
+        )
+      }
 
-        return [...currentExpandedCategoryIds, categoryId]
-      },
-    )
+      return [...currentExpandedCategoryIds, categoryId]
+    })
   }
 
   return (
-    <aside className={styles.filters}>
+    <aside className={`${styles.filters} ${disabled ? styles.filtersDisabled : ''}`}>
       <div className={styles.filtersHead}>
         <h2 className={styles.title}>
-          {activeFiltersCount > 0
-            ? `Фильтры (${activeFiltersCount})`
-            : 'Фильтры'}
+          {activeFiltersCount > 0 ? `Фильтры (${activeFiltersCount})` : 'Фильтры'}
         </h2>
 
         {activeFiltersCount > 0 && (
@@ -89,22 +70,17 @@ export function FiltersBar({
             type="button"
             className={styles.resetButton}
             onClick={onReset}
+            disabled={disabled}
           >
             <span>Сбросить</span>
 
-            <img
-              src={crossIcon}
-              alt=""
-              aria-hidden="true"
-            />
+            <img src={crossIcon} alt="" aria-hidden="true" />
           </button>
         )}
       </div>
 
-      <fieldset className={styles.group}>
-        <legend className={styles.legend}>
-          Что показывать
-        </legend>
+      <fieldset className={styles.group} disabled={disabled}>
+        <legend className={styles.legend}>Что показывать</legend>
 
         <div className={styles.optionList}>
           <label className={styles.option}>
@@ -142,36 +118,27 @@ export function FiltersBar({
         </div>
       </fieldset>
 
-      <fieldset className={styles.group}>
+      <fieldset className={styles.group} disabled={disabled}>
         <legend className={styles.legend}>Навыки</legend>
 
         <div className={styles.categoryList}>
           {categories.map((category) => {
-            const selectedCategory =
-              filters.skillCategories.find(
-                (skillCategory) =>
-                  skillCategory.categoryId === category.id,
-              )
+            const selectedCategory = filters.skillCategories.find(
+              (skillCategory) => skillCategory.categoryId === category.id,
+            )
 
-            const isCategorySelected =
-              Boolean(selectedCategory)
+            const isCategorySelected = Boolean(selectedCategory)
 
-            const isCategoryExpanded =
-              expandedCategoryIds.includes(category.id)
+            const isCategoryExpanded = expandedCategoryIds.includes(category.id)
 
             return (
-              <div
-                key={category.id}
-                className={styles.category}
-              >
+              <div key={category.id} className={styles.category}>
                 <div className={styles.categoryRow}>
                   <label className={styles.option}>
                     <input
                       type="checkbox"
                       checked={isCategorySelected}
-                      onChange={() =>
-                        onCategoryToggle(category.id)
-                      }
+                      onChange={() => onCategoryToggle(category.id)}
                     />
 
                     <span>{category.name}</span>
@@ -180,13 +147,9 @@ export function FiltersBar({
                   <button
                     type="button"
                     className={`${styles.expandButton} ${
-                      isCategoryExpanded
-                        ? styles.expandButtonExpanded
-                        : ''
+                      isCategoryExpanded ? styles.expandButtonExpanded : ''
                     }`}
-                    onClick={() =>
-                      handleCategoryExpandToggle(category.id)
-                    }
+                    onClick={() => handleCategoryExpandToggle(category.id)}
                     aria-expanded={isCategoryExpanded}
                     aria-label={
                       isCategoryExpanded
@@ -205,38 +168,22 @@ export function FiltersBar({
 
                 {isCategoryExpanded && (
                   <div className={styles.subcategoryList}>
-                    {category.subcategories.map(
-                      (subcategory) => {
-                        const isSubcategorySelected =
-                          selectedCategory?.subcategoryIds.includes(
-                            subcategory.id,
-                          ) ?? false
+                    {category.subcategories.map((subcategory) => {
+                      const isSubcategorySelected =
+                        selectedCategory?.subcategoryIds.includes(subcategory.id) ?? false
 
-                        return (
-                          <label
-                            key={subcategory.id}
-                            className={
-                              styles.subcategoryOption
-                            }
-                          >
-                            <input
-                              type="checkbox"
-                              checked={isSubcategorySelected}
-                              onChange={() =>
-                                onSubcategoryToggle(
-                                  category.id,
-                                  subcategory.id,
-                                )
-                              }
-                            />
+                      return (
+                        <label key={subcategory.id} className={styles.subcategoryOption}>
+                          <input
+                            type="checkbox"
+                            checked={isSubcategorySelected}
+                            onChange={() => onSubcategoryToggle(category.id, subcategory.id)}
+                          />
 
-                            <span>
-                              {subcategory.name}
-                            </span>
-                          </label>
-                        )
-                      },
-                    )}
+                          <span>{subcategory.name}</span>
+                        </label>
+                      )
+                    })}
                   </div>
                 )}
               </div>
@@ -245,10 +192,8 @@ export function FiltersBar({
         </div>
       </fieldset>
 
-      <fieldset className={styles.group}>
-        <legend className={styles.legend}>
-          Пол автора
-        </legend>
+      <fieldset className={styles.group} disabled={disabled}>
+        <legend className={styles.legend}>Пол автора</legend>
 
         <div className={styles.optionList}>
           <label className={styles.option}>
@@ -271,7 +216,6 @@ export function FiltersBar({
               checked={filters.gender === 'male'}
               onChange={() => onGenderChange('male')}
             />
-
             <span>Мужской</span>
           </label>
 
@@ -283,21 +227,17 @@ export function FiltersBar({
               checked={filters.gender === 'female'}
               onChange={() => onGenderChange('female')}
             />
-
             <span>Женский</span>
           </label>
         </div>
       </fieldset>
 
-      <fieldset className={styles.group}>
+      <fieldset className={styles.group} disabled={disabled}>
         <legend className={styles.legend}>Город</legend>
 
         <div className={styles.optionList}>
           {visibleCities.map((city) => (
-            <label
-              key={city.id}
-              className={styles.option}
-            >
+            <label key={city.id} className={styles.option}>
               <input
                 type="checkbox"
                 checked={filters.cityIds.includes(city.id)}
@@ -313,24 +253,15 @@ export function FiltersBar({
           <button
             type="button"
             className={styles.moreButton}
-            onClick={() =>
-              setAreAllCitiesVisible(
-                (isVisible) => !isVisible,
-              )
-            }
+            onClick={() => setAreAllCitiesVisible((isVisible) => !isVisible)}
+            disabled={disabled}
           >
-            <span>
-              {areAllCitiesVisible
-                ? 'Свернуть'
-                : 'Все города'}
-            </span>
+            <span>{areAllCitiesVisible ? 'Свернуть' : 'Все города'}</span>
 
             <img
               src={chevronDownIcon}
               className={`${styles.moreButtonChevron} ${
-                areAllCitiesVisible
-                  ? styles.moreButtonChevronExpanded
-                  : ''
+                areAllCitiesVisible ? styles.moreButtonChevronExpanded : ''
               }`}
               alt=""
               aria-hidden="true"

@@ -1,36 +1,19 @@
-interface SearchableCatalogUser {
-  teachSkills: {
-    title: string
-  }[]
-  learnSkills: {
-    title: string
-  }[]
-}
+import type { CatalogUser } from '@/features/catalog/model/types'
 
-export function filterCatalogUsersBySearch<
-  T extends SearchableCatalogUser,
->(
-  catalogUsers: T[],
+export function filterCatalogUsersBySearch(
+  users: CatalogUser[],
   searchQuery: string,
-): T[] {
+): CatalogUser[] {
   const normalizedSearchQuery = searchQuery.trim().toLowerCase()
 
-  if (normalizedSearchQuery === '') {
-    return catalogUsers
+  if (!normalizedSearchQuery) {
+    return users
   }
 
-  return catalogUsers.filter(
-    ({ teachSkills, learnSkills }) => {
-      const userSkills = [
-        ...teachSkills,
-        ...learnSkills,
-      ]
-
-      return userSkills.some((skill) =>
-        skill.title
-          .toLowerCase()
-          .includes(normalizedSearchQuery),
-      )
-    },
-  )
+  return users.filter((user) => {
+    return user.teachSkills.some((skill) => {
+      const title = skill.title ?? ''
+      return title.toLowerCase().includes(normalizedSearchQuery)
+    })
+  })
 }

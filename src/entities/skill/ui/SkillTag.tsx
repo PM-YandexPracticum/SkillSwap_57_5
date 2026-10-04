@@ -8,12 +8,12 @@ interface SkillTagProps {
 
 function getSkillTagClass(categoryId: string): string {
   const categoryClassMap: Record<string, string> = {
-    'business-career': styles.businessTag,
+    'business-and-career': styles.businessTag,
     'foreign-languages': styles.languagesTag,
-    'home-comfort': styles.homeTag,
-    'creativity-art': styles.creativityTag,
-    'education-development': styles.educationTag,
-    'health-lifestyle': styles.healthTag,
+    'home-and-comfort': styles.homeTag,
+    'creativity-and-art': styles.creativityTag,
+    'education-and-development': styles.educationTag,
+    'health-and-lifestyle': styles.healthTag,
   }
 
   return categoryClassMap[categoryId] ?? styles.defaultTag
@@ -21,9 +21,7 @@ function getSkillTagClass(categoryId: string): string {
 
 export function SkillTag({ skill }: SkillTagProps) {
   return (
-    <span
-      className={`${styles.skillTag} ${getSkillTagClass(skill.categoryId)}`}
-    >
+    <span className={`${styles.skillTag} ${getSkillTagClass(skill.categoryId)}`}>
       {skill.title}
     </span>
   )

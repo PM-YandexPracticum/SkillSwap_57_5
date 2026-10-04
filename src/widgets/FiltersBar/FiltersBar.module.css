@@ -240,3 +240,10 @@
 .moreButtonChevronExpanded {
   transform: rotate(180deg);
 }
+
+.filtersDisabled {
+  opacity: 0.5;
+  pointer-events: none;
+  filter: grayscale(0.3);
+  transition: opacity 0.2s ease;
+}
