@@ -13,8 +13,8 @@ import { useFavoriteUsers } from '@/features/favorite-user'
 import { addFavoriteData } from '../lib/addFavoriteData'
 
 import { filterCatalogUsersBySearch, useSearchQuery } from '@/features/search-skills'
-import type { City } from '@/entities/city/model/types'
-import type { SkillCategory } from '@/entities/category/model/types'
+import type { City } from '@/entities/city'
+import type { SkillCategory } from '@/entities/category'
 
 import { buildCatalogUsers } from '../lib/buildCatalogUsers'
 import {

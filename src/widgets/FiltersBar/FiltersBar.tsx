@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import type { UserGender } from '@/entities/user/model/types'
-import type { City } from '@/entities/city/model/types'
-import type { SkillCategory } from '@/entities/category/model/types'
+import type { Gender } from '@/entities/user'
+import type { City } from '@/entities/city'
+import type { SkillCategory } from '@/entities/category'
 
 import { countActiveFilters, type CatalogFilters } from '@/features/filter-catalog'
 
@@ -18,7 +18,7 @@ interface FiltersBarProps {
   categories: SkillCategory[]
   cities: City[]
   onModeChange: (mode: CatalogFilters['mode']) => void
-  onGenderChange: (gender: UserGender | null) => void
+  onGenderChange: (gender: Gender | null) => void
   onCityToggle: (cityId: string) => void
   onCategoryToggle: (categoryId: string) => void
   onSubcategoryToggle: (categoryId: string, subcategoryId: string) => void

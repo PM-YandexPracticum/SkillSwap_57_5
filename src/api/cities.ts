@@ -1,4 +1,4 @@
-import type { City } from '@/shared/types'
+import type { City } from '@/entities/city'
 
 const BASE_URL = '/db'
 

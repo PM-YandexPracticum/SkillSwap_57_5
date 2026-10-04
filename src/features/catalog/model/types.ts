@@ -1,5 +1,5 @@
-import type { User } from '@/entities/user/model/types'
-import type { Skill } from '@/entities/skill/model/types'
+import type { User } from '@/entities/user'
+import type { Skill } from '@/entities/skill'
 
 export interface CatalogUser {
   user: User

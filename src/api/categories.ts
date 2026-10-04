@@ -1,4 +1,4 @@
-import type { SkillCategory } from '@/shared/types'
+import type { SkillCategory } from '@/entities/category'
 
 const BASE_URL = '/db'
 

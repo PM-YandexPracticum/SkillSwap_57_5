@@ -1,7 +1,7 @@
-import type { City } from '@/entities/city/model/types'
-import type { User } from '@/entities/user/model/types'
-import type { SkillCategory, SkillSubcategory } from '@/entities/category/model/types'
-import type { Skill } from '@/entities/skill/model/types'
+import type { City } from '@/entities/city'
+import type { User } from '@/entities/user'
+import type { SkillCategory, SkillSubcategory } from '@/entities/category'
+import type { Skill } from '@/entities/skill'
 import type { CatalogUser } from '../model/types'
 
 export function buildCatalogUsers(

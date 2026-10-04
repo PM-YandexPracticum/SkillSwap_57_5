@@ -4,12 +4,10 @@ import { fetchCategories } from '@/api/categories'
 import { fetchCities } from '@/api/cities'
 import { fetchUsers } from '@/api/users'
 import { loadSkills } from '@/entities/skill/model/skillsSlice'
-import type {
-  City,
-  Skill,
-  SkillCategory,
-  User,
-} from '@/shared/types'
+import type { City } from '@/entities/city'
+import type { Skill } from '@/entities/skill'
+import type { SkillCategory } from '@/entities/category'
+import type { User } from '@/entities/user'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 type DataStatus = 'idle' | 'loading' | 'succeeded' | 'failed'

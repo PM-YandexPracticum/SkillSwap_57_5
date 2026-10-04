@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import type { UserGender } from '@/entities/user/model/types'
+import type { Gender } from '@/entities/user'
 
 import type { CatalogFilterMode, CatalogFilters } from './types'
 
@@ -19,7 +19,7 @@ const filterSlice = createSlice({
       state.mode = action.payload
     },
 
-    setGender(state, action: PayloadAction<UserGender | null>) {
+    setGender(state, action: PayloadAction<Gender | null>) {
       state.gender = action.payload
     },
 

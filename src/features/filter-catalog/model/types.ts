@@ -1,4 +1,4 @@
-import type { UserGender } from '@/entities/user/model/types'
+import type { Gender } from '@/entities/user'
 
 export type CatalogFilterMode = 'all' | 'teach' | 'learn'
 
@@ -9,7 +9,7 @@ export interface CatalogSkillFilter {
 
 export interface CatalogFilters {
   mode: CatalogFilterMode
-  gender: UserGender | null
+  gender: Gender | null
   cityIds: string[]
   skillCategories: CatalogSkillFilter[]
 }

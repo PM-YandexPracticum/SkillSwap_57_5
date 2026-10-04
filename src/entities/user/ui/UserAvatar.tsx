@@ -1,4 +1,4 @@
-import type { User } from '@/shared/types'
+import type { User } from '@/entities/user'
 import styles from './UserAvatar.module.css'
 
 interface UserAvatarProps {

@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import type { User } from '@/entities/user/model/types'
+import type { User } from '@/entities/user'
 
 import styles from './FavoriteButton.module.css'
 

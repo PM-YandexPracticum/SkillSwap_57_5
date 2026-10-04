@@ -1,4 +1,4 @@
-import type { Skill } from '@/shared/types'
+import type { Skill } from '@/entities/skill'
 
 import styles from './SkillTag.module.css'
 

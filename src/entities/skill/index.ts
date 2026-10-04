@@ -1,2 +1,2 @@
 export { SkillTag } from './ui/SkillTag'
-export type { Skill, SkillSubcategory, SkillCategory } from '@/shared/types'
+export type { Skill, SkillId } from './model/types'
