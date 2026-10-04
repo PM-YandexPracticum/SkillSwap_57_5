@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import {
   sortCatalogUsersByNewestSkill,
@@ -19,63 +13,42 @@ import {
   RECOMMENDED_INCREMENT,
 } from './constants'
 
-import type {
-  CatalogCardData,
-  CatalogSection,
-  CatalogSectionId,
-} from './types'
+import type { CatalogCardData, CatalogSection, CatalogSectionId } from './types'
 
-const RECOMMENDED_LOADING_DELAY = 5000
+const RECOMMENDED_LOADING_DELAY = 1000
 
 interface UseCatalogSectionsResult {
   sections: CatalogSection[]
   isRecommendedLoading: boolean
-  setRecommendedLoadMoreElement: (
-    element: HTMLDivElement | null,
-  ) => void
+  setRecommendedLoadMoreElement: (element: HTMLDivElement | null) => void
   toggleSection: (sectionId: CatalogSectionId) => void
 }
 
-export function useCatalogSections(
-  catalogUsers: CatalogCardData[],
-): UseCatalogSectionsResult {
-  const [expandedSectionIds, setExpandedSectionIds] = useState<
-    CatalogSectionId[]
-  >([])
+export function useCatalogSections(catalogUsers: CatalogCardData[]): UseCatalogSectionsResult {
+  const [expandedSectionIds, setExpandedSectionIds] = useState<CatalogSectionId[]>([])
 
-  const [recommendedVisibleCount, setRecommendedVisibleCount] =
-    useState(INITIAL_RECOMMENDED_SIZE)
+  const [recommendedVisibleCount, setRecommendedVisibleCount] = useState(INITIAL_RECOMMENDED_SIZE)
 
   const [recommendedLoadMoreElement, setRecommendedLoadMoreElement] =
     useState<HTMLDivElement | null>(null)
 
-  const [isRecommendedLoading, setIsRecommendedLoading] =
-    useState(false)
+  const [isRecommendedLoading, setIsRecommendedLoading] = useState(false)
 
   const recommendedLoadingRef = useRef(false)
-  const recommendedLoadingTimerRef =
-    useRef<ReturnType<typeof setTimeout> | null>(null)
+  const recommendedLoadingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const popularUsers = useMemo(
-    () => sortCatalogUsersByPopularity(catalogUsers),
-    [catalogUsers],
-  )
+  const popularUsers = useMemo(() => sortCatalogUsersByPopularity(catalogUsers), [catalogUsers])
 
-  const newUsers = useMemo(
-    () => sortCatalogUsersByNewestSkill(catalogUsers),
-    [catalogUsers],
-  )
+  const newUsers = useMemo(() => sortCatalogUsersByNewestSkill(catalogUsers), [catalogUsers])
 
   const recommendedUsers = useMemo(
     () => sortCatalogUsersByRegistrationDate(catalogUsers),
     [catalogUsers],
   )
 
-  const isPopularExpanded =
-    expandedSectionIds.includes('popular')
+  const isPopularExpanded = expandedSectionIds.includes('popular')
 
-  const isNewExpanded =
-    expandedSectionIds.includes('new')
+  const isNewExpanded = expandedSectionIds.includes('new')
 
   const visiblePopularUsers = isPopularExpanded
     ? popularUsers.slice(0, EXPANDED_SECTION_SIZE)
@@ -85,27 +58,23 @@ export function useCatalogSections(
     ? newUsers.slice(0, EXPANDED_SECTION_SIZE)
     : newUsers.slice(0, INITIAL_SECTION_SIZE)
 
-  const visibleRecommendedUsers = recommendedUsers.slice(
-    0,
-    recommendedVisibleCount,
-  )
+  const visibleRecommendedUsers = recommendedUsers.slice(0, recommendedVisibleCount)
+
+  // УБРАН СБРОС ЗАГРУЗКИ ПРИ ИЗМЕНЕНИИ catalogUsers:
+  // лайк не должен сворачивать список или прерывать показ следующих карточек.
+  // useEffect(() => {
+  //   setRecommendedVisibleCount(INITIAL_RECOMMENDED_SIZE)
+  //   setIsRecommendedLoading(false)
+  //   recommendedLoadingRef.current = false
+
+  //   if (recommendedLoadingTimerRef.current !== null) {
+  //     clearTimeout(recommendedLoadingTimerRef.current)
+  //     recommendedLoadingTimerRef.current = null
+  //   }
+  // }, [catalogUsers])
 
   useEffect(() => {
-    setRecommendedVisibleCount(INITIAL_RECOMMENDED_SIZE)
-    setIsRecommendedLoading(false)
-    recommendedLoadingRef.current = false
-
-    if (recommendedLoadingTimerRef.current !== null) {
-      clearTimeout(recommendedLoadingTimerRef.current)
-      recommendedLoadingTimerRef.current = null
-    }
-  }, [catalogUsers])
-
-  useEffect(() => {
-    if (
-      !recommendedLoadMoreElement ||
-      recommendedVisibleCount >= recommendedUsers.length
-    ) {
+    if (!recommendedLoadMoreElement || recommendedVisibleCount >= recommendedUsers.length) {
       return
     }
 
@@ -113,10 +82,7 @@ export function useCatalogSections(
       (entries) => {
         const [entry] = entries
 
-        if (
-          !entry.isIntersecting ||
-          recommendedLoadingRef.current
-        ) {
+        if (!entry.isIntersecting || recommendedLoadingRef.current) {
           return
         }
 
@@ -133,11 +99,7 @@ export function useCatalogSections(
     return () => {
       observer.disconnect()
     }
-  }, [
-    recommendedLoadMoreElement,
-    recommendedUsers.length,
-    recommendedVisibleCount,
-  ])
+  }, [recommendedLoadMoreElement, recommendedUsers.length, recommendedVisibleCount])
 
   useEffect(() => {
     if (!isRecommendedLoading) {
@@ -146,10 +108,7 @@ export function useCatalogSections(
 
     recommendedLoadingTimerRef.current = setTimeout(() => {
       setRecommendedVisibleCount((currentVisibleCount) =>
-        Math.min(
-          currentVisibleCount + RECOMMENDED_INCREMENT,
-          recommendedUsers.length,
-        ),
+        Math.min(currentVisibleCount + RECOMMENDED_INCREMENT, recommendedUsers.length),
       )
 
       recommendedLoadingRef.current = false
@@ -173,12 +132,9 @@ export function useCatalogSections(
     }
   }, [])
 
-  const setRecommendedLoadMoreElementRef = useCallback(
-    (element: HTMLDivElement | null) => {
-      setRecommendedLoadMoreElement(element)
-    },
-    [],
-  )
+  const setRecommendedLoadMoreElementRef = useCallback((element: HTMLDivElement | null) => {
+    setRecommendedLoadMoreElement(element)
+  }, [])
 
   const toggleSection = (sectionId: CatalogSectionId) => {
     setExpandedSectionIds((currentExpandedSectionIds) => {
@@ -229,8 +185,7 @@ export function useCatalogSections(
   return {
     sections,
     isRecommendedLoading,
-    setRecommendedLoadMoreElement:
-      setRecommendedLoadMoreElementRef,
+    setRecommendedLoadMoreElement: setRecommendedLoadMoreElementRef,
     toggleSection,
   }
 }
