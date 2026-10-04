@@ -1,5 +1,5 @@
 import type { UserId } from '@/entities/user'
-import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/skill-category'
+import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/category'
 
 export type SkillId = string
 
