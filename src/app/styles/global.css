@@ -1,31 +1,57 @@
 /* ─── CSS Custom Properties ─────────────────────────────── */
+
 :root {
   /* Colors */
-  --color-primary: #6366f1;
-  --color-primary-hover: #4f46e5;
-  --color-bg: #fff;
-  --color-bg-secondary: #f9fafb;
-  --color-text: #111827;
-  --color-text-secondary: #6b7280;
-  --color-border: #e5e7eb;
-  --color-error: #ef4444;
-  --color-success: #22c55e;
+  --color-text: #253017;
+  --color-caption: #69735d;
+  --color-toggle: #b2b9a9;
+  --color-disabled-text: #9ca197;
+  --color-disabled: #e4e8df;
+  --color-text-link: #508826;
+  --color-primary: #abd27a;
+  --color-primary-hover: #deebc5;
+  --color-bg: #f9faf7;
+  --color-surface: #fff;
+  --color-alarm: #e0796e;
+  --color-error: #bf3920;
+
+  /* Skill tags */
+  --color-tag-business: #eee7f7;
+  --color-tag-creativity: #f7e7f2;
+  --color-tag-languages: #ebe5c5;
+  --color-tag-education: #e7f2f6;
+  --color-tag-home: #f7ebe5;
+  --color-tag-health: #e9f7e7;
+  --color-tag-additional: #e8ecf7;
+
+  /* Typography */
+  --font-heading: 'Jost', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  --font-name: 'Open Sans', sans-serif;
+
+  /* Font sizes */
+  --font-size-h1: 32px;
+  --font-size-h2: 24px;
+  --font-size-h3: 20px;
+  --font-size-h4: 16px;
+  --font-size-body: 16px;
+  --font-size-caption: 12px;
+
+  /* Line heights */
+  --line-height-h1: 40px;
+  --line-height-h2: 28px;
+  --line-height-h3: 24px;
+  --line-height-h4: 24px;
+  --line-height-body: 24px;
+  --line-height-caption: 16px;
 
   /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
-  --space-md: 16px;
+  --space-md: 12px;
   --space-lg: 24px;
   --space-xl: 32px;
   --space-2xl: 48px;
-
-  /* Typography */
-  --font-sans: system-ui, -apple-system, sans-serif;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
 
   /* Borders */
   --radius-sm: 4px;
@@ -35,6 +61,7 @@
   /* Shadows */
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
   --shadow-md: 0 4px 6px rgb(0 0 0 / 7%);
+  --shadow-card: 0 1px 4px rgb(37 48 23 / 4%);
 }
 
 /* Тёмная тема — добавить поддержку через data-theme="dark" */
@@ -47,6 +74,7 @@
 }
 
 /* ─── Reset ──────────────────────────────────────────────── */
+
 *,
 *::before,
 *::after {
@@ -55,12 +83,18 @@
   padding: 0;
 }
 
+html {
+  font-family: var(--font-body);
+}
+
 body {
-  font-family: var(--font-sans);
-  font-size: var(--font-size-base);
+  min-width: 320px;
   color: var(--color-text);
   background-color: var(--color-bg);
-  line-height: 1.5;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: var(--line-height-body);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -70,13 +104,19 @@ a {
 }
 
 img {
-  max-width: 100%;
   display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 button {
-  cursor: pointer;
   border: none;
   background: none;
-  font: inherit;
+  cursor: pointer;
 }
