@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, ButtonHTMLAttributes } from 'react'
 
 export type CheckboxProps = {
   id: string
@@ -29,34 +29,35 @@ export type SelectProps = {
   disabled?: boolean
   required: boolean
   ariaLabel?: string
+}
+
 export interface InputProps {
-  id: string;
-  value: string;
-  onChange: (value: string) => void;
-  type?: string;
-  placeholder?: string;
-  className?: string;
-  disabled?: boolean;
-  required?: boolean;
-  ariaLabel?: string;
+  id: string
+  value: string
+  onChange: (value: string) => void
+  type?: string
+  placeholder?: string
+  className?: string
+  disabled?: boolean
+  required?: boolean
+  ariaLabel?: string
 }
 
 export interface TextareaProps {
-  id: string;
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  className?: string;
-  disabled?: boolean;
-  required?: boolean;
-  maxLength?: number;
-  ariaLabel?: string;
+  id: string
+  value: string
+  onChange: (value: string) => void
+  placeholder?: string
+  className?: string
+  disabled?: boolean
+  required?: boolean
+  maxLength?: number
+  ariaLabel?: string
 }
 
-export type SearchInputProps = Omit<InputProps, 'type' | 'required'>;
+export type SearchInputProps = Omit<InputProps, 'type' | 'required'>
 
-export type AboutFieldProps = Omit<TextareaProps, 'required'>;
-import type { ButtonHTMLAttributes, ReactNode } from 'react'
+export type AboutFieldProps = Omit<TextareaProps, 'required'>
 
 type ButtonVariant = 'primary' | 'secondary'
 
