@@ -1,4 +1,4 @@
-// TODO: реализовать страницу NotFoundPage
+// import styles from './NotFoundPage.module.css'
 
 export default function NotFoundPage() {
   return (
