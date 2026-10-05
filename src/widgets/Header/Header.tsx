@@ -1,5 +1,5 @@
 import { SearchSkills } from '@/features/search-skills'
-import { Button } from '@/shared/button'
+import { Button } from '@/shared/ui/button'
 
 import logo from '@/shared/assets/icons/Logo.png'
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
