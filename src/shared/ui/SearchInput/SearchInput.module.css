@@ -1,0 +1,36 @@
+.root {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.root:focus-within {
+  box-shadow: 0 0 0 2px rgb(105 115 93 / 30%);
+}
+
+.icon {
+  display: flex;
+  flex-shrink: 0;
+  color: #69735d;
+}
+
+.root .field {
+  height: auto;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+.root .field:focus-visible {
+  box-shadow: none;
+}
+
+.root .field::-webkit-search-cancel-button {
+  appearance: none;
+}
