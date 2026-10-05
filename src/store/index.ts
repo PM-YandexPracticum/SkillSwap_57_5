@@ -1,18 +1,23 @@
 import { configureStore } from '@reduxjs/toolkit'
-// Импортируй свои slice'ы здесь по мере их создания:
 import filterReducer from './slices/filterSlice'
 import skillsReducer from './slices/skillsSlice'
 import usersReducer from './slices/usersSlice'
 import registrationReducer from './slices/registrationSlice'
-// import authReducer from '@/features/auth/model/authSlice'
+import categoriesReducer from './slices/categoriesSlice'
+import notificationsReducer from './slices/notificationsSlice'
+import citiesReducer from './slices/citiesSlice'
+import themeReducer from './slices/themeSlice'
 
 export const store = configureStore({
   reducer: {
     skills: skillsReducer,
     users: usersReducer,
     registration: registrationReducer,
+    categories: categoriesReducer,
+    notifications: notificationsReducer,
+    cities: citiesReducer,
+    theme: themeReducer,
     catalogFilters: filterReducer,
-    // auth: authReducer,
   },
 })
 

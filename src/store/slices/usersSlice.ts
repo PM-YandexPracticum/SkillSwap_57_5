@@ -25,11 +25,9 @@ const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    // Добавляет пользователя в избранное текущего пользователя или убирает его
+    // Добавляет пользователя из карточки в избранное текущего авторизованного пользователя или убирает его
     toggleFavoriteUser(state, action: PayloadAction<string>) {
-      const currentUser = state.items.find(
-        (user) => user.id === state.currentUserId,
-      )
+      const currentUser = state.items.find((user) => user.id === state.currentUserId)
 
       if (!currentUser) {
         return

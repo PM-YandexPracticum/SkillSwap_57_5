@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-import { fetchCategories } from '@/api/categories'
-import { fetchCities } from '@/api/cities'
+import { loadCategories } from '@/store/slices/categoriesSlice'
+import { loadCities } from '@/store/slices/citiesSlice'
 import { loadSkills } from '@/store/slices/skillsSlice'
 import { loadUsers } from '@/store/slices/usersSlice'
 import type { City } from '@/entities/city'
@@ -9,8 +9,6 @@ import type { Skill } from '@/entities/skill'
 import type { SkillCategory } from '@/entities/category'
 import type { User } from '@/entities/user'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-
-type DataStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 interface CatalogData {
   users: User[]
@@ -49,19 +47,25 @@ export function useCatalogData(): CatalogData {
     (state) => state.users.error,
   )
 
-  const [cities, setCities] = useState<City[]>([])
-  const [citiesStatus, setCitiesStatus] =
-    useState<DataStatus>('idle')
-  const [citiesError, setCitiesError] =
-    useState<string | null>(null)
+  const cities = useAppSelector(
+    (state) => state.cities.items,
+  )
+  const citiesStatus = useAppSelector(
+    (state) => state.cities.status,
+  )
+  const citiesError = useAppSelector(
+    (state) => state.cities.error,
+  )
 
-  const [categories, setCategories] = useState<
-    SkillCategory[]
-  >([])
-  const [categoriesStatus, setCategoriesStatus] =
-    useState<DataStatus>('idle')
-  const [categoriesError, setCategoriesError] =
-    useState<string | null>(null)
+  const categories = useAppSelector(
+    (state) => state.categories.items,
+  )
+  const categoriesStatus = useAppSelector(
+    (state) => state.categories.status,
+  )
+  const categoriesError = useAppSelector(
+    (state) => state.categories.error,
+  )
 
   useEffect(() => {
     if (skillsStatus === 'idle') {
@@ -76,75 +80,16 @@ export function useCatalogData(): CatalogData {
   }, [dispatch, usersStatus])
 
   useEffect(() => {
-    let isMounted = true
-
-    async function loadCities() {
-      setCitiesStatus('loading')
-      setCitiesError(null)
-
-      try {
-        const loadedCities = await fetchCities()
-
-        if (!isMounted) {
-          return
-        }
-
-        setCities(loadedCities)
-        setCitiesStatus('succeeded')
-      } catch {
-        if (!isMounted) {
-          return
-        }
-
-        setCitiesStatus('failed')
-        setCitiesError(
-          'Не удалось загрузить города',
-        )
-      }
+    if (citiesStatus === 'idle') {
+      dispatch(loadCities())
     }
-
-    loadCities()
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
+  }, [dispatch, citiesStatus])
 
   useEffect(() => {
-    let isMounted = true
-
-    async function loadCategories() {
-      setCategoriesStatus('loading')
-      setCategoriesError(null)
-
-      try {
-        const loadedCategories =
-          await fetchCategories()
-
-        if (!isMounted) {
-          return
-        }
-
-        setCategories(loadedCategories)
-        setCategoriesStatus('succeeded')
-      } catch {
-        if (!isMounted) {
-          return
-        }
-
-        setCategoriesStatus('failed')
-        setCategoriesError(
-          'Не удалось загрузить категории',
-        )
-      }
+    if (categoriesStatus === 'idle') {
+      dispatch(loadCategories())
     }
-
-    loadCategories()
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
+  }, [dispatch, categoriesStatus])
 
   const isLoading =
     skillsStatus === 'loading' ||
