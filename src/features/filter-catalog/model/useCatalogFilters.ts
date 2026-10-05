@@ -6,7 +6,7 @@ import {
   toggleCategory,
   toggleCity,
   toggleSubcategory,
-} from './filterSlice'
+} from '@/store/slices/filterSlice'
 
 import type {
   ActiveFilter,

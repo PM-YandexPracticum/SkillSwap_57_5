@@ -1,0 +1,45 @@
+.root {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 20px;
+  border: 1px solid #69735d;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.root:focus-within {
+  box-shadow: 0 0 0 2px rgb(105 115 93 / 30%);
+}
+
+
+.root .field {
+  flex: 1;
+  min-height: 96px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  resize: none;
+}
+
+.root .field:focus-visible {
+  box-shadow: none;
+}
+
+.edit {
+  display: flex;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #69735d;
+  cursor: pointer;
+}
+
+.edit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

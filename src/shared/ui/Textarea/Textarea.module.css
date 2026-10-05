@@ -1,0 +1,26 @@
+.textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 96px;
+  padding: 12px 20px;
+  border: 1px solid var(--color-border, #69735d);
+  border-radius: 12px;
+  background: var(--color-surface, #fff);
+  color: var(--color-text, #1f2a1a);
+  font: inherit;
+  outline: none;
+  resize: vertical;
+}
+
+.textarea::placeholder {
+  color: var(--color-placeholder, #69735d);
+}
+
+.textarea:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-focus, rgb(105 115 93 / 30%));
+}
+
+.textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
