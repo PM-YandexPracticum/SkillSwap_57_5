@@ -5,6 +5,7 @@ import { FiltersBar } from '@/widgets/FiltersBar'
 import { FiltersResult } from '@/widgets/FiltersResult'
 
 import styles from './CatalogPage.module.css'
+import { Loader } from '@/shared/ui/Loader'
 
 export default function CatalogPage() {
   const {
@@ -38,7 +39,7 @@ export default function CatalogPage() {
   if (isLoading) {
     return (
       <main className={styles.page}>
-        <p className={styles.message}>Загрузка...</p>
+        <Loader text="Загружаем каталог навыков" />
       </main>
     )
   }

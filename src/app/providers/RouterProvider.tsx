@@ -1,3 +1,4 @@
+import { Loader } from '@/shared/ui/Loader'
 import { lazy, Suspense } from 'react'
 import { Navigate, Routes, Route } from 'react-router-dom'
 
@@ -15,7 +16,7 @@ const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 export function AppRouter() {
   return (
-    <Suspense fallback={<div>Загрузка...</div>}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path={'/'} element={<CatalogPage />} />
         <Route path={'/about'} element={<AboutPage />} />
