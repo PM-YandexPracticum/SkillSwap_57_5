@@ -5,7 +5,8 @@ export function IconButton({
   className,
   src,
   ariaLabel,
-  ...buttonProps
+  disabled,
+  onClick
 }: IconButtonProps) {
   const baseClass = styles.iconButton
   const buttonClassName = className
@@ -13,8 +14,8 @@ export function IconButton({
     : `${baseClass}`
 
   return (
-    <button type='button' className={buttonClassName} aria-label={ariaLabel} {...buttonProps}>
-      <img src={src} className='iconButton__img' />
+    <button type='button' disabled={disabled} className={buttonClassName} aria-label={ariaLabel} onClick={onClick}>
+      <img src={src} className='styles.icon' />
     </button>
   )
 }

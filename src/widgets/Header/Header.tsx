@@ -27,7 +27,7 @@ export function Header() {
         <SearchSkills />
 
         <div className={styles.rightSection}>
-          <IconButton src={moonIcon} ariaLabel="Переключить тему" onClick={() => {}}>
+          <IconButton src={moonIcon} disabled ariaLabel="Переключить тему" onClick={() => console.log('Смена темы')}>
           </IconButton>
           <div className={styles.authButtonSection}>
             <Button variant="secondary">Войти</Button>
