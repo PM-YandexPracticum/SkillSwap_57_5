@@ -1,32 +1,38 @@
-import { Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
-import { ROUTES } from '@/shared/lib/constants'
+import { Navigate, Routes, Route } from 'react-router-dom'
 
-// Lazy-загрузка страниц — каждая страница грузится только при переходе на неё
 const CatalogPage = lazy(() => import('@/pages/CatalogPage'))
+const AboutPage = lazy(() => import('@/pages/AboutPage'))
 const SkillPage = lazy(() => import('@/pages/SkillPage'))
+const LoginPage = lazy(() => import('@/pages/LoginPage'))
+const RegisterCredentialsPage = lazy(() => import('@/pages//RegisterPage/RegisterCredentialsPage'))
+const RegisterProfilePage = lazy(() => import('@/pages/RegisterPage/RegisterProfilePage'))
+const RegisterSkillPage = lazy(() => import('@/pages/RegisterPage/RegisterSkillPage'))
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'))
 const FavoritesPage = lazy(() => import('@/pages/FavoritesPage'))
-const CreateSkillPage = lazy(() => import('@/pages/CreateSkillPage'))
-const LoginPage = lazy(() => import('@/pages/LoginPage'))
+const ServerErrorPage = lazy(() => import('@/pages/ServerErrorPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 export function AppRouter() {
   return (
-      <Suspense fallback={<div>Загрузка...</div>}>
-        <Routes>
-          <Route path={ROUTES.HOME} element={<CatalogPage />} />
-          <Route path={ROUTES.SKILL} element={<SkillPage />} />
-          <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />
-          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-          <Route path={ROUTES.REGISTER} element={<LoginPage />} />
+    <Suspense fallback={<div>Загрузка...</div>}>
+      <Routes>
+        <Route path={'/'} element={<CatalogPage />} />
+        <Route path={'/about'} element={<AboutPage />} />
+        <Route path={'/skill/:id'} element={<SkillPage />} />
+        <Route path={'/login'} element={<LoginPage />} />
 
-          {/* Защищённые маршруты — добавь PrivateRoute обёртку */}
-          <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-          <Route path={ROUTES.CREATE} element={<CreateSkillPage />} />
+        <Route path={'/register'} element={<Navigate to="/register/credentials" replace />} />
+        <Route path={'/register/credentials'} element={<RegisterCredentialsPage />} />
+        <Route path={'/register/profile'} element={<RegisterProfilePage />} />
+        <Route path={'/register/skill'} element={<RegisterSkillPage />} />
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
+        <Route path={'/profile'} element={<ProfilePage />} />
+        <Route path={'/favorites'} element={<FavoritesPage />} />
+             
+        <Route path={'/500'} element={<ServerErrorPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Suspense>
   )
 }

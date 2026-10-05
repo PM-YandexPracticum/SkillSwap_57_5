@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 import type { Gender } from '@/entities/user'
 
-import type { CatalogFilterMode, CatalogFilters } from './types'
+import type { CatalogFilterMode, CatalogFilters } from '@/features/filter-catalog/model/types'
 
 const initialState: CatalogFilters = {
   mode: 'all',
@@ -15,14 +15,17 @@ const filterSlice = createSlice({
   name: 'catalogFilters',
   initialState,
   reducers: {
+    // Выбирает режим: всё, могу научить или хочу научиться
     setMode(state, action: PayloadAction<CatalogFilterMode>) {
       state.mode = action.payload
     },
 
+    // Выбирает пол автора, null означает любой пол
     setGender(state, action: PayloadAction<Gender | null>) {
       state.gender = action.payload
     },
 
+    // Добавляет город в фильтр или убирает, если он уже выбран
     toggleCity(state, action: PayloadAction<string>) {
       const cityId = action.payload
       const cityIndex = state.cityIds.indexOf(cityId)
@@ -35,6 +38,7 @@ const filterSlice = createSlice({
       state.cityIds.splice(cityIndex, 1)
     },
 
+    // Добавляет категорию или убирает её вместе с выбранными подкатегориями
     toggleCategory(state, action: PayloadAction<string>) {
       const categoryId = action.payload
 
@@ -54,6 +58,7 @@ const filterSlice = createSlice({
       state.skillCategories.splice(categoryIndex, 1)
     },
 
+    // Добавляет подкатегорию в фильтр или убирает, если она уже выбрана
     toggleSubcategory(
       state,
       action: PayloadAction<{
@@ -86,6 +91,7 @@ const filterSlice = createSlice({
       selectedCategory.subcategoryIds.splice(subcategoryIndex, 1)
     },
 
+    // Удаляет один выбранный фильтр
     removeFilter(
       state,
       action: PayloadAction<{
@@ -132,6 +138,7 @@ const filterSlice = createSlice({
       }
     },
 
+    // Сбрасывает все фильтры к начальным значениям
     resetFilters() {
       return initialState
     },

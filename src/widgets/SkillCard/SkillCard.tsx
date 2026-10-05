@@ -1,6 +1,6 @@
 import type { Skill } from '@/entities/skill'
 import type { User } from '@/entities/user'
-import { Button } from '@/shared/button'
+import { Button } from '@/shared/ui/Button'
 import { FavoriteButton } from '@/features/favorite-user'
 import { SkillTag } from '@/entities/skill'
 import { UserAvatar } from '@/entities/user'

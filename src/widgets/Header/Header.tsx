@@ -1,5 +1,6 @@
 import { SearchSkills } from '@/features/search-skills'
-import { Button } from '@/shared/button'
+import { Button } from '@/shared/ui/Button'
+import { IconButton } from '@/shared/ui/IconButton'
 
 import logo from '@/shared/assets/icons/Logo.png'
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
@@ -26,13 +27,13 @@ export function Header() {
         <SearchSkills />
 
         <div className={styles.rightSection}>
-          <button type="button" className={styles.themeButton} aria-label="Переключить тему">
-            <img src={moonIcon} alt="" aria-hidden="true" className={styles.themeIcon} />
-          </button>
+          <IconButton src={moonIcon} disabled ariaLabel="Переключить тему" onClick={() => console.log('Смена темы')}>
+          </IconButton>
+          <div className={styles.authButtonSection}>
+            <Button variant="secondary">Войти</Button>
 
-          <Button variant="secondary">Войти</Button>
-
-          <Button variant="primary">Зарегистрироваться</Button>
+            <Button variant="primary">Зарегистрироваться</Button>
+          </div>
         </div>
       </div>
     </header>
