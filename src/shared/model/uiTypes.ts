@@ -15,3 +15,9 @@ export interface IconButtonProps {
   disabled?: boolean
   ariaLabel: string
 }
+
+export interface AvatarProps {
+  src: string
+  name: string
+  className?: string
+}
