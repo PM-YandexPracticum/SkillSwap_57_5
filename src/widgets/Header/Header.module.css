@@ -55,6 +55,13 @@
   display: flex;
   flex-shrink: 0;
   align-items: center;
+  gap: 32px;
+}
+
+.authButtonSection {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
   gap: var(--space-md);
 }
 
