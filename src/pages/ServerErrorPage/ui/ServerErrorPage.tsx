@@ -1,6 +1,6 @@
 // import styles from './ServerErrorPage.module.css'
 
-export function ServerErrorPage() {
+export default function ServerErrorPage() {
   return (
     <main>
       <h1>ServerErrorPage</h1>

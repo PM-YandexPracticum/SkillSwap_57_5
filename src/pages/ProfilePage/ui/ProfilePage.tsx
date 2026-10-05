@@ -1,6 +1,6 @@
 // import styles from './ProfilePage.module.css'
 
-export function ProfilePage() {
+export default function ProfilePage() {
   return (
     <main>
       <h1>ProfilePage</h1>

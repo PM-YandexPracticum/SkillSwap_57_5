@@ -1,6 +1,6 @@
 // import styles from "./LoginPage.module.css";
 
-export function LoginPage() {
+export default function LoginPage() {
   return (
     <main>
       <h1>LoginPage</h1>

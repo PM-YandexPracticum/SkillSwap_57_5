@@ -1,1 +1,3 @@
-export { SkillPage } from './ui/SkillPage'
+import SkillPage from './ui/SkillPage'
+
+export default SkillPage

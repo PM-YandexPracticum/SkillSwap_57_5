@@ -1,1 +1,3 @@
-export { ServerErrorPage } from './ui/ServerErrorPage'
+import ServerErrorPage from './ui/ServerErrorPage'
+
+export default ServerErrorPage

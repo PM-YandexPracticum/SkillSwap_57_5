@@ -1,1 +1,3 @@
-export { FavoritesPage } from './ui/FavoritesPage'
+import FavoritesPage from './ui/FavoritesPage'
+
+export default FavoritesPage

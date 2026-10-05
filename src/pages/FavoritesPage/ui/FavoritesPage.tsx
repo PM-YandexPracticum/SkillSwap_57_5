@@ -1,6 +1,6 @@
 // import styles from "./FavoritesPage.module.css"
 
-export function FavoritesPage() {
+export default function FavoritesPage() {
   return (
     <main>
       <h1>FavoritesPage</h1>

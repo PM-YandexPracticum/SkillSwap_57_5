@@ -1,6 +1,6 @@
 // import styles from "./AboutPage.module.css"
 
-export function AboutPage() {
+export default function AboutPage() {
   return (
     <main>
       <h1>AboutPage</h1>

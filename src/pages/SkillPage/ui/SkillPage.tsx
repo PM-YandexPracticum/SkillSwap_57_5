@@ -1,6 +1,6 @@
 // import styles from './SkillPage.module.css'
 
-export function SkillPage() {
+export default function SkillPage() {
   return (
     <main>
       <h1>SkillPage</h1>
