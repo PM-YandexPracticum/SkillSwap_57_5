@@ -1,6 +1,6 @@
-// TODO: реализовать страницу SkillPage
+// import styles from './SkillPage.module.css'
 
-export default function SkillPage() {
+export function SkillPage() {
   return (
     <main>
       <h1>SkillPage</h1>

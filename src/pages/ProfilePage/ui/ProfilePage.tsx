@@ -1,6 +1,6 @@
-// TODO: реализовать страницу ProfilePage
+// import styles from './ProfilePage.module.css'
 
-export default function ProfilePage() {
+export function ProfilePage() {
   return (
     <main>
       <h1>ProfilePage</h1>

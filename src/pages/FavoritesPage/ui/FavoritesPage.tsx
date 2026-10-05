@@ -1,6 +1,6 @@
-// TODO: реализовать страницу FavoritesPage
+// import styles from "./FavoritesPage.module.css"
 
-export default function FavoritesPage() {
+export function FavoritesPage() {
   return (
     <main>
       <h1>FavoritesPage</h1>

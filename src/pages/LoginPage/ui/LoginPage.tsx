@@ -1,6 +1,6 @@
-// TODO: реализовать страницу LoginPage
+// import styles from "./LoginPage.module.css";
 
-export default function LoginPage() {
+export function LoginPage() {
   return (
     <main>
       <h1>LoginPage</h1>
