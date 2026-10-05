@@ -1,21 +1,16 @@
-import type {
-  CatalogSection,
-  CatalogSectionId,
-} from '@/features/catalog'
+import type { CatalogSection, CatalogSectionId } from '@/features/catalog'
 
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
-import spinnerIcon from '@/shared/assets/icons/spinner.png'
 import { SkillCard } from '@/widgets/SkillCard'
 
 import styles from './Catalog.module.css'
+import { Loader } from '@/shared/ui/Loader'
 
 interface CatalogProps {
   sections: CatalogSection[]
   isAuthenticated: boolean
   isRecommendedLoading: boolean
-  setRecommendedLoadMoreElement: (
-    element: HTMLDivElement | null,
-  ) => void
+  setRecommendedLoadMoreElement: (element: HTMLDivElement | null) => void
   onToggleSection: (sectionId: CatalogSectionId) => void
   onFavoriteToggle: (userId: string) => void
 }
@@ -45,9 +40,7 @@ export function Catalog({
 
                 <img
                   className={`${styles.chevronIcon} ${
-                    section.isExpanded
-                      ? styles.chevronIconExpanded
-                      : ''
+                    section.isExpanded ? styles.chevronIconExpanded : ''
                   }`}
                   src={chevronDownIcon}
                   alt=""
@@ -58,10 +51,7 @@ export function Catalog({
 
           <ul className={styles.cardsGrid}>
             {section.users.map((catalogUser) => (
-              <li
-                className={styles.cardItem}
-                key={catalogUser.user.id}
-              >
+              <li className={styles.cardItem} key={catalogUser.user.id}>
                 <SkillCard
                   user={catalogUser.user}
                   cityName={catalogUser.cityName}
@@ -70,9 +60,7 @@ export function Catalog({
                   isFavorite={catalogUser.isFavorite}
                   likeCount={catalogUser.displayedLikeCount}
                   isAuthenticated={isAuthenticated}
-                  onFavoriteToggle={() =>
-                    onFavoriteToggle(catalogUser.user.id)
-                  }
+                  onFavoriteToggle={() => onFavoriteToggle(catalogUser.user.id)}
                 />
               </li>
             ))}
@@ -80,21 +68,9 @@ export function Catalog({
 
           {section.id === 'recommended' && (
             <>
-              {isRecommendedLoading && (
-                <div className={styles.spinnerWrapper}>
-                  <img
-                    className={styles.spinner}
-                    src={spinnerIcon}
-                    alt=""
-                    aria-hidden="true"
-                  />
-                </div>
-              )}
+              {isRecommendedLoading && <Loader text="" />}
 
-              <div
-                className={styles.loadMoreTrigger}
-                ref={setRecommendedLoadMoreElement}
-              />
+              <div className={styles.loadMoreTrigger} ref={setRecommendedLoadMoreElement} />
             </>
           )}
         </section>
