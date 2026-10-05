@@ -1,8 +1,17 @@
 import type { RadioProps } from '@/shared/model/uiTypes'
 
-export function Radio({ id, checked, onChange, name, value, className, disabled }: RadioProps) {
+export function Radio({
+  id,
+  checked,
+  onChange,
+  name,
+  value,
+  className,
+  disabled,
+  label,
+}: RadioProps) {
   return (
-    <label>
+    <>
       <input
         id={id}
         type="radio"
@@ -13,7 +22,8 @@ export function Radio({ id, checked, onChange, name, value, className, disabled 
         className={className}
         disabled={disabled}
       />
-      Radio
-    </label>
+
+      <label htmlFor={id}>{label}</label>
+    </>
   )
 }

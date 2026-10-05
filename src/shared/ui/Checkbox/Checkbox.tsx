@@ -1,8 +1,8 @@
-import type { CheckboxProps } from "@/shared/model/uiTypes"
+import type { CheckboxProps } from '@/shared/model/uiTypes'
 
-export function Checkbox({ id, checked, onChange, className, disabled }: CheckboxProps) {
+export function Checkbox({ id, checked, onChange, className, disabled, label }: CheckboxProps) {
   return (
-    <label>
+    <>
       <input
         id={id}
         type="checkbox"
@@ -11,6 +11,8 @@ export function Checkbox({ id, checked, onChange, className, disabled }: Checkbo
         className={className}
         disabled={disabled}
       />
-    </label>
+
+      <label htmlFor={id}>{label}</label>
+    </>
   )
 }
