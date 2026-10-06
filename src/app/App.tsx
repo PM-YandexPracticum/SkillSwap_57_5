@@ -5,6 +5,7 @@ import { AppRouter } from './providers/RouterProvider'
 import './styles/global.css'
 
 import { Header } from '@/widgets/Header'
+import { Footer } from '@/widgets/Footer'
 
 export function App() {
   return (
@@ -12,6 +13,7 @@ export function App() {
       <BrowserRouter>
         <Header />
         <AppRouter />
+        <Footer />
       </BrowserRouter>
     </StoreProvider>
   )

@@ -1,0 +1,41 @@
+.footer {
+  display: flex;
+  width: 100%;
+  min-height: 232px;
+  padding: 32px 36px;
+  box-sizing: border-box;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.copyright {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  flex: 1;
+  margin-left: 189px;
+  align-self: center;
+}
+
+.navColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.navColumn a {
+  color: inherit;
+  text-decoration: none;
+}
