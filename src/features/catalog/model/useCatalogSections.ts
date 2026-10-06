@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { shuffleArray } from '../lib/shuffleArray'
 import {
   sortCatalogUsersByNewestSkill,
   sortCatalogUsersByPopularity,
-  sortCatalogUsersByRegistrationDate,
 } from '../lib/sortCatalogUsers'
 
 import {
@@ -29,6 +29,8 @@ export function useCatalogSections(catalogUsers: CatalogCardData[]): UseCatalogS
 
   const [recommendedVisibleCount, setRecommendedVisibleCount] = useState(INITIAL_RECOMMENDED_SIZE)
 
+  const [recommendedOrder, setRecommendedOrder] = useState<CatalogCardData['user']['id'][]>([])
+
   const [recommendedLoadMoreElement, setRecommendedLoadMoreElement] =
     useState<HTMLDivElement | null>(null)
 
@@ -41,10 +43,30 @@ export function useCatalogSections(catalogUsers: CatalogCardData[]): UseCatalogS
 
   const newUsers = useMemo(() => sortCatalogUsersByNewestSkill(catalogUsers), [catalogUsers])
 
-  const recommendedUsers = useMemo(
-    () => sortCatalogUsersByRegistrationDate(catalogUsers),
-    [catalogUsers],
-  )
+  // Порядок «Рекомендуем» перемешиваем один раз после загрузки.
+  // Перемешиваются только новые id, поэтому лайк порядок не меняет.
+  useEffect(() => {
+    setRecommendedOrder((currentOrder) => {
+      const knownIds = new Set(currentOrder)
+      const newIds = catalogUsers
+        .filter((item) => !knownIds.has(item.user.id))
+        .map((item) => item.user.id)
+
+      if (newIds.length === 0) {
+        return currentOrder
+      }
+
+      return [...currentOrder, ...shuffleArray(newIds)]
+    })
+  }, [catalogUsers])
+
+  const recommendedUsers = useMemo(() => {
+    const usersById = new Map(catalogUsers.map((item) => [item.user.id, item]))
+
+    return recommendedOrder
+      .map((id) => usersById.get(id))
+      .filter((item): item is CatalogCardData => item !== undefined)
+  }, [catalogUsers, recommendedOrder])
 
   const isPopularExpanded = expandedSectionIds.includes('popular')
 
