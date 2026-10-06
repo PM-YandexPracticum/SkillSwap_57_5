@@ -88,3 +88,11 @@ export interface LoaderProps {
   text?: string
   className?: string 
 }
+
+export interface InfoBlockProps {
+  src: string
+  alt?: string
+  title: string
+  description: string
+  className?: string
+}
