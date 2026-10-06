@@ -1,5 +1,9 @@
 import { ReactNode, ButtonHTMLAttributes } from 'react'
 
+export type LogoProps = {
+  className?: string
+}
+
 export type CheckboxProps = {
   id: string
   checked: boolean
