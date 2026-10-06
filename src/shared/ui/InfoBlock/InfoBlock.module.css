@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.image {
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  max-height: 300px; 
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 436px;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+  letter-spacing: 0.011em;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.description {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  letter-spacing: 0.02em;
+  text-align: center;
+}
