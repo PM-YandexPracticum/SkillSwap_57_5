@@ -9,6 +9,7 @@ interface FavoriteButtonProps {
   likeCount: number
   isAuthenticated: boolean
   onToggle?: () => void
+  showCount?: boolean
 }
 
 export function FavoriteButton({
@@ -17,6 +18,7 @@ export function FavoriteButton({
   likeCount,
   isAuthenticated,
   onToggle,
+  showCount = true,
 }: FavoriteButtonProps) {
   const favoriteClipId = useId()
 
@@ -29,8 +31,8 @@ export function FavoriteButton({
       aria-pressed={isFavorite}
       aria-label={
         isFavorite
-          ? `Убрать лайк пользователя ${user.name}. ${likeCount} лайков`
-          : `Поставить лайк пользователю ${user.name}. ${likeCount} лайков`
+          ? `Убрать лайк пользователя ${user.name}${showCount ? `. ${likeCount} лайков` : ''}`
+          : `Поставить лайк пользователю ${user.name}${showCount ? `. ${likeCount} лайков` : ''}`
       }
     >
       {isFavorite ? (
@@ -73,7 +75,9 @@ export function FavoriteButton({
         </svg>
       )}
 
-      <span className={styles.likeCount}>{likeCount}</span>
+      {showCount && (
+        <span className={styles.likeCount}>{likeCount}</span>
+      )}
     </button>
   )
 }
