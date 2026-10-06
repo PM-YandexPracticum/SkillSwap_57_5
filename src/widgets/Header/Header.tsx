@@ -1,8 +1,8 @@
 import { SearchSkills } from '@/features/search-skills'
 import { Button } from '@/shared/ui/Button'
 import { IconButton } from '@/shared/ui/IconButton'
+import { Logo } from '@/shared/ui/Logo'
 
-import logo from '@/shared/assets/icons/Logo.png'
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
 import moonIcon from '@/shared/assets/icons/moon.svg'
 
@@ -13,9 +13,7 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.leftSection}>
-          <button type="button" className={styles.logoButton} aria-label="SkillSwap">
-            <img src={logo} alt="SkillSwap" className={styles.logo} />
-          </button>
+          <Logo />
 
           <button type="button" className={styles.skillsButton}>
             <span>Все навыки</span>
@@ -27,8 +25,12 @@ export function Header() {
         <SearchSkills />
 
         <div className={styles.rightSection}>
-          <IconButton src={moonIcon} disabled ariaLabel="Переключить тему" onClick={() => console.log('Смена темы')}>
-          </IconButton>
+          <IconButton
+            src={moonIcon}
+            disabled
+            ariaLabel="Переключить тему"
+            onClick={() => console.log('Смена темы')}
+          ></IconButton>
           <div className={styles.authButtonSection}>
             <Button variant="secondary">Войти</Button>
 
