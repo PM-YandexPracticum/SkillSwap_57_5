@@ -1,9 +1,9 @@
 import type { CatalogUser } from '@/features/catalog/model/types'
 
-export function filterCatalogUsersBySearch(
-  users: CatalogUser[],
+export function filterCatalogUsersBySearch<T extends CatalogUser>(
+  users: T[],
   searchQuery: string,
-): CatalogUser[] {
+): T[] {
   const normalizedSearchQuery = searchQuery.trim().toLowerCase()
 
   if (!normalizedSearchQuery) {

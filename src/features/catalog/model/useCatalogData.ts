@@ -23,93 +23,69 @@ interface CatalogData {
 export function useCatalogData(): CatalogData {
   const dispatch = useAppDispatch()
 
-  const skills = useAppSelector(
-    (state) => state.skills.items,
-  )
-
-  const skillsStatus = useAppSelector(
-    (state) => state.skills.status,
-  )
-
-  const skillsError = useAppSelector(
-    (state) => state.skills.error,
-  )
-
-  const users = useAppSelector(
-    (state) => state.users.items,
-  )
-
-  const usersStatus = useAppSelector(
-    (state) => state.users.status,
-  )
-
-  const usersError = useAppSelector(
-    (state) => state.users.error,
-  )
-
-  const cities = useAppSelector(
-    (state) => state.cities.items,
-  )
-  const citiesStatus = useAppSelector(
-    (state) => state.cities.status,
-  )
-  const citiesError = useAppSelector(
-    (state) => state.cities.error,
-  )
-
-  const categories = useAppSelector(
-    (state) => state.categories.items,
-  )
-  const categoriesStatus = useAppSelector(
-    (state) => state.categories.status,
-  )
-  const categoriesError = useAppSelector(
-    (state) => state.categories.error,
-  )
-
+  // Получаем навыки и загружаем их, если загрузка ещё не начиналась
+  const skills = useAppSelector((state) => state.skills.items)
+  const skillsStatus = useAppSelector((state) => state.skills.status)
+  const skillsError = useAppSelector((state) => state.skills.error)
   useEffect(() => {
     if (skillsStatus === 'idle') {
       dispatch(loadSkills())
     }
   }, [dispatch, skillsStatus])
 
+  // Получаем пользователей и при необходимости загружаем их
+  const users = useAppSelector((state) => state.users.items)
+  const usersStatus = useAppSelector((state) => state.users.status)
+  const usersError = useAppSelector((state) => state.users.error)
   useEffect(() => {
     if (usersStatus === 'idle') {
       dispatch(loadUsers())
     }
   }, [dispatch, usersStatus])
 
+  // Получаем города и при необходимости загружаем их
+  const cities = useAppSelector((state) => state.cities.items)
+  const citiesStatus = useAppSelector((state) => state.cities.status)
+  const citiesError = useAppSelector((state) => state.cities.error)
   useEffect(() => {
     if (citiesStatus === 'idle') {
       dispatch(loadCities())
     }
   }, [dispatch, citiesStatus])
 
+  // Получаем категории с подкатегориями и при необходимости загружаем их
+  const categories = useAppSelector((state) => state.categories.items)
+  const categoriesStatus = useAppSelector((state) => state.categories.status)
+  const categoriesError = useAppSelector((state) => state.categories.error)
   useEffect(() => {
     if (categoriesStatus === 'idle') {
       dispatch(loadCategories())
     }
   }, [dispatch, categoriesStatus])
 
+  // Показываем загрузку, пока хотя бы один список ожидает запрос или загружается
   const isLoading =
+    skillsStatus === 'idle' ||
     skillsStatus === 'loading' ||
+    usersStatus === 'idle' ||
     usersStatus === 'loading' ||
+    citiesStatus === 'idle' ||
     citiesStatus === 'loading' ||
+    categoriesStatus === 'idle' ||
     categoriesStatus === 'loading'
 
-  const errorMessage =
-    skillsStatus === 'failed'
-      ? skillsError ?? 'Не удалось загрузить навыки'
-      : usersStatus === 'failed'
-        ? usersError ??
-          'Не удалось загрузить пользователей'
-        : citiesStatus === 'failed'
-          ? citiesError ??
-            'Не удалось загрузить города'
-          : categoriesStatus === 'failed'
-            ? categoriesError ??
-              'Не удалось загрузить категории'
-            : null
+  // Если запросы завершились с ошибками, показываем первую из них
+  let errorMessage: string | null = null
+
+  if (skillsStatus === 'failed') {
+    errorMessage = skillsError ?? 'Не удалось загрузить навыки'
+  } else if (usersStatus === 'failed') {
+    errorMessage = usersError ?? 'Не удалось загрузить пользователей'
+  } else if (citiesStatus === 'failed') {
+    errorMessage = citiesError ?? 'Не удалось загрузить города'
+  } else if (categoriesStatus === 'failed') {
+    errorMessage = categoriesError ?? 'Не удалось загрузить категории'
+  }
 
   return {
     users,
