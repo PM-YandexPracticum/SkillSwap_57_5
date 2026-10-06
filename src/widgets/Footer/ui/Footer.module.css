@@ -1,0 +1,36 @@
+.footer {
+  min-height: 232px;
+  padding: 32px 110px 36px;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+}
+
+.logo {
+  flex-shrink: 0;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  margin-left: 189px;
+}
+
+.navColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.navColumn a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.copyright {
+  margin: 112px 0 0;
+}
