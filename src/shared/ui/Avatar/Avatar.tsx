@@ -1,10 +1,14 @@
 import styles from './Avatar.module.css'
 import type { AvatarProps } from '@/shared/model/uiTypes'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export function Avatar({ src, name, className }: AvatarProps) {
   
   const [hasError, setHasError] = useState(false)
+
+  useEffect(() => {
+    setHasError(false)
+  }, [src])
 
   const showImage = Boolean(src) && !hasError
 
