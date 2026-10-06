@@ -79,23 +79,6 @@
   height: 100%;
 }
 
-.spinnerWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.spinner {
-  display: block;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .loadMoreTrigger {
   width: 100%;
   height: 1px;

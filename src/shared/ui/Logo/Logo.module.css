@@ -1,0 +1,11 @@
+.logoButton {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.logo {
+  width: auto;
+  height: 48px;
+  object-fit: contain;
+}
