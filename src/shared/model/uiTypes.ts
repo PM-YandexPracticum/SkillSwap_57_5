@@ -79,6 +79,11 @@ export interface IconButtonProps {
   ariaLabel: string
 }
 
+export interface AvatarProps {
+  src: string
+  name: string
+  className?: string
+}
 export interface LoaderProps {
   text?: string
   className?: string 

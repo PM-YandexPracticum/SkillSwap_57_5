@@ -3,7 +3,7 @@ import type { User } from '@/entities/user'
 import { Button } from '@/shared/ui/Button'
 import { FavoriteButton } from '@/features/favorite-user'
 import { SkillTag } from '@/entities/skill'
-import { UserAvatar } from '@/entities/user'
+import { Avatar } from '@/shared/ui/Avatar'
 
 import { getAgeFromBirthDate } from '@/shared/lib/helpers'
 import styles from './SkillCard.module.css'
@@ -36,7 +36,7 @@ export function SkillCard({
   return (
     <article className={styles.card}>
       <div className={styles.header}>
-        <UserAvatar user={user} />
+        <Avatar name={user.name} src={user.avatarUrl} />
 
         <div className={styles.userColumn}>
           <FavoriteButton
