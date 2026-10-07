@@ -1,0 +1,20 @@
+.button {
+  width: 32px;
+  height: 32px;
+  background-color: #e4e8df;
+  border-radius: 50%;
+}
+
+.button img {
+  width: 16px;
+  height: 16px;
+  background-color: #69735D;
+}
+
+.left img {
+  transform: rotate(90deg);
+}
+
+.right img {
+  transform: rotate(-90deg);
+}

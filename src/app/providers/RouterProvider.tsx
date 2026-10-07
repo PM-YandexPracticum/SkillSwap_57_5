@@ -12,13 +12,17 @@ const RegisterProfilePage = lazy(() => import('@/pages/RegisterPage/RegisterProf
 const RegisterSkillPage = lazy(() => import('@/pages/RegisterPage/RegisterSkillPage'))
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'))
 const FavoritesPage = lazy(() => import('@/pages/FavoritesPage'))
-const ServerErrorPage = lazy(() => import('@/pages/ServerErrorPage'))
+const ServerErrorPage = lazy(() => import('@/widgets/ServerErrorPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
+// Страница для локального ревью компонентов доступна только при npm run dev
+const UiReviewPage = import.meta.env.DEV ? lazy(() => import('@/pages/UiReviewPage')) : null
 
 export function AppRouter() {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
+        {UiReviewPage && <Route path="/dev" element={<UiReviewPage />} />}
+
         {/* Главная обёртка MainLayout для всех страниц, кроме регистрации */}
         <Route element={<MainLayout />}>
           <Route path={'/'} element={<CatalogPage />} />
