@@ -7,6 +7,7 @@ import { FavoriteButton } from '@/features/favorite-user'
 import shareIcon from '@/shared/assets/icons/share.svg'
 import optionIcon from '@/shared/assets/icons/option.svg'
 
+import { SkillGallery } from './SkillGallery'
 import styles from './SkillInfo.module.css'
 
 interface SkillInfoProps {
@@ -26,15 +27,10 @@ export function SkillInfo({
   subcategoryName,
   isFavorite,
   isAuthenticated,
-  onFavoriteToggle
+  onFavoriteToggle,
 }: SkillInfoProps) {
-        
-  const hasImages = skill.imageUrls.length > 0
-  const coverImage = hasImages ? skill.imageUrls[0] : null
-  
   return (
     <section className={styles.container}>
-
       <div className={styles.header}>
         <FavoriteButton
           user={author}
@@ -42,7 +38,7 @@ export function SkillInfo({
           likeCount={author.likesCount}
           isAuthenticated={isAuthenticated}
           onToggle={onFavoriteToggle}
-          showCount = {false}
+          showCount={false}
         />
         <IconButton
           src={shareIcon}
@@ -61,7 +57,7 @@ export function SkillInfo({
           <div className={styles.textContainer}>
             <h1 className={styles.title}>{skill.title}</h1>
             <p className={styles.category}>
-                {categoryName} / {subcategoryName}
+              {categoryName} / {subcategoryName}
             </p>
             <p className={styles.description}>{skill.description}</p>
           </div>
@@ -71,14 +67,9 @@ export function SkillInfo({
         </div>
 
         <div className={styles.gallery}>
-          {coverImage ? (
-            <img src={coverImage} alt={skill.title} />
-          ) : (
-            <p>Нет фотографий</p>
-          )}
+          <SkillGallery imageUrls={skill.imageUrls} />
         </div>
       </div>
-
     </section>
   )
 }
