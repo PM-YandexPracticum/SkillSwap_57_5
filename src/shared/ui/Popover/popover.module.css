@@ -1,0 +1,41 @@
+.wrapper {
+  position: relative;
+  display: inline-flex;
+  vertical-align: top;
+}
+
+.triggerWrapper {
+  cursor: pointer;
+}
+
+.content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 20px;
+  padding: var(--popover-padding, 60px);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-disabled);
+  border-radius: var(--radius-lg);
+  z-index: 1000;
+  width: max-content;
+  transform: translateX(var(--popover-translate-x, 0));
+}
+
+.placementTop {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.alignCenter {
+  left: 50%;
+
+  --popover-translate-x: -50%;
+}
+
+.alignRight {
+  left: auto;
+  right: 0;
+}
