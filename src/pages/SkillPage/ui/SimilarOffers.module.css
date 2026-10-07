@@ -1,0 +1,30 @@
+.content {
+  position: relative;
+  min-height: 368px;
+}
+
+.title {
+  margin: 0 0 32px;
+  color: #253017;
+  font-family: Jost, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: -0.011em;
+}
+
+.prevButton,
+.nextButton {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.prevButton {
+  left: -16px;
+}
+
+.nextButton {
+  right: -16px;
+}
