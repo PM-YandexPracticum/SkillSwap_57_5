@@ -5,6 +5,12 @@
   border-radius: 50%;
 }
 
+.button img {
+  width: 16px;
+  height: 16px;
+  background-color: #69735D;
+}
+
 .left img {
   transform: rotate(90deg);
 }
