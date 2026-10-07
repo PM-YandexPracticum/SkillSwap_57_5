@@ -29,18 +29,15 @@
   position: absolute;
   top: 50%;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background-color: rgb(222 235 197 / 90%);
   transform: translateY(-50%);
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+}
+
+.navPrev {
+  left: 16px;
+}
+
+.navNext {
+  right: 16px;
 }
 
 .navButton:hover {
@@ -50,14 +47,6 @@
 .navButton:focus-visible {
   outline: 2px solid var(--color-text-link);
   outline-offset: 2px;
-}
-
-.navPrev {
-  left: 16px;
-}
-
-.navNext {
-  right: 16px;
 }
 
 .thumbsWrapper {

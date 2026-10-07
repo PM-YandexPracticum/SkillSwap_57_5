@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Thumbs } from 'swiper/modules'
+import { Thumbs } from 'swiper/modules'
 import type { Swiper as SwiperClass } from 'swiper'
 
 import 'swiper/css'
-import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
+
+import { CarouselButton } from '@/shared/ui/CarouselButton'
 
 import styles from './SkillGallery.module.css'
 
@@ -15,48 +16,9 @@ interface SkillGalleryProps {
 
 const MAX_VISIBLE_THUMBS = 3
 
-const chevronLeftIcon = (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-  >
-    <path
-      d="M15 5L8 12L15 19"
-      stroke="#253017"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-)
-
-const chevronRightIcon = (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-  >
-    <path
-      d="M9 5L16 12L9 19"
-      stroke="#253017"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-)
-
 export function SkillGallery({ imageUrls }: SkillGalleryProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null)
-  const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null)
-  const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null)
+  const mainSwiperRef = useRef<SwiperClass | null>(null)
 
   if (imageUrls.length === 0) {
     return <p className={styles.empty}>Нет фотографий</p>
@@ -70,9 +32,11 @@ export function SkillGallery({ imageUrls }: SkillGalleryProps) {
     <div className={styles.gallery}>
       <div className={styles.mainWrapper}>
         <Swiper
-          modules={[Navigation, Thumbs]}
-          navigation={hasMultipleImages ? { prevEl, nextEl } : false}
+          modules={[Thumbs]}
           thumbs={{ swiper: thumbsSwiper }}
+          onSwiper={(swiper) => {
+            mainSwiperRef.current = swiper
+          }}
           className={styles.mainSwiper}
         >
           {imageUrls.map((imageUrl) => (
@@ -84,23 +48,17 @@ export function SkillGallery({ imageUrls }: SkillGalleryProps) {
 
         {hasMultipleImages && (
           <>
-            <button
-              ref={setPrevEl}
-              type="button"
+            <CarouselButton
+              direction="left"
+              onClick={() => mainSwiperRef.current?.slidePrev()}
               className={`${styles.navButton} ${styles.navPrev}`}
-              aria-label="Предыдущая фотография"
-            >
-              {chevronLeftIcon}
-            </button>
+            />
 
-            <button
-              ref={setNextEl}
-              type="button"
+            <CarouselButton
+              direction="right"
+              onClick={() => mainSwiperRef.current?.slideNext()}
               className={`${styles.navButton} ${styles.navNext}`}
-              aria-label="Следующая фотография"
-            >
-              {chevronRightIcon}
-            </button>
+            />
           </>
         )}
       </div>
