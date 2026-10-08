@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  color: var(--color-text);
+}
+
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Отступ справа, чтобы текст не заходил под кнопку действия */
+.field input,
+.field textarea {
+  padding-right: 50px;
+}
+
+.action {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
