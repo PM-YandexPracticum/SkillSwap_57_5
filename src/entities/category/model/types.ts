@@ -2,6 +2,10 @@ export type SkillCategoryId = string
 
 export type SkillSubcategoryId = string
 
+export interface CategoryListProps {
+  categories: SkillCategory[]
+}
+
 // Описывает категорию навыков, например Творчество и искусство
 export interface SkillCategory {
   id: SkillCategoryId
