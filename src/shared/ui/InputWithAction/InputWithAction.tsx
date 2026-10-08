@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { IconButton } from '../IconButton'
 import { InputWithActionProps } from './types'
 import styles from './InputWithAction.module.css'
@@ -14,8 +15,8 @@ export const InputWithAction = ({
   className,
   iconButtonClassName,
 }: InputWithActionProps) => {
-  const wrapperClassName = [styles.wrapper, className].filter(Boolean).join(' ')
-  const actionClassName = [styles.action, iconButtonClassName].filter(Boolean).join(' ')
+  const wrapperClassName = clsx(styles.wrapper, className)
+  const actionClassName = clsx(styles.action, iconButtonClassName)
 
   return (
     <div className={wrapperClassName}>

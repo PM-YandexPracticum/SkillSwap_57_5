@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { Skill } from '@/entities/skill'
 
 import styles from './SkillTag.module.css'
@@ -21,7 +22,7 @@ function getSkillTagClass(categoryId: string): string {
 
 export function SkillTag({ skill }: SkillTagProps) {
   return (
-    <span className={`${styles.skillTag} ${getSkillTagClass(skill.categoryId)}`}>
+    <span className={clsx(styles.skillTag, getSkillTagClass(skill.categoryId))}>
       {skill.title}
     </span>
   )

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { ChangeEvent } from 'react'
 import type { InputProps } from '../../model/uiTypes'
 import styles from './Input.module.css'
@@ -21,7 +22,7 @@ export const Input = ({
   return (
     <input
       id={id}
-      className={[styles.input, className].filter(Boolean).join(' ')}
+      className={clsx(styles.input, className)}
       type={type}
       value={value}
       onChange={handleChange}

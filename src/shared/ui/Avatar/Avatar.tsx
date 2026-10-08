@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import styles from './Avatar.module.css'
 import type { AvatarProps } from '@/shared/model/uiTypes'
 import { useState, useEffect } from 'react'
@@ -14,8 +15,7 @@ export function Avatar({ src, name, className }: AvatarProps) {
 
   const displayName = name.trim() || '?'
   const initial = displayName.charAt(0).toUpperCase()
-  const baseClass = styles.avatar
-  const avatarClassName = className ? `${baseClass} ${className}` : `${baseClass}`
+  const avatarClassName = clsx(styles.avatar, className)
 
   return (
     <div className={avatarClassName}>

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useRef } from 'react';
 import type { AboutFieldProps } from '../../model/uiTypes';
 import { Textarea } from '../Textarea';
@@ -22,7 +23,7 @@ export const AboutField = ({
   return (
     <div
       ref={rootRef}
-      className={[styles.root, className].filter(Boolean).join(' ')}
+      className={clsx(styles.root, className)}
     >
       <Textarea
         id={id}

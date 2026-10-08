@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { CatalogSection, CatalogSectionId } from '@/features/catalog'
 
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
@@ -39,9 +40,10 @@ export function Catalog({
                 {section.isExpanded ? 'Свернуть' : 'Смотреть все'}
 
                 <img
-                  className={`${styles.chevronIcon} ${
-                    section.isExpanded ? styles.chevronIconExpanded : ''
-                  }`}
+                  className={clsx(
+                    styles.chevronIcon,
+                    section.isExpanded && styles.chevronIconExpanded,
+                  )}
                   src={chevronDownIcon}
                   alt=""
                 />

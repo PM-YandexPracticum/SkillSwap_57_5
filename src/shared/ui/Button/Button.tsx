@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import styles from './Button.module.css'
 import { ButtonProps } from '../../model/uiTypes'
 
@@ -8,11 +9,7 @@ export function Button({
   type = 'button',
   ...buttonProps
 }: ButtonProps) {
-  const baseClass = styles.button
-  const variantClass = styles[variant]
-  const buttonClassName = className
-    ? `${baseClass} ${variantClass} ${className}`
-    : `${baseClass} ${variantClass}`
+  const buttonClassName = clsx(styles.button, styles[variant], className)
 
   return (
     <button type={type} className={buttonClassName} {...buttonProps}>

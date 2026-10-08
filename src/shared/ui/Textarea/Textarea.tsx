@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { ChangeEvent } from 'react'
 import type { TextareaProps } from '../../model/uiTypes'
 import styles from './Textarea.module.css'
@@ -21,7 +22,7 @@ export const Textarea = ({
   return (
     <textarea
       id={id}
-      className={[styles.textarea, className].filter(Boolean).join(' ')}
+      className={clsx(styles.textarea, className)}
       value={value}
       onChange={handleChange}
       placeholder={placeholder}

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { IconButton } from '../IconButton'
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
 
@@ -16,13 +17,11 @@ export function CarouselButton({
   disabled = false,
   className,
 }: CarouselButtonProps) {
-  const buttonClassName = [
+  const buttonClassName = clsx(
     styles.button,
     direction === 'left' ? styles.left : styles.right,
     className,
-  ]
-    .filter(Boolean)
-    .join(' ')
+  )
 
   return (
     <IconButton

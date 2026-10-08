@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { CSSProperties, useEffect, useRef, useState } from 'react'
 import { PopoverProps } from './types'
 import styles from './popover.module.css'
@@ -40,14 +41,12 @@ export const Popover = ({
     }
   }, [isOpen])
 
-  const contentClassName = [
+  const contentClassName = clsx(
     styles.content,
     placement === 'top' && styles.placementTop,
     align === 'center' && styles.alignCenter,
     align === 'right' && styles.alignRight,
-  ]
-    .filter(Boolean)
-    .join(' ')
+  )
 
   const popoverPadding = padding ? ({ '--popover-padding': padding } as CSSProperties) : undefined
 
