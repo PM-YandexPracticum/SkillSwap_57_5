@@ -1,0 +1,14 @@
+.container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container button {
+  width: 16px;
+  height: 16px;
+}
+
+.hiddenInput {
+  display: none;
+}
