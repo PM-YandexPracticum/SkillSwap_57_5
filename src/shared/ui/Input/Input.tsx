@@ -1,6 +1,6 @@
-import type { ChangeEvent } from 'react';
-import type { InputProps } from '../../model/uiTypes';
-import styles from './Input.module.css';
+import type { ChangeEvent } from 'react'
+import type { InputProps } from '../../model/uiTypes'
+import styles from './Input.module.css'
 
 export const Input = ({
   id,
@@ -12,10 +12,11 @@ export const Input = ({
   disabled,
   required,
   ariaLabel,
+  readOnly,
 }: InputProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
-  };
+    onChange(e.target.value)
+  }
 
   return (
     <input
@@ -28,6 +29,7 @@ export const Input = ({
       disabled={disabled}
       required={required}
       aria-label={ariaLabel}
+      readOnly={readOnly}
     />
-  );
-};
+  )
+}

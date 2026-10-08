@@ -1,6 +1,6 @@
-import type { ChangeEvent } from 'react';
-import type { TextareaProps } from '../../model/uiTypes';
-import styles from './Textarea.module.css';
+import type { ChangeEvent } from 'react'
+import type { TextareaProps } from '../../model/uiTypes'
+import styles from './Textarea.module.css'
 
 export const Textarea = ({
   id,
@@ -12,10 +12,11 @@ export const Textarea = ({
   required,
   maxLength,
   ariaLabel,
+  readOnly,
 }: TextareaProps) => {
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    onChange(e.target.value);
-  };
+    onChange(e.target.value)
+  }
 
   return (
     <textarea
@@ -28,6 +29,7 @@ export const Textarea = ({
       required={required}
       maxLength={maxLength}
       aria-label={ariaLabel}
+      readOnly={readOnly}
     />
-  );
-};
+  )
+}
