@@ -98,8 +98,9 @@ export interface InfoBlockProps {
   className?: string
 }
 
-export interface InputFieldProps extends Omit<InputProps, 'id'> {
-  id: string;
-  label?: string;
-  className?: string;
+export interface FormFieldProps {
+  id: string
+  label?: string
+  children: ReactNode
+  className?: string
 }
