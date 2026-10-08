@@ -45,6 +45,7 @@ export interface InputProps {
   disabled?: boolean
   required?: boolean
   ariaLabel?: string
+  readOnly?: boolean
 }
 
 export interface TextareaProps {
@@ -57,6 +58,7 @@ export interface TextareaProps {
   required?: boolean
   maxLength?: number
   ariaLabel?: string
+  readOnly?: boolean
 }
 
 export type SearchInputProps = Omit<InputProps, 'type' | 'required'>
