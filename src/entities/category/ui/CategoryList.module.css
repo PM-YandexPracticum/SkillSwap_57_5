@@ -1,0 +1,38 @@
+.categoryList {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: flex-start;
+  gap: 40px;
+  height: 920px;
+  padding: 60px;
+  color: #253017;
+}
+
+.category {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: calc((100% - 40px) / 2);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+}
+
+.subcategories {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

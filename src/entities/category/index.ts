@@ -3,4 +3,5 @@ export type {
   SkillCategoryId,
   SkillSubcategory,
   SkillSubcategoryId,
+  CategoryListProps
 } from './model/types'
