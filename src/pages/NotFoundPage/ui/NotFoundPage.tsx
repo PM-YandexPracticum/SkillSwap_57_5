@@ -1,10 +1,10 @@
-// import styles from './NotFoundPage.module.css'
+import { NotFoundPage as NotFoundWidget } from '@/widgets/NotFoundPage'
+import styles from './NotFoundPage.module.css'
 
 export default function NotFoundPage() {
   return (
-    <main>
-      <h1>NotFoundPage</h1>
-      <p>Страница в разработке</p>
+    <main className={styles.page}>
+      <NotFoundWidget />
     </main>
   )
 }

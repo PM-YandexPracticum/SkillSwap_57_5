@@ -9,6 +9,7 @@ export function ServerErrorPage() {
   return (
     <div className={styles.container}>
       <InfoBlock
+        variant="error"
         src={serverErrorIcon}
         alt="Иллюстрация ошибки 500"
         title="На сервере произошла ошибка"

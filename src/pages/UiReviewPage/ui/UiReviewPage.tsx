@@ -1,10 +1,17 @@
-import { Button } from '@/shared/ui/Button'
+import { Header } from '@/widgets/Header'
+import { Footer } from '@/widgets/Footer'
+import { NotFoundPage } from '@/widgets/NotFoundPage'
+
+import styles from './UiReviewPage.module.css'
 
 export default function UiReviewPage() {
   return (
-    // Только для отладки и ревью. Вставляйте нужный компонент в этот блок.
-    <div style={{ minHeight: '100vh', display: 'grid', placeItems: 'center' }}>
-      <Button>КНОПКА</Button>
+    <div className={styles.page}>
+      <Header />
+      <main className={styles.content}>
+        <NotFoundPage />
+      </main>
+      <Footer />
     </div>
   )
 }

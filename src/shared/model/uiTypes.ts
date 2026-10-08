@@ -86,10 +86,11 @@ export interface AvatarProps {
 }
 export interface LoaderProps {
   text?: string
-  className?: string 
+  className?: string
 }
 
 export interface InfoBlockProps {
+  variant?: 'error' | 'registration'
   src: string
   alt?: string
   title: string

@@ -9,15 +9,23 @@
   width: auto;
   height: auto;
   object-fit: contain;
-  max-height: 300px; 
+  max-height: 300px;
 }
 
 .textContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.registration .textContainer {
   gap: 12px;
   max-width: 436px;
+}
+
+.error .textContainer {
+  gap: 4px;
+  max-width: 460px;
 }
 
 .title {
