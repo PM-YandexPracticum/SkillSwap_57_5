@@ -8,7 +8,7 @@ export function CategoryList({ categories }: CategoryListProps) {
   return (
     <div className={styles.categoryList}>
       {categories.map((cat) => (
-        <div key={cat.id} className={styles.caytegory}>
+        <div key={cat.id} className={styles.category}>
           <div className={styles.iconWrapper} style={{ backgroundColor: CATEGORY_COLORS[cat.id] }}>
             <img src={CATEGORY_ICONS[cat.id]} alt="" />
           </div>

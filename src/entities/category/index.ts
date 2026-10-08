@@ -1,3 +1,5 @@
+export { CategoryList } from './ui/CategoryList'
+
 export type {
   SkillCategory,
   SkillCategoryId,
