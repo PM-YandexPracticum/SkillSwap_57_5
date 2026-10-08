@@ -1,9 +1,9 @@
+import clsx from 'clsx'
 import styles from './IconButton.module.css'
 import { IconButtonProps } from '../../model/uiTypes'
 
 export function IconButton({ className, src, ariaLabel, disabled, onClick }: IconButtonProps) {
-  const baseClass = styles.iconButton
-  const buttonClassName = className ? `${baseClass} ${className}` : `${baseClass}`
+  const buttonClassName = clsx(styles.iconButton, className)
 
   return (
     <button

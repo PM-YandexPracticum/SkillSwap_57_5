@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useRef } from 'react'
 import { IconButton } from '@/shared/ui/IconButton'
 import addIcon from '@/shared/assets/icons/add.svg'
@@ -21,7 +22,7 @@ export function AvatarUploadButton({
   }
 
   return (
-    <div className={className ? `${styles.container} ${className}` : styles.container}>
+    <div className={clsx(styles.container, className)}>
       <IconButton src={addIcon} ariaLabel="Загрузить аватар" onClick={handleClick} />
       <input
         ref={inputRef}

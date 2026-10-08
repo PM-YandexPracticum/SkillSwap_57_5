@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useState } from 'react'
 
 import type { Gender } from '@/entities/user'
@@ -59,7 +60,7 @@ export function FiltersBar({
   }
 
   return (
-    <aside className={`${styles.filters} ${disabled ? styles.filtersDisabled : ''}`}>
+    <aside className={clsx(styles.filters, disabled && styles.filtersDisabled)}>
       <div className={styles.filtersHead}>
         <h2 className={styles.title}>
           {activeFiltersCount > 0 ? `Фильтры (${activeFiltersCount})` : 'Фильтры'}
@@ -146,9 +147,10 @@ export function FiltersBar({
 
                   <button
                     type="button"
-                    className={`${styles.expandButton} ${
-                      isCategoryExpanded ? styles.expandButtonExpanded : ''
-                    }`}
+                    className={clsx(
+                      styles.expandButton,
+                      isCategoryExpanded && styles.expandButtonExpanded,
+                    )}
                     onClick={() => handleCategoryExpandToggle(category.id)}
                     aria-expanded={isCategoryExpanded}
                     aria-label={
@@ -260,9 +262,10 @@ export function FiltersBar({
 
             <img
               src={chevronDownIcon}
-              className={`${styles.moreButtonChevron} ${
-                areAllCitiesVisible ? styles.moreButtonChevronExpanded : ''
-              }`}
+              className={clsx(
+                styles.moreButtonChevron,
+                areAllCitiesVisible && styles.moreButtonChevronExpanded,
+              )}
               alt=""
               aria-hidden="true"
             />

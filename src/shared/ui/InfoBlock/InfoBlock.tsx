@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import styles from './InfoBlock.module.css'
 import type { InfoBlockProps } from '@/shared/model/uiTypes'
 
@@ -9,8 +10,7 @@ export function InfoBlock({
   className,
   variant = 'registration',
 }: InfoBlockProps) {
-  const baseClass = `${styles.container} ${styles[variant]}`
-  const containerClassName = className ? `${baseClass} ${className}` : baseClass
+  const containerClassName = clsx(styles.container, styles[variant], className)
 
   return (
     <div className={containerClassName}>

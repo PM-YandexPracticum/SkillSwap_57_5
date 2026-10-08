@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { SearchInputProps } from '../../model/uiTypes';
 import { Input } from '../Input';
 import styles from './SearchInput.module.css';
@@ -11,7 +12,7 @@ export const SearchInput = ({
   disabled,
   ariaLabel,
 }: SearchInputProps) => (
-  <div className={[styles.root, className].filter(Boolean).join(' ')}>
+  <div className={clsx(styles.root, className)}>
     <span className={styles.icon}>
     </span>
     <Input

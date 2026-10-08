@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Thumbs } from 'swiper/modules'
@@ -51,13 +52,13 @@ export function SkillGallery({ imageUrls }: SkillGalleryProps) {
             <CarouselButton
               direction="left"
               onClick={() => mainSwiperRef.current?.slidePrev()}
-              className={`${styles.navButton} ${styles.navPrev}`}
+              className={clsx(styles.navButton, styles.navPrev)}
             />
 
             <CarouselButton
               direction="right"
               onClick={() => mainSwiperRef.current?.slideNext()}
-              className={`${styles.navButton} ${styles.navNext}`}
+              className={clsx(styles.navButton, styles.navNext)}
             />
           </>
         )}
