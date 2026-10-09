@@ -1,4 +1,6 @@
 .button {
+  display: flex;
+  justify-content: center;
   min-height: 48px;
   padding: var(--space-md) var(--space-lg);
   color: var(--color-text);
