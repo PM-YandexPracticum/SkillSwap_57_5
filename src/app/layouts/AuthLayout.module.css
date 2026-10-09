@@ -1,0 +1,41 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #fff;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+}
+
+.content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border-color: transparent;
+}
+
+.closeButton:hover:not(:disabled) {
+  background-color: transparent;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
