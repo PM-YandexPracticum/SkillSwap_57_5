@@ -1,1 +1,1 @@
-export { default } from './ui/ServerErrorPage'
+export { ServerErrorPage, default } from './ui/ServerErrorPage'
