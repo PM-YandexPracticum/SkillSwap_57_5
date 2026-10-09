@@ -36,9 +36,24 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  --popover-translate-x: -348px;
+}
+
+.navColumn :global([class*='placementTop']) {
+  margin-bottom: 128px;
 }
 
 .navColumn a {
   color: inherit;
   text-decoration: none;
+}
+
+.skillsButton {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
