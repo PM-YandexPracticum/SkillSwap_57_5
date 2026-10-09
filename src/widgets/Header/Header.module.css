@@ -20,6 +20,8 @@
   flex-shrink: 0;
   align-items: center;
   gap: var(--space-xl);
+
+  --popover-translate-x: -191px;
 }
 
 .skillsButton {

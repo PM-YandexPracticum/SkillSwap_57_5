@@ -1,8 +1,13 @@
 import { Logo } from '@/shared/ui/Logo'
 
+import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
+import { useAppSelector } from '@/store/hooks'
+
 import styles from './Footer.module.css'
 
 export function Footer() {
+  const categories = useAppSelector((state) => state.categories.items)
+
   return (
     <footer className={styles.footer}>
       <div className={styles.brand}>
@@ -13,7 +18,16 @@ export function Footer() {
       <nav className={styles.nav}>
         <div className={styles.navColumn}>
           <a href="#">О проекте</a>
-          <a href="#">Все навыки</a>
+
+          <CategoryPopover
+            categories={categories}
+            placement='top'
+            trigger={
+              <button type="button" className={styles.skillsButton}>
+                Все навыки
+              </button>
+            }
+          />
         </div>
 
         <div className={styles.navColumn}>
