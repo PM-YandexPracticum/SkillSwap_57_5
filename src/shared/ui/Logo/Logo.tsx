@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 
 import logo from '@/shared/assets/icons/Logo.png'
-import type { LogoProps } from '@/shared/model/uiTypes'
+import type { LogoProps } from './types'
 
 import styles from './Logo.module.css'
 

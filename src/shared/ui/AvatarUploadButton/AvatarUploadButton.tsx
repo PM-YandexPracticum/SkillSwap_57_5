@@ -1,13 +1,10 @@
+import type { AvatarUploadButtonProps } from './types'
 import clsx from 'clsx'
 import { useRef } from 'react'
 import { IconButton } from '@/shared/ui/IconButton'
 import addIcon from '@/shared/assets/icons/add.svg'
 import styles from './AvatarUploadButton.module.css'
 
-interface AvatarUploadButtonProps {
-  onAvatarChange?: (file: File) => void
-  className?: string
-}
 
 export function AvatarUploadButton({
   onAvatarChange = () => {},

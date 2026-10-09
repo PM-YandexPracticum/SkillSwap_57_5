@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import type { ChangeEvent } from 'react'
-import type { TextareaProps } from '../../model/uiTypes'
+import type { TextareaProps } from './types'
 import styles from './Textarea.module.css'
 
 export const Textarea = ({

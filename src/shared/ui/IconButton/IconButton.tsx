@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import styles from './IconButton.module.css'
-import { IconButtonProps } from '../../model/uiTypes'
+import type { IconButtonProps } from './types'
 
 export function IconButton({ className, src, ariaLabel, disabled, onClick }: IconButtonProps) {
   const buttonClassName = clsx(styles.iconButton, className)

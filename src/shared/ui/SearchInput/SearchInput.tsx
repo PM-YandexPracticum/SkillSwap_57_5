@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import type { SearchInputProps } from '../../model/uiTypes';
+import type { SearchInputProps } from './types';
 import { Input } from '../Input';
 import styles from './SearchInput.module.css';
 

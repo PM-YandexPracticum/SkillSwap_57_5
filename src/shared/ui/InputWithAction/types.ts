@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 export interface InputWithActionProps {
   // Для поля и лейбла к нему

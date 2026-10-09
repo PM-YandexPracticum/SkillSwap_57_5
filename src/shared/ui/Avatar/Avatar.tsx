@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import styles from './Avatar.module.css'
-import type { AvatarProps } from '@/shared/model/uiTypes'
+import type { AvatarProps } from './types'
 import { useState, useEffect } from 'react'
 
 export function Avatar({ src, name, className }: AvatarProps) {

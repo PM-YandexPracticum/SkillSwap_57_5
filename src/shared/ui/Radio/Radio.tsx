@@ -1,4 +1,4 @@
-import type { RadioProps } from '@/shared/model/uiTypes'
+import type { RadioProps } from './types'
 
 export function Radio({
   id,

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useRef } from 'react';
-import type { AboutFieldProps } from '../../model/uiTypes';
+import type { AboutFieldProps } from './types';
 import { Textarea } from '../Textarea';
 import styles from './AboutField.module.css';
 

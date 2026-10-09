@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import type { ChangeEvent } from 'react'
-import type { InputProps } from '../../model/uiTypes'
+import type { InputProps } from './types'
 import styles from './Input.module.css'
 
 export const Input = ({

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { CSSProperties, useEffect, useRef, useState } from 'react'
-import { PopoverProps } from './types'
+import type { PopoverProps } from './types'
 import styles from './popover.module.css'
 
 export const Popover = ({

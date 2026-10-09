@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { IconButton } from '../IconButton'
-import { InputWithActionProps } from './types'
+import type { InputWithActionProps } from './types'
 import styles from './InputWithAction.module.css'
 
 export const InputWithAction = ({

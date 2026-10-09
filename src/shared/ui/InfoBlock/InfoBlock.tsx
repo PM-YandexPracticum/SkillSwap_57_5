@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import styles from './InfoBlock.module.css'
-import type { InfoBlockProps } from '@/shared/model/uiTypes'
+import type { InfoBlockProps } from './types'
 
 export function InfoBlock({
   src,

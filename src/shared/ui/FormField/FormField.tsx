@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import type { FormFieldProps } from '@/shared/model/uiTypes'
+import type { FormFieldProps } from './types'
 import styles from './FormField.module.css'
 
 export function FormField({ id, label, children, className }: FormFieldProps) {

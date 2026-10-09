@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import styles from './Button.module.css'
-import { ButtonProps } from '../../model/uiTypes'
+import type { ButtonProps } from './types'
 
 export function Button({
   children,

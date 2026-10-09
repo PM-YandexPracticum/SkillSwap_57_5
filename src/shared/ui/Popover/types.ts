@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 type PopoverPlacement = 'top' | 'bottom'
 type PopoverAlign = 'left' | 'center' | 'right'

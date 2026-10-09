@@ -1,4 +1,4 @@
-import type { CheckboxProps } from '@/shared/model/uiTypes'
+import type { CheckboxProps } from './types'
 
 export function Checkbox({ id, checked, onChange, className, disabled, label }: CheckboxProps) {
   return (

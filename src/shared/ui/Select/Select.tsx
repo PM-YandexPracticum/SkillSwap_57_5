@@ -1,4 +1,4 @@
-import type { SelectProps } from '@/shared/model/uiTypes'
+import type { SelectProps } from './types'
 
 export function Select({
   id,
