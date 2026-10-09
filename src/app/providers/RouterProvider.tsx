@@ -1,7 +1,8 @@
-import { Loader } from '@/shared/ui/Loader'
 import { lazy, Suspense } from 'react'
 import { Navigate, Routes, Route } from 'react-router-dom'
+import { Loader } from '@/shared/ui/Loader'
 import { MainLayout } from '../layouts/MainLayout'
+import { AuthLayout } from '../layouts/AuthLayout' // Наш новый лайаут авторизации
 
 const CatalogPage = lazy(() => import('@/pages/CatalogPage'))
 const AboutPage = lazy(() => import('@/pages/AboutPage'))
@@ -23,23 +24,25 @@ export function AppRouter() {
       <Routes>
         {UiReviewPage && <Route path="/dev" element={<UiReviewPage />} />}
 
-        {/* Главная обёртка MainLayout для всех страниц, кроме регистрации */}
+        {/* Главная обёртка MainLayout для обычных страниц (убрали отсюда /login) */}
         <Route element={<MainLayout />}>
           <Route path={'/'} element={<CatalogPage />} />
           <Route path={'/about'} element={<AboutPage />} />
           <Route path={'/skill/:id'} element={<SkillPage />} />
-          <Route path={'/login'} element={<LoginPage />} />
           <Route path={'/profile'} element={<ProfilePage />} />
           <Route path={'/favorites'} element={<FavoritesPage />} />
           <Route path={'/500'} element={<ServerErrorPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
-        {/* Маршруты регистрации — снаружи MainLayout (без Header и Footer) */}
-        <Route path={'/register'} element={<Navigate to="/register/credentials" replace />} />
-        <Route path={'/register/credentials'} element={<RegisterCredentialsPage />} />
-        <Route path={'/register/profile'} element={<RegisterProfilePage />} />
-        <Route path={'/register/skill'} element={<RegisterSkillPage />} />
+        {/* НОВАЯ обёртка AuthLayout для страниц входа и регистрации строго по ТЗ! */}
+        <Route element={<AuthLayout />}>
+          <Route path={'/login'} element={<LoginPage />} />
+          <Route path={'/register'} element={<Navigate to="/register/credentials" replace />} />
+          <Route path={'/register/credentials'} element={<RegisterCredentialsPage />} />
+          <Route path={'/register/profile'} element={<RegisterProfilePage />} />
+          <Route path={'/register/skill'} element={<RegisterSkillPage />} />
+        </Route>
       </Routes>
     </Suspense>
   )
