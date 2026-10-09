@@ -28,13 +28,11 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  border-color: transparent;
 }
 
-.closeButton:hover {
-  background-color: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-  outline: none;
+.closeButton:hover:not(:disabled) {
+  background-color: transparent;
 }
 
 .icon {
