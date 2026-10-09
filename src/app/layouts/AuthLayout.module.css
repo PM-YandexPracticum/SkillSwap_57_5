@@ -3,6 +3,9 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: #fff;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .header {
@@ -25,6 +28,13 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
+}
+
+.closeButton:hover {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none;
 }
 
 .icon {
