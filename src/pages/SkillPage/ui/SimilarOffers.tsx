@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import type { CatalogCardData } from '@/features/catalog'
 import { CarouselButton } from '@/shared/ui/CarouselButton'
-import { SkillCard } from '@/widgets/SkillCard'
+import { UserCard } from '@/widgets/UserCard'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -43,7 +43,7 @@ export function SimilarOffers({
             >
               {items.map((item) => (
                 <SwiperSlide key={item.user.id}>
-                  <SkillCard
+                  <UserCard
                     user={item.user}
                     cityName={item.cityName}
                     teachSkills={item.teachSkills}

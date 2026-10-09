@@ -6,7 +6,7 @@ import type {
   CatalogCardData,
 } from '@/features/catalog'
 
-import { SkillCard } from '@/widgets/SkillCard'
+import { UserCard } from '@/widgets/UserCard'
 
 import sortIcon from '@/shared/assets/icons/sort.svg'
 
@@ -88,7 +88,7 @@ export function FiltersResult({
               key={catalogUser.user.id}
               className={styles.cardItem}
             >
-              <SkillCard
+              <UserCard
                 user={catalogUser.user}
                 cityName={catalogUser.cityName}
                 teachSkills={catalogUser.teachSkills}

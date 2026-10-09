@@ -6,9 +6,9 @@ import { SkillTag } from '@/entities/skill'
 import { Avatar } from '@/shared/ui/Avatar'
 
 import { getAgeFromBirthDate } from '@/shared/lib/helpers'
-import styles from './SkillCard.module.css'
+import styles from './UserCard.module.css'
 
-interface SkillCardProps {
+interface UserCardProps {
   user: User
   cityName: string
   teachSkills: Skill[]
@@ -19,7 +19,7 @@ interface SkillCardProps {
   onFavoriteToggle?: () => void
 }
 
-export function SkillCard({
+export function UserCard({
   user,
   cityName,
   teachSkills,
@@ -28,7 +28,7 @@ export function SkillCard({
   likeCount = typeof user.likesCount === 'number' ? user.likesCount : 0,
   isAuthenticated = false,
   onFavoriteToggle,
-}: SkillCardProps) {
+}: UserCardProps) {
   const visibleTeachSkills = teachSkills.slice(0, 1)
   const visibleLearnSkills = learnSkills.slice(0, 2)
   const additionalLearnSkillsCount = learnSkills.length - visibleLearnSkills.length

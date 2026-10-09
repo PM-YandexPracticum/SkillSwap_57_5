@@ -2,12 +2,12 @@ import clsx from 'clsx'
 import type { CatalogSection, CatalogSectionId } from '@/features/catalog'
 
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
-import { SkillCard } from '@/widgets/SkillCard'
+import { UserCard } from '@/widgets/UserCard'
 
-import styles from './Catalog.module.css'
+import styles from './CatalogSections.module.css'
 import { Loader } from '@/shared/ui/Loader'
 
-interface CatalogProps {
+interface CatalogSectionsProps {
   sections: CatalogSection[]
   isAuthenticated: boolean
   isRecommendedLoading: boolean
@@ -16,14 +16,14 @@ interface CatalogProps {
   onFavoriteToggle: (userId: string) => void
 }
 
-export function Catalog({
+export function CatalogSections({
   sections,
   isAuthenticated,
   isRecommendedLoading,
   setRecommendedLoadMoreElement,
   onToggleSection,
   onFavoriteToggle,
-}: CatalogProps) {
+}: CatalogSectionsProps) {
   return (
     <div className={styles.content}>
       {sections.map((section) => (
@@ -54,7 +54,7 @@ export function Catalog({
           <ul className={styles.cardsGrid}>
             {section.users.map((catalogUser) => (
               <li className={styles.cardItem} key={catalogUser.user.id}>
-                <SkillCard
+                <UserCard
                   user={catalogUser.user}
                   cityName={catalogUser.cityName}
                   teachSkills={catalogUser.teachSkills}

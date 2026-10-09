@@ -1,8 +1,8 @@
 import { useCatalogPage } from '@/features/catalog'
 
-import { Catalog } from '@/widgets/Catalog'
+import { CatalogSections } from './CatalogSections'
 import { FiltersBar } from '@/widgets/FiltersBar'
-import { FiltersResult } from '@/widgets/FiltersResult'
+import { FiltersResult } from './FiltersResult'
 
 import styles from './CatalogPage.module.css'
 import { Loader } from '@/shared/ui/Loader'
@@ -80,7 +80,7 @@ export default function CatalogPage() {
             onFavoriteToggle={handleFavoriteToggle}
           />
         ) : (
-          <Catalog
+          <CatalogSections
             sections={sections}
             isAuthenticated={isAuthenticated}
             isRecommendedLoading={isRecommendedLoading}
