@@ -8,8 +8,9 @@
 .activeFilters {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
+  padding-top: 14px;
 }
 
 .filterChip {
