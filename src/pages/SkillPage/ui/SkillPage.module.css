@@ -1,1 +1,12 @@
-/* SkillPage.module.css */
+.page {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 12px 36px 60px;
+}
+
+.skillSection {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  margin-bottom: 60px;
+}
