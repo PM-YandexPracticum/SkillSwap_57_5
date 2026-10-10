@@ -13,6 +13,8 @@ export type SkillPageData = {
   subcategoryName: string
   isFavorite: boolean
   similarOffers: CatalogCardData[]
+  authorTeachSkills: Skill[]
+  authorLearnSkills: Skill[]
 }
 
 export function useSkillPage(id: SkillId | undefined) {
@@ -30,6 +32,12 @@ export function useSkillPage(id: SkillId | undefined) {
     const city = cities.find((c) => c.id === author.cityId)
     if (!city) return null
 
+    const authorTeachSkills = skills.filter((s) => s.authorId === author.id)
+
+    const authorLearnSkills = author.learningSubcategoryIds?.length
+      ? skills.filter((s) => author.learningSubcategoryIds.includes(s.subcategoryId))
+      : []
+
     const category = categories.find((c) => c.id === skill.categoryId)
     const subcategory = category?.subcategories.find((s) => s.id === skill.subcategoryId)
 
@@ -38,18 +46,21 @@ export function useSkillPage(id: SkillId | undefined) {
       .filter((user) => user.id !== author.id)
       .slice(0, 8)
       .map((user) => {
-        const userSkills = skills.filter((s) => s.authorId === user.id)
-        const userCity = cities.find((c) => c.id === user.cityId)
+        // Чему учит этот пользователь
+        const teach = skills.filter((s) => s.authorId === user.id)
+        // Чему хочет научиться этот пользователь (скиллы по его интересам)
+        const learn = user.learningSubcategoryIds?.length
+          ? skills.filter((s) => user.learningSubcategoryIds.includes(s.subcategoryId))
+          : []
 
+        const userCity = cities.find((c) => c.id === user.cityId)
         return {
           user,
           cityName: userCity?.name ?? '',
-          //  Сейчас в навыки у нас передается Skill[] и в тегах SkillTag выводится
-          //  название навыка. Но на макете в тегах названия подкатегорий.
-          //  И в модели пользователя у нас только id подкатегорий которым
-          //  он хочет научиться.
-          teachSkills: userSkills, // TODO: заменить на подкатегории (названия или ID)
-          learnSkills: userSkills, // TODO: заменить на подкатегории (названия или ID)
+          teachSkills: teach,
+          learnSkills: learn,
+          additionalTeachSkillsCount: Math.max(0, teach.length - 1),
+          additionalLearnSkillsCount: Math.max(0, learn.length - 2),
           latestSkillCreatedAt: '',
           isFavorite: false,
           displayedLikeCount: user.likesCount,
@@ -64,6 +75,8 @@ export function useSkillPage(id: SkillId | undefined) {
       subcategoryName: subcategory?.name ?? '',
       isFavorite: false,
       similarOffers,
+      authorTeachSkills,
+      authorLearnSkills,
     }
   }, [id, skills, users, cities, categories])
 

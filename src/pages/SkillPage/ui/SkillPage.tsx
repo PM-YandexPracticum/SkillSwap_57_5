@@ -19,12 +19,8 @@ export default function SkillPage() {
           <SkillAuthor
             user={data.author}
             cityName={data.city.name}
-            //  Сейчас в навыки у нас передается Skill[] и в тегах SkillTag выводится 
-            //  название навыка. Но на макете в тегах названия подкатегорий. 
-            //  И в модели пользователя у нас только id подкатегорий которым
-            //  он хочет научиться. 
-            teachSkills={[data.skill]} // TODO: заменить на подкатегории (названия или ID)
-            learnSkills={[data.skill]} // TODO: заменить на подкатегории (названия или ID)
+            teachSkills={data.authorTeachSkills}
+            learnSkills={data.authorLearnSkills}
           />
           <SkillInfo
             skill={data.skill}
