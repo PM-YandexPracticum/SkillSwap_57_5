@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { SearchSkills } from '@/features/search-skills'
 import { Button } from '@/shared/ui/Button'
 import { IconButton } from '@/shared/ui/IconButton'
@@ -42,9 +43,13 @@ export function Header() {
             onClick={() => console.log('Смена темы')}
           ></IconButton>
           <div className={styles.authButtonSection}>
-            <Button variant="secondary">Войти</Button>
+            <Link to="/login" className={styles.authLink}>
+              <Button variant="secondary">Войти</Button>
+            </Link>
 
-            <Button variant="primary">Зарегистрироваться</Button>
+            <Link to="/register" className={styles.authLink}>
+              <Button variant="primary">Зарегистрироваться</Button>
+            </Link>
           </div>
         </div>
       </div>
