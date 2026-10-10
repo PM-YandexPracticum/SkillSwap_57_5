@@ -4,33 +4,36 @@ import { createPortal } from 'react-dom';
 import styles from './Modal.module.css';
 import type { ModalProps } from './types';
 
-export const Modal = ({ children, onClose, ariaLabel, className }: ModalProps) => {
+export const Modal = ({ children, onClose, open, ariaLabel, className }: ModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     const dialog = dialogRef.current;
 
-    if (!dialog) {
+    if (!dialog || !open) {
       return undefined;
     }
 
     const opener = document.activeElement;
-    const prevOverflow = document.body.style.overflow;
 
     dialog.showModal();
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add(styles.noScroll);
 
     return () => {
-      dialog.close();
-      document.body.style.overflow = prevOverflow;
+      if (dialog.open) {
+        dialog.close();
+      }
+
+      document.body.classList.remove(styles.noScroll);
 
       if (opener instanceof HTMLElement) {
         opener.focus();
       }
     };
-  }, []);
+  }, [open]);
 
   const handleCancel = (event: SyntheticEvent<HTMLDialogElement>) => {
+    // Не даём браузеру закрыть окно самому: состоянием управляет родитель через open
     event.preventDefault();
     onClose();
   };
@@ -49,6 +52,10 @@ export const Modal = ({ children, onClose, ariaLabel, className }: ModalProps) =
       onClose();
     }
   };
+
+  if (!open) {
+    return null;
+  }
 
   return createPortal(
     <dialog

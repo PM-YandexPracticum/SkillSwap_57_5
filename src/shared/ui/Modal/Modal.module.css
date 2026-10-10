@@ -1,7 +1,10 @@
 .modal {
+  position: fixed;
+  inset: 0;
   box-sizing: border-box;
   width: 556px;
   height: 420px;
+  margin: auto;
   padding: 80px 60px;
   border: 0;
   border-radius: 12px;
@@ -15,4 +18,8 @@
 
 .modal::backdrop {
   background: rgb(0 0 0 / 60%);
+}
+
+.noScroll {
+  overflow: hidden;
 }
