@@ -4,6 +4,7 @@ import { Button } from '@/shared/ui/Button'
 import { FavoriteButton } from '@/features/favorite-user'
 import { SkillTag } from '@/entities/skill'
 import { Avatar } from '@/shared/ui/Avatar'
+import { useNavigate } from 'react-router-dom'
 
 import { getAgeFromBirthDate } from '@/shared/lib/helpers'
 import styles from './UserCard.module.css'
@@ -29,6 +30,7 @@ export function UserCard({
   isAuthenticated = false,
   onFavoriteToggle,
 }: UserCardProps) {
+  const navigate = useNavigate()
   const visibleTeachSkills = teachSkills.slice(0, 1)
   const visibleLearnSkills = learnSkills.slice(0, 2)
   const additionalLearnSkillsCount = learnSkills.length - visibleLearnSkills.length
@@ -84,7 +86,15 @@ export function UserCard({
         )}
       </div>
 
-      <Button variant="primary" className={styles.detailsButton}>
+      <Button
+        variant="primary"
+        className={styles.detailsButton}
+        onClick={() => {
+          if (visibleTeachSkills.length > 0) {
+            navigate(`/skill/${visibleTeachSkills[0].id}`)
+          }
+        }}
+      >
         Подробнее
       </Button>
     </article>
