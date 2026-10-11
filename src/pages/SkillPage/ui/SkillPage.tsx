@@ -1,8 +1,8 @@
 import styles from './SkillPage.module.css'
 import { SkillAuthor } from '@/widgets/SkillAuthor'
-import { SkillInfo } from '../../../widgets/SkillInfo/ui/SkillInfo'
+import { SkillInfo } from '@/widgets/SkillInfo'
 import { useParams } from 'react-router-dom'
-import { useSkillPage } from '../modal/useSkillPage'
+import { useSkillPage } from '../model/useSkillPage'
 import { SimilarOffers } from './SimilarOffers'
 
 export default function SkillPage() {
