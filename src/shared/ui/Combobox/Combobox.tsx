@@ -22,6 +22,7 @@ export function Combobox({
   const listId = `${inputId}-list`
   const rootRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+
   const [isOpen, setIsOpen] = useState(false)
   const [inputText, setInputText] = useState<string | null>(null)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -43,15 +44,25 @@ export function Combobox({
 
   const selectedLabel = options.find((option) => option.value === value)?.label
   const text = inputText ?? selectedLabel ?? value
+
   const filteredOptions = options.filter((option) =>
-    option.label.toLocaleLowerCase().includes(text.trim().toLocaleLowerCase()),
+    option.label.toLocaleLowerCase().includes(text?.trim().toLocaleLowerCase() ?? ''),
   )
+
   const visibleCount = Math.max(1, visibleItemsCount)
 
   const selectOption = (option: ComboboxOptions) => {
     setInputText(null)
     onChange(option.value)
     setIsOpen(false)
+    inputRef.current?.blur()
+  }
+
+  const clearValue = () => {
+    onChange('')
+    setInputText('')
+    setIsOpen(true)
+    inputRef.current?.focus()
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -66,9 +77,10 @@ export function Combobox({
         setIsOpen(true)
         setActiveIndex(0)
       } else if (filteredOptions.length) {
-        setActiveIndex((current) =>
-          (current + (event.key === 'ArrowDown' ? 1 : -1) + filteredOptions.length) %
-          filteredOptions.length,
+        setActiveIndex(
+          (current) =>
+            (current + (event.key === 'ArrowDown' ? 1 : -1) + filteredOptions.length) %
+            filteredOptions.length,
         )
       }
     }
@@ -79,9 +91,11 @@ export function Combobox({
     }
   }
 
+  const hasUserInputOrValue = !!inputText || !!value
+
   return (
-    <div ref={rootRef} className={clsx(styles.root, isOpen && styles.open, className)}>
-      <div className={styles.field}>
+    <div ref={rootRef} className={clsx(styles.root, className)}>
+      <div className={clsx(styles.field, isOpen && styles.open)}>
         <input
           ref={inputRef}
           id={inputId}
@@ -92,13 +106,8 @@ export function Combobox({
           aria-autocomplete="list"
           aria-expanded={isOpen}
           aria-controls={listId}
-          aria-activedescendant={
-            isOpen && filteredOptions[activeIndex]
-              ? `${listId}-option-${activeIndex}`
-              : undefined
-          }
           autoComplete="off"
-          value={text}
+          value={text ?? ''}
           placeholder={placeholder}
           disabled={disabled}
           onFocus={() => {
@@ -108,28 +117,33 @@ export function Combobox({
           onChange={(event) => {
             setInputText(event.target.value)
             setActiveIndex(0)
-            setIsOpen(true)
-            onChange(event.target.value)
           }}
           onKeyDown={handleKeyDown}
         />
-        {text ? (
+
+        {hasUserInputOrValue && (
           <button
-            className={styles.action}
             type="button"
-            aria-label="Очистить поле"
+            className={clsx(styles.clearButton)}
+            aria-label="Очистить значение"
             disabled={disabled}
-            onClick={() => {
-              setInputText('')
-              setActiveIndex(0)
-              onChange('')
-              inputRef.current?.focus()
-            }}
+            onClick={clearValue}
+            style={{ opacity: disabled ? 0.5 : 1 }}
           >
             <img src={clearIcon} alt="" />
           </button>
-        ) : (
-          <img className={styles.chevron} src={chevronIcon} alt="" />
+        )}
+
+        {!hasUserInputOrValue && (
+          <button
+            type="button"
+            className={clsx(styles.chevronButton)}
+            aria-label="Открыть список"
+            disabled={disabled}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <img src={chevronIcon} alt="" />
+          </button>
         )}
       </div>
 

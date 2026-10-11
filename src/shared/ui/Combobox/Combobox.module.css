@@ -9,31 +9,39 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 48px;
+  min-height: 46px;
+  padding: 11px 20px;
   border: 1px solid var(--color-caption);
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
   background: var(--color-surface);
+  transition: border-color 0.2s ease;
+  cursor: default;
 }
 
 .root.open .field {
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  cursor: pointer;
 }
 
 .root:focus-within .field {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-color: #e4e8df;
 }
 
 .input {
-  width: 100%;
-  height: 100%;
-  padding: 11px 52px 11px 20px;
-  border: 0;
-  outline: 0;
-  border-radius: inherit;
+  flex: 1;
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
   background: transparent;
   color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  box-sizing: border-box;
 }
 
 .input::placeholder {
@@ -48,23 +56,66 @@
   opacity: 0.5;
 }
 
-.action,
-.chevron {
-  position: absolute;
-  right: 16px;
-  width: 24px;
-  height: 24px;
-}
-
-.action {
+.clearButton {
   display: grid;
   place-items: center;
-  color: var(--color-text);
-}
-
-.action img {
   width: 24px;
   height: 24px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: 0.6;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.clearButton:hover:not(:disabled) {
+  opacity: 1;
+}
+
+.clearButton img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.field .clearButton,
+.field .chevronButton {
+  z-index: 2;
+}
+
+.chevronButton {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: 0.6;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.chevronButton:hover,
+.root.open .chevronButton {
+  opacity: 1;
+}
+
+.root.open .chevronButton img {
+  transform: rotate(180deg);
+}
+
+.chevronButton img {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 .list {
@@ -79,7 +130,7 @@
   list-style: none;
   border: 1px solid var(--color-caption);
   border-top: 0;
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-radius: 0 0 12px 12px;
   background: var(--color-surface);
 }
 
