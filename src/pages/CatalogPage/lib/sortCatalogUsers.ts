@@ -1,7 +1,7 @@
 import type {
   CatalogCardData,
   CatalogUser,
-} from '../model/types'
+} from '@/widgets/UserCard'
 
 export function sortCatalogUsersByPopularity(
   catalogUsers: CatalogCardData[],

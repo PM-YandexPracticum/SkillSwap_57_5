@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
+import { buildCatalogUser, type CatalogCardData } from '@/widgets/UserCard'
+import { useAppData } from '@/store/useAppData'
 import type { Skill, SkillId } from '@/entities/skill/model/types'
 import type { User } from '@/entities/user/model/types'
 import type { City } from '@/entities/city/model/types'
-import type { CatalogCardData } from '@/features/catalog/model/types'
-import { useCatalogData } from '@/features/catalog/model/useCatalogData'
 
 export type SkillPageData = {
   skill: Skill
@@ -18,7 +18,7 @@ export type SkillPageData = {
 }
 
 export function useSkillPage(id: SkillId | undefined) {
-  const { users, cities, categories, skills, isLoading } = useCatalogData()
+  const { users, cities, categories, skills, isLoading } = useAppData()
 
   const data = useMemo<SkillPageData | null>(() => {
     if (!id) return null
@@ -32,11 +32,8 @@ export function useSkillPage(id: SkillId | undefined) {
     const city = cities.find((c) => c.id === author.cityId)
     if (!city) return null
 
-    const authorTeachSkills = skills.filter((s) => s.authorId === author.id)
-
-    const authorLearnSkills = author.learningSubcategoryIds?.length
-      ? skills.filter((s) => author.learningSubcategoryIds.includes(s.subcategoryId))
-      : []
+    const allSubcategories = categories.flatMap((category) => category.subcategories)
+    const authorCard = buildCatalogUser(author, skills, cities, allSubcategories, categories)
 
     const category = categories.find((c) => c.id === skill.categoryId)
     const subcategory = category?.subcategories.find((s) => s.id === skill.subcategoryId)
@@ -75,8 +72,8 @@ export function useSkillPage(id: SkillId | undefined) {
       subcategoryName: subcategory?.name ?? '',
       isFavorite: false,
       similarOffers,
-      authorTeachSkills,
-      authorLearnSkills,
+      authorTeachSkills: authorCard.teachSkills,
+      authorLearnSkills: authorCard.learnSkills,
     }
   }, [id, skills, users, cities, categories])
 

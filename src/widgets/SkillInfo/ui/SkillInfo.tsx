@@ -7,7 +7,7 @@ import { FavoriteButton } from '@/features/favorite-user'
 import shareIcon from '@/shared/assets/icons/share.svg'
 import optionIcon from '@/shared/assets/icons/option.svg'
 
-import { SkillGallery } from './SkillGallery'
+import { Gallery } from '@/shared/ui/Gallery'
 import styles from './SkillInfo.module.css'
 
 interface SkillInfoProps {
@@ -67,7 +67,7 @@ export function SkillInfo({
         </div>
 
         <div className={styles.gallery}>
-          <SkillGallery imageUrls={skill.imageUrls} />
+          <Gallery imageUrls={skill.imageUrls} />
         </div>
       </div>
     </section>

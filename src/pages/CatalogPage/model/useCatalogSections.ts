@@ -13,7 +13,8 @@ import {
   RECOMMENDED_INCREMENT,
 } from './constants'
 
-import type { CatalogCardData, CatalogSection, CatalogSectionId } from './types'
+import type { CatalogCardData } from '@/widgets/UserCard'
+import type { CatalogSection, CatalogSectionId } from './types'
 
 const RECOMMENDED_LOADING_DELAY = 1000
 

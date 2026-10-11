@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import type { CatalogSection, CatalogSectionId } from '@/features/catalog'
+import type { CatalogSection, CatalogSectionId } from '../model/types'
 
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
 import { UserCard } from '@/widgets/UserCard'

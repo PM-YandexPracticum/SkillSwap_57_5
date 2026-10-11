@@ -9,22 +9,21 @@ import {
   type UseCatalogFiltersResult,
 } from '@/features/filter-catalog'
 
-import { useFavoriteUsers } from '@/features/favorite-user'
-import { addFavoriteData } from '../lib/addFavoriteData'
+import { useFavoriteUsers, addFavoriteData } from '@/features/favorite-user'
+import { buildCatalogUser, type CatalogCardData } from '@/widgets/UserCard'
+import { useAppData } from '@/store/useAppData'
 
 import { filterCatalogUsersBySearch, useSearchQuery } from '@/features/search-skills'
 import type { City } from '@/entities/city'
 import type { SkillCategory } from '@/entities/category'
 
-import { buildCatalogUsers } from '../lib/buildCatalogUsers'
 import {
   sortCatalogUsersByNewestSkill,
   sortCatalogUsersByPopularity,
 } from '../lib/sortCatalogUsers'
 
-import { useCatalogData } from './useCatalogData'
 import { useCatalogSections } from './useCatalogSections'
-import type { CatalogCardData, CatalogSection, CatalogSectionId } from './types'
+import type { CatalogSection, CatalogSectionId } from './types'
 
 interface UseCatalogPageResult {
   filters: UseCatalogFiltersResult['filters']
@@ -36,7 +35,7 @@ interface UseCatalogPageResult {
   isRecommendedLoading: boolean
   setRecommendedLoadMoreElement: (element: HTMLDivElement | null) => void
   toggleSection: (sectionId: CatalogSectionId) => void
-  filteredUsers: CatalogCardData[]
+  sortedCatalogUsers: CatalogCardData[]
   resultCount: number
   isSortedByNewest: boolean
   hasActiveFilters: boolean
@@ -61,7 +60,7 @@ export function useCatalogPage(): UseCatalogPageResult {
   // Эту подготовку можно вынести в общий хук для «Похожих предложений» на SkillPage
 
   // 1. Загружаем и получаем пользователей, навыки, города и категории из Redux
-  const catalogData = useCatalogData()
+  const catalogData = useAppData()
 
   // 2. Получаем выбранные фильтры и функции для их изменения
   const {
@@ -88,25 +87,29 @@ export function useCatalogPage(): UseCatalogPageResult {
   // 7. Проверяем, введён ли непустой поисковый запрос
   const isSearchActive = searchQuery.trim() !== ''
 
-  // 8. Собираем подкатегории всех категорий в один массив для buildCatalogUsers
+  // 8. Собираем подкатегории всех категорий в один массив для buildCatalogUser
   const allSubcategories = useMemo(() => {
     if (!catalogData.categories) return []
 
-    return catalogData.categories.flatMap((cat) =>
-      Array.isArray(cat.subcategories) ? cat.subcategories : [],
+    return catalogData.categories.flatMap((category) =>
+      Array.isArray(category.subcategories) ? category.subcategories : [],
     )
   }, [catalogData.categories])
 
   // 9. Собираем данные карточек: пользователь, город и списки навыков
   const catalogUsers = useMemo(
     () =>
-      buildCatalogUsers(
-        catalogData.users ?? [],
-        catalogData.skills ?? [],
-        catalogData.cities ?? [],
-        allSubcategories,
-        catalogData.categories ?? [],
-      ),
+      (catalogData.users ?? [])
+        .map((user) =>
+          buildCatalogUser(
+            user,
+            catalogData.skills ?? [],
+            catalogData.cities ?? [],
+            allSubcategories,
+            catalogData.categories ?? [],
+          ),
+        )
+        .filter(({ teachSkills, learnSkills }) => teachSkills.length > 0 || learnSkills.length > 0),
     [
       catalogData.users,
       catalogData.skills,
@@ -117,7 +120,7 @@ export function useCatalogPage(): UseCatalogPageResult {
   )
 
   // 10. Добавляем состояние избранного и счётчик лайков для секций и результатов поиска
-  const favoriteCatalogUsers = useMemo(
+  const withFavoritesCatalogUsers = useMemo(
     () => addFavoriteData(catalogUsers, likedUserIds ?? []),
     [catalogUsers, likedUserIds],
   )
@@ -125,9 +128,9 @@ export function useCatalogPage(): UseCatalogPageResult {
 
   // 11. Применяем фильтры к карточкам; при активном поиске фильтры пропускаем
   const filteredCatalogUsers = useMemo(() => {
-    if (isSearchActive) return favoriteCatalogUsers
-    return filterCatalogUsers(favoriteCatalogUsers, filters)
-  }, [favoriteCatalogUsers, filters, isSearchActive])
+    if (isSearchActive) return withFavoritesCatalogUsers
+    return filterCatalogUsers(withFavoritesCatalogUsers, filters)
+  }, [withFavoritesCatalogUsers, filters, isSearchActive])
 
   // 12. Отбираем карточки по строке поиска
   const searchFilteredUsers = useMemo(
@@ -136,7 +139,7 @@ export function useCatalogPage(): UseCatalogPageResult {
   )
 
   // 13. Сортируем результаты по выбранному режиму "Сначала новые" или "Сначала популярные"
-  const filteredUsers = useMemo(() => {
+  const sortedCatalogUsers = useMemo(() => {
     if (searchFilteredUsers.length === 0) return []
 
     if (isSortedByNewest) {
@@ -148,7 +151,7 @@ export function useCatalogPage(): UseCatalogPageResult {
 
   // 14. Из всех карточек пункта 10 формируем секции «Популярное», «Новое» и «Рекомендуем» и управление их отображением
   const { sections, isRecommendedLoading, setRecommendedLoadMoreElement, toggleSection } =
-    useCatalogSections(favoriteCatalogUsers)
+    useCatalogSections(withFavoritesCatalogUsers)
 
   // 15. Готовим метки выбранных фильтров для отображения над результатами
   const activeFilters = useMemo(
@@ -174,7 +177,7 @@ export function useCatalogPage(): UseCatalogPageResult {
     sections,
     setRecommendedLoadMoreElement,
     toggleSection,
-    filteredUsers,
+    sortedCatalogUsers,
     // Количество найденных карточек после поиска и фильтров
     resultCount: searchFilteredUsers.length,
     isSortedByNewest,

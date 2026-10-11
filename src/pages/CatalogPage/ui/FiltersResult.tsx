@@ -4,7 +4,7 @@ import type {
 
 import type {
   CatalogCardData,
-} from '@/features/catalog'
+} from '@/widgets/UserCard'
 
 import { UserCard } from '@/widgets/UserCard'
 

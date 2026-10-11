@@ -1,6 +1,10 @@
-import type { CatalogUser } from '@/features/catalog/model/types'
+import type { Skill } from '@/entities/skill'
 
-export function filterCatalogUsersBySearch<T extends CatalogUser>(
+interface SearchableCatalogUser {
+  teachSkills: Skill[]
+}
+
+export function filterCatalogUsersBySearch<T extends SearchableCatalogUser>(
   users: T[],
   searchQuery: string,
 ): T[] {

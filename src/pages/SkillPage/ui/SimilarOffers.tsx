@@ -1,7 +1,7 @@
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import type { CatalogCardData } from '@/features/catalog'
+import type { CatalogCardData } from '@/widgets/UserCard'
 import { CarouselButton } from '@/shared/ui/CarouselButton'
 import { UserCard } from '@/widgets/UserCard'
 

@@ -1,16 +1,16 @@
 import { useEffect } from 'react'
 
-import { loadCategories } from '@/store/slices/categoriesSlice'
-import { loadCities } from '@/store/slices/citiesSlice'
-import { loadSkills } from '@/store/slices/skillsSlice'
-import { loadUsers } from '@/store/slices/usersSlice'
+import { loadCategories } from './slices/categoriesSlice'
+import { loadCities } from './slices/citiesSlice'
+import { loadSkills } from './slices/skillsSlice'
+import { loadUsers } from './slices/usersSlice'
 import type { City } from '@/entities/city'
 import type { Skill } from '@/entities/skill'
 import type { SkillCategory } from '@/entities/category'
 import type { User } from '@/entities/user'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from './hooks'
 
-interface CatalogData {
+interface AppData {
   users: User[]
   cities: City[]
   categories: SkillCategory[]
@@ -20,7 +20,7 @@ interface CatalogData {
   errorMessage: string | null
 }
 
-export function useCatalogData(): CatalogData {
+export function useAppData(): AppData {
   const dispatch = useAppDispatch()
 
   // Получаем навыки и загружаем их, если загрузка ещё не начиналась

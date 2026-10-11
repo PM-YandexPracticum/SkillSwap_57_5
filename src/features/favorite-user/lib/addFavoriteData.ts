@@ -1,9 +1,14 @@
-import type { CatalogCardData, CatalogUser } from '../model/types'
+interface UserWithLikes {
+  user: {
+    id: string
+    likesCount: number
+  }
+}
 
-export function addFavoriteData(
-  catalogUsers: CatalogUser[],
+export function addFavoriteData<T extends UserWithLikes>(
+  catalogUsers: T[],
   likedUserIds: string[],
-): CatalogCardData[] {
+) {
   const likedUserIdSet = new Set(likedUserIds)
 
   return catalogUsers.map((catalogUser) => {

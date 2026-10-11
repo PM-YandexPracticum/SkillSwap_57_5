@@ -9,15 +9,12 @@ import 'swiper/css/thumbs'
 
 import { CarouselButton } from '@/shared/ui/CarouselButton'
 
-import styles from './SkillGallery.module.css'
-
-interface SkillGalleryProps {
-  imageUrls: string[]
-}
+import type { GalleryProps } from './types'
+import styles from './Gallery.module.css'
 
 const MAX_VISIBLE_THUMBS = 3
 
-export function SkillGallery({ imageUrls }: SkillGalleryProps) {
+export function Gallery({ imageUrls }: GalleryProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null)
   const mainSwiperRef = useRef<SwiperClass | null>(null)
 

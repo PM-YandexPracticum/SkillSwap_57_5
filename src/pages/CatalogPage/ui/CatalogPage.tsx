@@ -1,4 +1,4 @@
-import { useCatalogPage } from '@/features/catalog'
+import { useCatalogPage } from '../model/useCatalogPage'
 
 import { CatalogSections } from './CatalogSections'
 import { FiltersBar } from '@/widgets/FiltersBar'
@@ -17,7 +17,7 @@ export default function CatalogPage() {
     sections,
     setRecommendedLoadMoreElement,
     toggleSection,
-    filteredUsers,
+    sortedCatalogUsers,
     resultCount,
     isSortedByNewest,
     hasActiveFilters,
@@ -71,7 +71,7 @@ export default function CatalogPage() {
         {hasActiveFilters ? (
           <FiltersResult
             activeFilters={activeFilters}
-            users={filteredUsers}
+            users={sortedCatalogUsers}
             isAuthenticated={isAuthenticated}
             resultCount={resultCount}
             isSortedByNewest={isSortedByNewest}
