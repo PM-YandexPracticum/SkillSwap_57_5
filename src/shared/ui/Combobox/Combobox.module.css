@@ -1,0 +1,105 @@
+.root {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  color: var(--color-text);
+}
+
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  border: 1px solid var(--color-caption);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.root.open .field {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.root:focus-within .field {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  padding: 11px 52px 11px 20px;
+  border: 0;
+  outline: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+}
+
+.input::placeholder {
+  color: var(--color-caption);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+.root:has(.input:disabled) {
+  opacity: 0.5;
+}
+
+.action,
+.chevron {
+  position: absolute;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+}
+
+.action {
+  display: grid;
+  place-items: center;
+  color: var(--color-text);
+}
+
+.action img {
+  width: 24px;
+  height: 24px;
+}
+
+.list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  max-height: calc(var(--visible-count) * 48px + 17px);
+  padding: 8px 0;
+  overflow-y: auto;
+  list-style: none;
+  border: 1px solid var(--color-caption);
+  border-top: 0;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.option,
+.empty {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 8px 20px;
+}
+
+.option {
+  cursor: pointer;
+}
+
+.option:hover,
+.active {
+  background: var(--color-primary-hover);
+}
+
+.empty {
+  color: var(--color-caption);
+}
