@@ -88,7 +88,6 @@ describe('Combobox', () => {
   it('закрывается при клике вне области (document pointerdown)', () => {
     render(<Example />)
 
-    const input = screen.getByRole('combobox')
     const chevronButton = screen.getByRole('button', { name: 'Открыть список' })
 
     fireEvent.click(chevronButton)
