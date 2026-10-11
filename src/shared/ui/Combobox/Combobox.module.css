@@ -1,0 +1,156 @@
+.root {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  color: var(--color-text);
+}
+
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 11px 20px;
+  border: 1px solid var(--color-caption);
+  border-radius: 12px;
+  background: var(--color-surface);
+  transition: border-color 0.2s ease;
+  cursor: default;
+}
+
+.root.open .field {
+  cursor: pointer;
+}
+
+.root:focus-within .field {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-color: #e4e8df;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: var(--color-caption);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+.root:has(.input:disabled) {
+  opacity: 0.5;
+}
+
+.clearButton {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: 0.6;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.clearButton:hover:not(:disabled) {
+  opacity: 1;
+}
+
+.clearButton img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.field .clearButton,
+.field .chevronButton {
+  z-index: 2;
+}
+
+.chevronButton {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: 0.6;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.chevronButton:hover,
+.root.open .chevronButton {
+  opacity: 1;
+}
+
+.root.open .chevronButton img {
+  transform: rotate(180deg);
+}
+
+.chevronButton img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  max-height: calc(var(--visible-count) * 48px + 17px);
+  padding: 8px 0;
+  overflow-y: auto;
+  list-style: none;
+  border: 1px solid var(--color-caption);
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  background: var(--color-surface);
+}
+
+.option,
+.empty {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 8px 20px;
+}
+
+.option {
+  cursor: pointer;
+}
+
+.option:hover,
+.active {
+  background: var(--color-primary-hover);
+}
+
+.empty {
+  color: var(--color-caption);
+}
