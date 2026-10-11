@@ -11,41 +11,90 @@ const options = [
 ]
 
 function Example() {
-  const [value, setValue] = useState('')
-  return <Combobox value={value} options={options} onChange={setValue} ariaLabel="Город" />
+  const [value, setValue] = useState<string>('')
+  return (
+    <Combobox
+      value={value}
+      options={options}
+      onChange={setValue}
+      ariaLabel="Выберите город"
+      placeholder="Начните вводить название"
+    />
+  )
 }
 
 describe('Combobox', () => {
-  it('фильтрует города, выбирает значение и очищает поле', () => {
+  it('фильтрует опции при вводе, выбирает значение и корректно очищает поле', () => {
     render(<Example />)
-    const input = screen.getByRole('combobox')
 
-    fireEvent.focus(input)
+    const input = screen.getByRole('combobox')
+    const chevronButton = screen.getByRole('button', { name: 'Открыть список' })
+
+    fireEvent.click(chevronButton)
+
     expect(screen.getAllByRole('option')).toHaveLength(4)
 
     fireEvent.change(input, { target: { value: 'Са' } })
     expect(screen.getAllByRole('option')).toHaveLength(3)
 
-    fireEvent.click(screen.getByRole('option', { name: 'Самара' }))
+    const samaraOption = screen.getByRole('option', { name: 'Самара' })
+    fireEvent.click(samaraOption)
+
     expect(input).toHaveValue('Самара')
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: 'Очистить поле' }))
+    const clearButton = screen.getByRole('button', { name: 'Очистить значение' })
+    fireEvent.click(clearButton)
+
     expect(input).toHaveValue('')
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
+    expect(document.activeElement).toBe(input)
 
     fireEvent.pointerDown(document.body)
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
   })
 
-  it('позволяет выбрать пункт с клавиатуры', () => {
+  describe('Combobox', () => {
+    it('позволяет выбрать пункт с клавиатуры (стрелки + Enter)', async () => {
+      render(<Example />)
+
+      const input = screen.getByRole('combobox')
+
+      fireEvent.focus(input)
+      await screen.findByRole('listbox')
+
+      fireEvent.keyDown(input, { key: 'ArrowDown' })
+      fireEvent.keyDown(input, { key: 'Enter' })
+
+      expect(input).toHaveValue('Самара')
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+    })
+  })
+
+  it('корректно обрабатывает Escape — закрывает список без выбора', () => {
     render(<Example />)
+
     const input = screen.getByRole('combobox')
+    const chevronButton = screen.getByRole('button', { name: 'Открыть список' })
 
-    fireEvent.focus(input)
-    fireEvent.keyDown(input, { key: 'ArrowDown' })
-    fireEvent.keyDown(input, { key: 'Enter' })
+    fireEvent.click(chevronButton)
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
 
-    expect(input).toHaveValue('Самара')
+    fireEvent.keyDown(input, { key: 'Escape' })
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+    expect(input).not.toHaveValue()
+  })
+
+  it('закрывается при клике вне области (document pointerdown)', () => {
+    render(<Example />)
+
+    const input = screen.getByRole('combobox')
+    const chevronButton = screen.getByRole('button', { name: 'Открыть список' })
+
+    fireEvent.click(chevronButton)
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
+
+    fireEvent.pointerDown(document.body)
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
   })
 })
