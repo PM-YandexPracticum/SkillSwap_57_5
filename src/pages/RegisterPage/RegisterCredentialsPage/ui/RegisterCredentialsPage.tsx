@@ -1,20 +1,17 @@
-// import styles from './RegisterCredentialsPage.module.css'
-import { useNavigate } from 'react-router-dom'
-
 import { CredentialsForm } from '@/widgets/CredentialsForm'
+import { useRegistrationCredentials } from '@/features/registration'
 
 export default function RegisterCredentialsPage() {
-  
-  const navigate = useNavigate()
-
-  const handleSubmit = (data: { email: string; password: string }) => {
-    console.log('registration step 1:', data)
-    navigate('/register/profile')
-  }
+  const { processRegistrationStep1, errors, savedValues } = useRegistrationCredentials()
 
   return (
     <main>
-      <CredentialsForm variant="registration" onSubmit={handleSubmit} />
+      <CredentialsForm 
+        variant="registration" 
+        onSubmit={processRegistrationStep1} 
+        savedValues={savedValues}
+        errors={errors}
+      />
     </main>
   )
 }

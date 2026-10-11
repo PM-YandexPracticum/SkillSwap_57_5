@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { InfoBlock } from '@/shared/ui/InfoBlock'
@@ -17,16 +17,27 @@ import styles from './CredentialsForm.module.css'
 interface CredentialsFormProps {
   variant: 'login' | 'registration'
   onSubmit: (data: { email: string; password: string }) => void
+  savedValues?: { email: string; password: string }
+  errors?: { email?: string; password?: string }
 }
 
 export function CredentialsForm({
   variant,
   onSubmit,
+  savedValues,
+  errors,
 }: CredentialsFormProps) {
-
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState(savedValues?.email || '')
+  const [password, setPassword] = useState(savedValues?.password || '')
   const [showPassword, setShowPassword] = useState(false)
+
+  useEffect(() => {
+    if (savedValues) {
+      setEmail(savedValues.email)
+      setPassword(savedValues.password)
+    }
+  }, [savedValues])
+
   const isPasswordValid = password.length >= 8
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -58,18 +69,19 @@ export function CredentialsForm({
           <FormField id="email" label={'Email'}>
             <Input
               id="email"
-              type="email"
+              type="text"
               value={email}
               onChange={setEmail}
               placeholder="Введите email"
             />
           </FormField>
+          {errors?.email && <p className={styles.errorHint}>{errors.email}</p>}
 
           <div>
             <InputWithAction
               id="password"
               label="Пароль"
-              actionIconSrc={eyeIcon}         // ← иконка глаза
+              actionIconSrc={eyeIcon}
               actionLabel={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
               onAction={() => setShowPassword(!showPassword)}
               showAction={true}
@@ -86,8 +98,9 @@ export function CredentialsForm({
                 }
               />
             </InputWithAction>
+            {errors?.password && <p className={styles.errorHint}>{errors.password}</p>}
 
-            {variant === 'registration' && (
+            {variant === 'registration' && !errors?.password && (
               <p className={styles.hint}>
                 {isPasswordValid
                   ? 'Надёжный пароль'
@@ -118,5 +131,4 @@ export function CredentialsForm({
       </div>
     </section>
   )
-
 }
