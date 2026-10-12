@@ -3,7 +3,7 @@
   flex-direction: column;
   box-sizing: border-box;
   padding: 40px 33px;
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 12px;
   color: #1f2a1f;
   font-size: 16px;
@@ -75,5 +75,5 @@
 }
 
 .linkUsername {
-  color: #000000;
+  color: #000;
 }
