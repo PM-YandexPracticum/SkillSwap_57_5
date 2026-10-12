@@ -34,7 +34,6 @@ export function AppRouter() {
           <Route path={'/'} element={<CatalogPage />} />
           <Route path={'/about'} element={<AboutPage />} />
           <Route path={'/skill/:id'} element={<SkillPage />} />
-          <Route path="/skill/:id/exchange" element={<SkillExchangePage />}></Route>
           <Route path={'/profile'} element={<ProfilePage />} />
           <Route path={'/favorites'} element={<FavoritesPage />} />
           <Route path={'/500'} element={<ServerErrorPage />} />
@@ -48,7 +47,6 @@ export function AppRouter() {
           <Route path={'/register/credentials'} element={<RegisterCredentialsPage />} />
           <Route path={'/register/profile'} element={<RegisterProfilePage />} />
           <Route path={'/register/skill'} element={<RegisterSkillPage />} />
-          <Route path="/register/skill/:id" element={<RegisterPreviewPage />}></Route>
         </Route>
       </Routes>
 
