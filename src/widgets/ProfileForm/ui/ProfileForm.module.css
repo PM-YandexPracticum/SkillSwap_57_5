@@ -38,15 +38,66 @@
   width: 100%;
 }
 
-.dateIcon {
+.dateInput {
+  width: 100%;
+  padding-right: 32px;
+  box-sizing: border-box;
+}
+
+.calendarIconButton {
   position: absolute;
   right: 20px;
   top: 50%;
   transform: translateY(-50%);
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.calendarIconButton img {
   width: 24px;
   height: 24px;
+  display: block;
   pointer-events: none;
 }
 
+.popoverContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
+.calendar {
+  width: 100%;
+  max-width: 320px;
 
+  --rdp-accent-color: #000;
+}
+
+.rdp-dropdown_root {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendarFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.weekday {
+  color: #508826;
+}
+
+.selectedDay {
+  background-color: #abd27a;
+  border: none;
+  color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
