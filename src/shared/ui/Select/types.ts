@@ -1,12 +1,17 @@
-import type { ReactNode } from 'react'
 
-export type SelectProps = {
+export interface SelectOption {
+  value: string
+  label: string
+}
+
+export interface SelectProps {
   id: string
-  children: ReactNode
+  label: string
+  options: SelectOption[]
   value: string
   onChange: (value: string) => void
+  placeholder?: string
   className?: string
   disabled?: boolean
-  required: boolean
-  ariaLabel?: string
+  required?: boolean
 }

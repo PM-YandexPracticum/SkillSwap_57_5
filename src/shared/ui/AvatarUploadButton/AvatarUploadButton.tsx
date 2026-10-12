@@ -2,9 +2,8 @@ import type { AvatarUploadButtonProps } from './types'
 import clsx from 'clsx'
 import { useRef } from 'react'
 import { IconButton } from '@/shared/ui/IconButton'
-import addIcon from '@/shared/assets/icons/add.svg'
+import Icon_and_add from '@/shared/assets/icons/Icon_and_add.svg'
 import styles from './AvatarUploadButton.module.css'
-
 
 export function AvatarUploadButton({
   onAvatarChange = () => {},
@@ -20,7 +19,7 @@ export function AvatarUploadButton({
 
   return (
     <div className={clsx(styles.container, className)}>
-      <IconButton src={addIcon} ariaLabel="Загрузить аватар" onClick={handleClick} />
+      <IconButton src={Icon_and_add} ariaLabel="Загрузить аватар" onClick={handleClick} />
       <input
         ref={inputRef}
         type="file"
