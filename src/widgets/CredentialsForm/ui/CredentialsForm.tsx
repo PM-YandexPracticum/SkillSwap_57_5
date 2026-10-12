@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 
 import { InfoBlock } from '@/shared/ui/InfoBlock'
@@ -21,12 +22,7 @@ interface CredentialsFormProps {
   errors?: { email?: string; password?: string }
 }
 
-export function CredentialsForm({
-  variant,
-  onSubmit,
-  savedValues,
-  errors,
-}: CredentialsFormProps) {
+export function CredentialsForm({ variant, onSubmit, savedValues, errors }: CredentialsFormProps) {
   const [email, setEmail] = useState(savedValues?.email || '')
   const [password, setPassword] = useState(savedValues?.password || '')
   const [showPassword, setShowPassword] = useState(false)
@@ -46,9 +42,8 @@ export function CredentialsForm({
   }
 
   return (
-    <section className={styles.container}>
+    <section className={clsx(styles.container, variant === 'login' && styles.login)}>
       <div className={styles.contentContainer}>
-        
         <div className={styles.serviceButtonWrapper}>
           <Button className={styles.serviceButton} variant={'secondary'}>
             <img alt="" aria-hidden="true" src={googleIcon} className={styles.buttonIcon} />
@@ -64,18 +59,28 @@ export function CredentialsForm({
           <p>или</p>
         </div>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          
-          <FormField id="email" label={'Email'}>
-            <Input
-              id="email"
-              type="text"
-              value={email}
-              onChange={setEmail}
-              placeholder="Введите email"
-            />
-          </FormField>
-          {errors?.email && <p className={styles.errorHint}>{errors.email}</p>}
+        <form
+          onSubmit={handleSubmit}
+          className={styles.form}
+          noValidate={variant === 'registration'}
+        >
+          <div>
+            <FormField id="email" label={'Email'}>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={setEmail}
+                placeholder="Введите email"
+                className={errors?.email ? styles.inputError : undefined}
+              />
+            </FormField>
+            {errors?.email && (
+              <p className={styles.errorHint} role="alert">
+                {errors.email}
+              </p>
+            )}
+          </div>
 
           <div>
             <InputWithAction
@@ -91,42 +96,43 @@ export function CredentialsForm({
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={setPassword}
+                className={errors?.password ? styles.inputError : undefined}
                 placeholder={
-                  variant === 'registration'
-                    ? 'Придумайте надёжный пароль'
-                    : 'Введите пароль'
+                  variant === 'registration' ? 'Придумайте надёжный пароль' : 'Введите пароль'
                 }
               />
             </InputWithAction>
-            {errors?.password && <p className={styles.errorHint}>{errors.password}</p>}
+            {errors?.password && (
+              <p className={styles.errorHint} role="alert">
+                {errors.password}
+              </p>
+            )}
 
             {variant === 'registration' && !errors?.password && (
               <p className={styles.hint}>
-                {isPasswordValid
-                  ? 'Надёжный пароль'
-                  : 'Пароль должен содержать минимум 8 символов'}
+                {isPasswordValid ? 'Надёжный пароль' : 'Пароль должен содержать минимум 8 символов'}
               </p>
             )}
           </div>
-          
+
           <Button type="submit" className={styles.submitButton}>
             {variant === 'registration' ? 'Далее' : 'Войти'}
           </Button>
-
         </form>
-        
+
         {variant === 'registration' && (
           <Link to="/login" className={styles.link}>
             Уже есть аккаунт? Войти
           </Link>
         )}
-
       </div>
       <div className={styles.contentContainer}>
-        <InfoBlock 
+        <InfoBlock
           src={lightBulb}
           title={'Добро пожаловать в SkillSwap!'}
-          description={'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'}
+          description={
+            'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'
+          }
         />
       </div>
     </section>

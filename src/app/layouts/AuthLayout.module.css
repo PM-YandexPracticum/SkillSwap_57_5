@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #fff;
+  background-color: var(--color-bg);
   max-width: 1440px;
   margin: 0 auto;
   width: 100%;
@@ -12,30 +12,45 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 40px;
+  gap: 16px;
+  padding: 36px 36px 0;
 }
 
 .content {
   flex-grow: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 20px;
+  padding: 0 36px 64px;
 }
 
 .closeButton {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 11px 24px;
+  font-weight: 400;
+  background-color: var(--color-surface);
   cursor: pointer;
   border-color: transparent;
 }
 
 .closeButton:hover:not(:disabled) {
-  background-color: transparent;
+  background-color: var(--color-primary-hover);
 }
 
 .icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
+}
+
+@media (width <= 600px) {
+  .header {
+    flex-wrap: wrap;
+    padding: 24px 20px 0;
+  }
+
+  .content {
+    padding: 0 20px 40px;
+  }
 }
