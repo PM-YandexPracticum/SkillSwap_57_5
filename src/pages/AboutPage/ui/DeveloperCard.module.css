@@ -1,0 +1,79 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 40px 33px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  color: #1f2a1f;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.card .avatar {
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.role {
+  margin: 0;
+}
+
+.about {
+  margin-top: 24px;
+}
+
+.label {
+  margin: 0;
+}
+
+.text {
+  margin: 12px 0 0;
+}
+
+.contact {
+  margin-top: 24px;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  color: inherit;
+  text-decoration: underline;
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.linkBase {
+  color: #4a554a;
+}
+
+.linkUsername {
+  color: #000000;
+}
