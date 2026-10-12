@@ -7,10 +7,10 @@ import { SimilarOffers } from './SimilarOffers'
 
 export default function SkillPage() {
   const skillId = useParams<{ id: string }>().id
-  const { data } = useSkillPage(skillId)
+  const { data, handleFavoriteToggle, isAuthenticated, likedUserIds } = useSkillPage(skillId)
+  const isAuthorFavorite = likedUserIds?.includes(data?.author.id ?? '') ?? false
 
-  if (!skillId) return null
-  if (!data) return null
+  if (!skillId || !data) return null
 
   return (
     <>
@@ -27,16 +27,16 @@ export default function SkillPage() {
             author={data.author}
             categoryName={data.categoryName}
             subcategoryName={data.subcategoryName}
-            isFavorite={data.isFavorite}
-            isAuthenticated={true}
-            onFavoriteToggle={() => {}}
+            isFavorite={isAuthorFavorite}
+            isAuthenticated={isAuthenticated}
+            onFavoriteToggle={() => handleFavoriteToggle(data.author.id)}
           ></SkillInfo>
         </section>
         <SimilarOffers
           items={data.similarOffers}
           title="Похожие предложения"
-          isAuthenticated={true}
-          onFavoriteToggle={() => {}}
+          isAuthenticated={isAuthenticated}
+          onFavoriteToggle={handleFavoriteToggle}
         />
       </div>
     </>

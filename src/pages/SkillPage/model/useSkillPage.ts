@@ -5,6 +5,8 @@ import type { Skill, SkillId } from '@/entities/skill/model/types'
 import type { User } from '@/entities/user/model/types'
 import type { City } from '@/entities/city/model/types'
 import { useSimilarOffers } from './useSimilarOffer'
+import { useFavoriteUsers } from '@/features/favorite-user/model/useFavoriteUsers'
+import { addFavoriteData } from '@/features/favorite-user/lib/addFavoriteData'
 
 export type SkillPageData = {
   skill: Skill
@@ -21,6 +23,11 @@ export type SkillPageData = {
 export function useSkillPage(id: SkillId | undefined) {
   const { users, cities, categories, skills, isLoading } = useAppData()
 
+  // Временная заглушка авторизации
+  const isAuthenticated = true
+
+  const { likedUserIds, toggleFavoriteUser } = useFavoriteUsers(isAuthenticated)
+
   const allSubcategories = useMemo(() => {
     return categories.flatMap((category) => category.subcategories)
   }, [categories])
@@ -34,6 +41,10 @@ export function useSkillPage(id: SkillId | undefined) {
   const subcategoryId = skill?.subcategoryId ?? ''
 
   const similarOffers = useSimilarOffers(catalogUsers, subcategoryId, author?.id ?? '')
+
+  const similarOffersWithFavorites = useMemo(() => {
+    return addFavoriteData(similarOffers, likedUserIds ?? [])
+  }, [similarOffers, likedUserIds])
 
   const data = useMemo<SkillPageData | null>(() => {
     if (!id || !skill || !author) return null
@@ -53,11 +64,17 @@ export function useSkillPage(id: SkillId | undefined) {
       categoryName: category?.name ?? '',
       subcategoryName: subcategory?.name ?? '',
       isFavorite: false,
-      similarOffers,
+      similarOffers: similarOffersWithFavorites,
       authorTeachSkills: authorCard.teachSkills,
       authorLearnSkills: authorCard.learnSkills,
     }
-  }, [id, skill, author, skills, cities, categories, allSubcategories, similarOffers])
+  }, [id, skill, author, skills, cities, categories, allSubcategories, similarOffersWithFavorites])
 
-  return { data, loading: isLoading }
+  return {
+    data,
+    loading: isLoading,
+    handleFavoriteToggle: toggleFavoriteUser,
+    isAuthenticated,
+    likedUserIds,
+  }
 }
