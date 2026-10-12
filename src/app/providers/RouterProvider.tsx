@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Navigate, Routes, Route } from 'react-router-dom'
+import { Navigate, Routes, Route, useLocation } from 'react-router-dom'
 import { Loader } from '@/shared/ui/Loader'
 import { MainLayout } from '../layouts/MainLayout'
 import { AuthLayout } from '../layouts/AuthLayout' // Наш новый лайаут авторизации
@@ -12,6 +12,8 @@ const RegisterCredentialsPage = lazy(() => import('@/pages/RegisterPage/Register
 const RegisterProfilePage = lazy(() => import('@/pages/RegisterPage/RegisterProfilePage'))
 const RegisterSkillPage = lazy(() => import('@/pages/RegisterPage/RegisterSkillPage'))
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'))
+const RegisterPreviewPage = lazy(() => import('@/pages/RegisterPreviewPage'))
+const SkillExchangePage = lazy(() => import('@/pages/SkillExchangePage'))
 const FavoritesPage = lazy(() => import('@/pages/FavoritesPage'))
 const ServerErrorPage = lazy(() => import('@/pages/ServerErrorPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
@@ -19,9 +21,12 @@ const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 const UiReviewPage = import.meta.env.DEV ? lazy(() => import('@/pages/UiReviewPage')) : null
 
 export function AppRouter() {
+  const location = useLocation()
+  const backgroundLocation = location.state?.backgroundLocation
+
   return (
     <Suspense fallback={<Loader />}>
-      <Routes>
+      <Routes location={backgroundLocation || location}>
         {UiReviewPage && <Route path="/dev" element={<UiReviewPage />} />}
 
         {/* Главная обёртка MainLayout для обычных страниц (убрали отсюда /login) */}
@@ -44,6 +49,13 @@ export function AppRouter() {
           <Route path={'/register/skill'} element={<RegisterSkillPage />} />
         </Route>
       </Routes>
+
+      {backgroundLocation && (
+        <Routes>
+          <Route path="/register/skill/:id" element={<RegisterPreviewPage />} />
+          <Route path="/skill/:id/exchange" element={<SkillExchangePage />} />
+        </Routes>
+      )}
     </Suspense>
   )
 }
