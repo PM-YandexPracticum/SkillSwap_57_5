@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 
 import { InfoBlock } from '@/shared/ui/InfoBlock'
@@ -17,16 +18,22 @@ import styles from './CredentialsForm.module.css'
 interface CredentialsFormProps {
   variant: 'login' | 'registration'
   onSubmit: (data: { email: string; password: string }) => void
+  savedValues?: { email: string; password: string }
+  errors?: { email?: string; password?: string }
 }
 
-export function CredentialsForm({
-  variant,
-  onSubmit,
-}: CredentialsFormProps) {
-
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+export function CredentialsForm({ variant, onSubmit, savedValues, errors }: CredentialsFormProps) {
+  const [email, setEmail] = useState(savedValues?.email || '')
+  const [password, setPassword] = useState(savedValues?.password || '')
   const [showPassword, setShowPassword] = useState(false)
+
+  useEffect(() => {
+    if (savedValues) {
+      setEmail(savedValues.email)
+      setPassword(savedValues.password)
+    }
+  }, [savedValues])
+
   const isPasswordValid = password.length >= 8
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -35,9 +42,8 @@ export function CredentialsForm({
   }
 
   return (
-    <section className={styles.container}>
+    <section className={clsx(styles.container, variant === 'login' && styles.login)}>
       <div className={styles.contentContainer}>
-        
         <div className={styles.serviceButtonWrapper}>
           <Button className={styles.serviceButton} variant={'secondary'}>
             <img alt="" aria-hidden="true" src={googleIcon} className={styles.buttonIcon} />
@@ -53,23 +59,34 @@ export function CredentialsForm({
           <p>или</p>
         </div>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          
-          <FormField id="email" label={'Email'}>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={setEmail}
-              placeholder="Введите email"
-            />
-          </FormField>
+        <form
+          onSubmit={handleSubmit}
+          className={styles.form}
+          noValidate={variant === 'registration'}
+        >
+          <div>
+            <FormField id="email" label={'Email'}>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={setEmail}
+                placeholder="Введите email"
+                className={errors?.email ? styles.inputError : undefined}
+              />
+            </FormField>
+            {errors?.email && (
+              <p className={styles.errorHint} role="alert">
+                {errors.email}
+              </p>
+            )}
+          </div>
 
           <div>
             <InputWithAction
               id="password"
               label="Пароль"
-              actionIconSrc={eyeIcon}         // ← иконка глаза
+              actionIconSrc={eyeIcon}
               actionLabel={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
               onAction={() => setShowPassword(!showPassword)}
               showAction={true}
@@ -79,44 +96,45 @@ export function CredentialsForm({
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={setPassword}
+                className={errors?.password ? styles.inputError : undefined}
                 placeholder={
-                  variant === 'registration'
-                    ? 'Придумайте надёжный пароль'
-                    : 'Введите пароль'
+                  variant === 'registration' ? 'Придумайте надёжный пароль' : 'Введите пароль'
                 }
               />
             </InputWithAction>
+            {errors?.password && (
+              <p className={styles.errorHint} role="alert">
+                {errors.password}
+              </p>
+            )}
 
-            {variant === 'registration' && (
+            {variant === 'registration' && !errors?.password && (
               <p className={styles.hint}>
-                {isPasswordValid
-                  ? 'Надёжный пароль'
-                  : 'Пароль должен содержать минимум 8 символов'}
+                {isPasswordValid ? 'Надёжный пароль' : 'Пароль должен содержать минимум 8 символов'}
               </p>
             )}
           </div>
-          
+
           <Button type="submit" className={styles.submitButton}>
             {variant === 'registration' ? 'Далее' : 'Войти'}
           </Button>
-
         </form>
-        
+
         {variant === 'registration' && (
           <Link to="/login" className={styles.link}>
             Уже есть аккаунт? Войти
           </Link>
         )}
-
       </div>
       <div className={styles.contentContainer}>
-        <InfoBlock 
+        <InfoBlock
           src={lightBulb}
           title={'Добро пожаловать в SkillSwap!'}
-          description={'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'}
+          description={
+            'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'
+          }
         />
       </div>
     </section>
   )
-
 }
