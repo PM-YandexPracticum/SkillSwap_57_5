@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto;
+  max-width: 1440px;
+}
+
+.contentContainer {
+  padding: 100px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 40vw;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.buttonContainer {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.rowInputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.dateField {
+  position: relative;
+  width: 100%;
+}
+
+.dateIcon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+
+
+
