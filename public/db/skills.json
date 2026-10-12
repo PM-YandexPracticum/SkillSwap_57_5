@@ -7,12 +7,11 @@
     "subcategoryId": "music-and-sound",
     "description": "Научу основам техники, разбору ритмов и уверенной игре под любимые композиции",
     "imageUrls": [
+      "/images/skills/creativity-and-art/07.jpg",
       "/images/skills/creativity-and-art/01.jpg",
-      "/images/skills/creativity-and-art/02.jpg",
-      "/images/skills/creativity-and-art/03.jpg",
-      "/images/skills/creativity-and-art/04.jpg",
-      "/images/skills/creativity-and-art/05.jpg",
-      "/images/skills/creativity-and-art/06.jpg"
+      "/images/skills/creativity-and-art/08.jpg",
+      "/images/skills/creativity-and-art/06.jpg",
+      "/images/skills/creativity-and-art/05.jpg"
     ]
   },
   {
@@ -23,9 +22,11 @@
     "subcategoryId": "english",
     "description": "Помогу начать говорить по-английски свободнее и перестать бояться ошибок",
     "imageUrls": [
-      "/images/skills/foreign-languages/01.jpg",
       "/images/skills/foreign-languages/02.jpg",
-      "/images/skills/foreign-languages/03.jpg"
+      "/images/skills/foreign-languages/08.jpg",
+      "/images/skills/foreign-languages/04.jpg",
+      "/images/skills/foreign-languages/01.jpg",
+      "/images/skills/foreign-languages/07.jpg"
     ]
   },
   {
@@ -36,9 +37,11 @@
     "subcategoryId": "time-management",
     "description": "Покажу, как планировать задачи, расставлять приоритеты и не перегружать расписание",
     "imageUrls": [
-      "/images/skills/business-and-career/01.jpg",
+      "/images/skills/business-and-career/04.jpg",
+      "/images/skills/business-and-career/05.jpg",
+      "/images/skills/business-and-career/07.jpg",
       "/images/skills/business-and-career/02.jpg",
-      "/images/skills/business-and-career/03.jpg"
+      "/images/skills/business-and-career/01.jpg"
     ]
   },
   {
@@ -49,9 +52,11 @@
     "subcategoryId": "acting",
     "description": "Научу справляться с волнением, работать с голосом и уверенно держаться перед аудиторией",
     "imageUrls": [
-      "/images/skills/creativity-and-art/02.jpg",
-      "/images/skills/creativity-and-art/03.jpg",
-      "/images/skills/creativity-and-art/04.jpg"
+      "/images/skills/creativity-and-art/06.jpg",
+      "/images/skills/creativity-and-art/04.jpg",
+      "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/05.jpg",
+      "/images/skills/creativity-and-art/02.jpg"
     ]
   },
   {
@@ -62,9 +67,11 @@
     "subcategoryId": "speed-reading",
     "description": "Разберём техники быстрого чтения, концентрации и запоминания основной информации",
     "imageUrls": [
-      "/images/skills/education-and-development/01.jpg",
       "/images/skills/education-and-development/02.jpg",
-      "/images/skills/education-and-development/03.jpg"
+      "/images/skills/education-and-development/03.jpg",
+      "/images/skills/education-and-development/07.jpg",
+      "/images/skills/education-and-development/05.jpg",
+      "/images/skills/education-and-development/04.jpg"
     ]
   },
   {
@@ -75,9 +82,11 @@
     "subcategoryId": "acting",
     "description": "Помогу раскрыть спонтанность, внимание к партнёру и уверенность в импровизации",
     "imageUrls": [
-      "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/02.jpg",
       "/images/skills/creativity-and-art/03.jpg",
-      "/images/skills/creativity-and-art/04.jpg"
+      "/images/skills/creativity-and-art/06.jpg",
+      "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/05.jpg"
     ]
   },
   {
@@ -88,9 +97,11 @@
     "subcategoryId": "drawing-and-illustration",
     "description": "Научу собирать композицию, работать с цветом и создавать законченную иллюстрацию",
     "imageUrls": [
-      "/images/skills/creativity-and-art/01.jpg",
-      "/images/skills/creativity-and-art/02.jpg",
-      "/images/skills/creativity-and-art/04.jpg"
+      "/images/skills/creativity-and-art/07.jpg",
+      "/images/skills/creativity-and-art/08.jpg",
+      "/images/skills/creativity-and-art/04.jpg",
+      "/images/skills/creativity-and-art/05.jpg",
+      "/images/skills/creativity-and-art/03.jpg"
     ]
   },
   {
@@ -101,9 +112,11 @@
     "subcategoryId": "music-and-sound",
     "description": "Разберём дыхание, интонацию и упражнения для уверенного звучания голоса",
     "imageUrls": [
-      "/images/skills/creativity-and-art/01.jpg",
       "/images/skills/creativity-and-art/02.jpg",
-      "/images/skills/creativity-and-art/03.jpg"
+      "/images/skills/creativity-and-art/03.jpg",
+      "/images/skills/creativity-and-art/05.jpg",
+      "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/06.jpg"
     ]
   },
   {
@@ -114,9 +127,11 @@
     "subcategoryId": "decor-and-diy",
     "description": "Покажу простые техники создания декора из доступных материалов",
     "imageUrls": [
+      "/images/skills/creativity-and-art/05.jpg",
+      "/images/skills/creativity-and-art/06.jpg",
       "/images/skills/creativity-and-art/02.jpg",
-      "/images/skills/creativity-and-art/03.jpg",
-      "/images/skills/creativity-and-art/04.jpg"
+      "/images/skills/creativity-and-art/04.jpg",
+      "/images/skills/creativity-and-art/03.jpg"
     ]
   },
   {
@@ -127,9 +142,11 @@
     "subcategoryId": "team-management",
     "description": "Помогу распределять задачи, давать обратную связь и проводить полезные встречи",
     "imageUrls": [
+      "/images/skills/business-and-career/03.jpg",
+      "/images/skills/business-and-career/04.jpg",
+      "/images/skills/business-and-career/07.jpg",
       "/images/skills/business-and-career/01.jpg",
-      "/images/skills/business-and-career/02.jpg",
-      "/images/skills/business-and-career/04.jpg"
+      "/images/skills/business-and-career/08.jpg"
     ]
   },
   {
@@ -141,8 +158,10 @@
     "description": "Научу находить идеи, выстраивать сюжет и редактировать собственные тексты",
     "imageUrls": [
       "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/04.jpg",
+      "/images/skills/creativity-and-art/05.jpg",
       "/images/skills/creativity-and-art/03.jpg",
-      "/images/skills/creativity-and-art/04.jpg"
+      "/images/skills/creativity-and-art/08.jpg"
     ]
   },
   {
@@ -153,9 +172,11 @@
     "subcategoryId": "cooking",
     "description": "Приготовим тесто, несколько видов пасты и простой соус из доступных продуктов",
     "imageUrls": [
-      "/images/skills/home-and-comfort/01.jpg",
+      "/images/skills/home-and-comfort/04.jpg",
+      "/images/skills/home-and-comfort/03.jpg",
       "/images/skills/home-and-comfort/02.jpg",
-      "/images/skills/home-and-comfort/03.jpg"
+      "/images/skills/home-and-comfort/01.jpg",
+      "/images/skills/home-and-comfort/05.jpg"
     ]
   },
   {
@@ -166,9 +187,11 @@
     "subcategoryId": "teaching-skills",
     "description": "Покажу, как строить понятные объяснения, примеры и практические задания",
     "imageUrls": [
+      "/images/skills/education-and-development/06.jpg",
+      "/images/skills/education-and-development/04.jpg",
+      "/images/skills/education-and-development/05.jpg",
       "/images/skills/education-and-development/01.jpg",
-      "/images/skills/education-and-development/03.jpg",
-      "/images/skills/education-and-development/04.jpg"
+      "/images/skills/education-and-development/07.jpg"
     ]
   },
   {
@@ -179,9 +202,11 @@
     "subcategoryId": "home-repair",
     "description": "Научу безопасно пользоваться инструментами и устранять простые бытовые поломки",
     "imageUrls": [
-      "/images/skills/home-and-comfort/01.jpg",
+      "/images/skills/home-and-comfort/03.jpg",
+      "/images/skills/home-and-comfort/08.jpg",
+      "/images/skills/home-and-comfort/04.jpg",
       "/images/skills/home-and-comfort/02.jpg",
-      "/images/skills/home-and-comfort/04.jpg"
+      "/images/skills/home-and-comfort/06.jpg"
     ]
   },
   {
@@ -192,9 +217,11 @@
     "subcategoryId": "photography",
     "description": "Разберём свет, композицию и работу с человеком во время портретной съёмки",
     "imageUrls": [
-      "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/08.jpg",
+      "/images/skills/creativity-and-art/07.jpg",
       "/images/skills/creativity-and-art/02.jpg",
-      "/images/skills/creativity-and-art/04.jpg"
+      "/images/skills/creativity-and-art/05.jpg",
+      "/images/skills/creativity-and-art/01.jpg"
     ]
   },
   {
@@ -205,9 +232,11 @@
     "subcategoryId": "video-editing",
     "description": "Научу собирать динамичный ролик, работать со звуком и простыми переходами",
     "imageUrls": [
-      "/images/skills/creativity-and-art/02.jpg",
-      "/images/skills/creativity-and-art/03.jpg",
-      "/images/skills/creativity-and-art/04.jpg"
+      "/images/skills/creativity-and-art/07.jpg",
+      "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/05.jpg",
+      "/images/skills/creativity-and-art/06.jpg",
+      "/images/skills/creativity-and-art/08.jpg"
     ]
   },
   {
@@ -219,8 +248,10 @@
     "description": "Покажу короткие практики внимания и дыхания для повседневной жизни",
     "imageUrls": [
       "/images/skills/health-and-lifestyle/01.jpg",
+      "/images/skills/health-and-lifestyle/03.jpg",
       "/images/skills/health-and-lifestyle/02.jpg",
-      "/images/skills/health-and-lifestyle/03.jpg"
+      "/images/skills/health-and-lifestyle/06.jpg",
+      "/images/skills/health-and-lifestyle/05.jpg"
     ]
   },
   {
@@ -231,9 +262,11 @@
     "subcategoryId": "houseplants",
     "description": "Помогу подобрать уход, освещение и режим полива для домашних растений",
     "imageUrls": [
-      "/images/skills/home-and-comfort/01.jpg",
+      "/images/skills/home-and-comfort/05.jpg",
+      "/images/skills/home-and-comfort/04.jpg",
+      "/images/skills/home-and-comfort/07.jpg",
       "/images/skills/home-and-comfort/03.jpg",
-      "/images/skills/home-and-comfort/04.jpg"
+      "/images/skills/home-and-comfort/01.jpg"
     ]
   },
   {
@@ -244,9 +277,11 @@
     "subcategoryId": "home-finance",
     "description": "Научу учитывать расходы, планировать накопления и собирать понятный бюджет",
     "imageUrls": [
-      "/images/skills/home-and-comfort/02.jpg",
       "/images/skills/home-and-comfort/03.jpg",
-      "/images/skills/home-and-comfort/04.jpg"
+      "/images/skills/home-and-comfort/02.jpg",
+      "/images/skills/home-and-comfort/04.jpg",
+      "/images/skills/home-and-comfort/01.jpg",
+      "/images/skills/home-and-comfort/06.jpg"
     ]
   },
   {
@@ -258,8 +293,10 @@
     "description": "Разберём резюме, ответы на частые вопросы и самопрезентацию",
     "imageUrls": [
       "/images/skills/business-and-career/01.jpg",
-      "/images/skills/business-and-career/03.jpg",
-      "/images/skills/business-and-career/04.jpg"
+      "/images/skills/business-and-career/02.jpg",
+      "/images/skills/business-and-career/06.jpg",
+      "/images/skills/business-and-career/08.jpg",
+      "/images/skills/business-and-career/05.jpg"
     ]
   },
   {
@@ -270,9 +307,11 @@
     "subcategoryId": "drawing-and-illustration",
     "description": "Научу искать форму персонажа, работать с силуэтом и подбирать цвет",
     "imageUrls": [
+      "/images/skills/creativity-and-art/03.jpg",
       "/images/skills/creativity-and-art/01.jpg",
       "/images/skills/creativity-and-art/02.jpg",
-      "/images/skills/creativity-and-art/03.jpg"
+      "/images/skills/creativity-and-art/06.jpg",
+      "/images/skills/creativity-and-art/04.jpg"
     ]
   },
   {
@@ -283,9 +322,11 @@
     "subcategoryId": "entrepreneurship",
     "description": "Покажу, как проверить спрос, сформулировать гипотезу и собрать первые отзывы",
     "imageUrls": [
-      "/images/skills/business-and-career/02.jpg",
       "/images/skills/business-and-career/03.jpg",
-      "/images/skills/business-and-career/04.jpg"
+      "/images/skills/business-and-career/04.jpg",
+      "/images/skills/business-and-career/01.jpg",
+      "/images/skills/business-and-career/02.jpg",
+      "/images/skills/business-and-career/08.jpg"
     ]
   },
   {
@@ -296,9 +337,11 @@
     "subcategoryId": "cleaning-and-organization",
     "description": "Помогу разобрать вещи и создать удобную систему хранения для дома",
     "imageUrls": [
-      "/images/skills/home-and-comfort/01.jpg",
+      "/images/skills/home-and-comfort/03.jpg",
+      "/images/skills/home-and-comfort/06.jpg",
+      "/images/skills/home-and-comfort/07.jpg",
       "/images/skills/home-and-comfort/02.jpg",
-      "/images/skills/home-and-comfort/03.jpg"
+      "/images/skills/home-and-comfort/04.jpg"
     ]
   },
   {
@@ -309,9 +352,11 @@
     "subcategoryId": "music-and-sound",
     "description": "Научу базовым аккордам, ритмическим рисункам и разбору любимых песен",
     "imageUrls": [
-      "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/05.jpg",
       "/images/skills/creativity-and-art/03.jpg",
-      "/images/skills/creativity-and-art/04.jpg"
+      "/images/skills/creativity-and-art/04.jpg",
+      "/images/skills/creativity-and-art/02.jpg",
+      "/images/skills/creativity-and-art/07.jpg"
     ]
   },
   {
@@ -322,9 +367,11 @@
     "subcategoryId": "acting",
     "description": "Помогу подготовить выступление, поставить голос и справиться с волнением",
     "imageUrls": [
+      "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/08.jpg",
       "/images/skills/creativity-and-art/02.jpg",
-      "/images/skills/creativity-and-art/03.jpg",
-      "/images/skills/creativity-and-art/04.jpg"
+      "/images/skills/creativity-and-art/07.jpg",
+      "/images/skills/creativity-and-art/06.jpg"
     ]
   },
   {
@@ -335,9 +382,11 @@
     "subcategoryId": "physical-training",
     "description": "Покажу базовые упражнения и помогу составить безопасную программу тренировок",
     "imageUrls": [
-      "/images/skills/health-and-lifestyle/01.jpg",
-      "/images/skills/health-and-lifestyle/02.jpg",
-      "/images/skills/health-and-lifestyle/04.jpg"
+      "/images/skills/health-and-lifestyle/07.jpg",
+      "/images/skills/health-and-lifestyle/06.jpg",
+      "/images/skills/health-and-lifestyle/05.jpg",
+      "/images/skills/health-and-lifestyle/04.jpg",
+      "/images/skills/health-and-lifestyle/02.jpg"
     ]
   },
   {
@@ -348,9 +397,11 @@
     "subcategoryId": "english",
     "description": "Разберём полезные фразы и реальные ситуации, которые встречаются в поездках",
     "imageUrls": [
-      "/images/skills/foreign-languages/01.jpg",
-      "/images/skills/foreign-languages/03.jpg",
-      "/images/skills/foreign-languages/04.jpg"
+      "/images/skills/foreign-languages/06.jpg",
+      "/images/skills/foreign-languages/05.jpg",
+      "/images/skills/foreign-languages/08.jpg",
+      "/images/skills/foreign-languages/04.jpg",
+      "/images/skills/foreign-languages/07.jpg"
     ]
   },
   {
@@ -361,8 +412,10 @@
     "subcategoryId": "sales-and-negotiations",
     "description": "Научу готовиться к переговорам, задавать вопросы и искать взаимовыгодные решения",
     "imageUrls": [
-      "/images/skills/business-and-career/01.jpg",
-      "/images/skills/business-and-career/02.jpg",
+      "/images/skills/business-and-career/08.jpg",
+      "/images/skills/business-and-career/06.jpg",
+      "/images/skills/business-and-career/05.jpg",
+      "/images/skills/business-and-career/03.jpg",
       "/images/skills/business-and-career/04.jpg"
     ]
   },
@@ -375,7 +428,9 @@
     "description": "Познакомлю с простыми творческими практиками для самовыражения и отдыха",
     "imageUrls": [
       "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/03.jpg",
       "/images/skills/creativity-and-art/02.jpg",
+      "/images/skills/creativity-and-art/08.jpg",
       "/images/skills/creativity-and-art/04.jpg"
     ]
   },
@@ -387,9 +442,11 @@
     "subcategoryId": "music-and-sound",
     "description": "Покажу, как записывать голос и инструменты с минимальным набором оборудования",
     "imageUrls": [
-      "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/03.jpg",
+      "/images/skills/creativity-and-art/07.jpg",
       "/images/skills/creativity-and-art/02.jpg",
-      "/images/skills/creativity-and-art/03.jpg"
+      "/images/skills/creativity-and-art/04.jpg",
+      "/images/skills/creativity-and-art/01.jpg"
     ]
   },
   {
@@ -400,9 +457,11 @@
     "subcategoryId": "sleep-and-recovery",
     "description": "Помогу настроить вечерний режим и привычки, которые улучшают восстановление",
     "imageUrls": [
+      "/images/skills/health-and-lifestyle/02.jpg",
+      "/images/skills/health-and-lifestyle/05.jpg",
+      "/images/skills/health-and-lifestyle/04.jpg",
       "/images/skills/health-and-lifestyle/01.jpg",
-      "/images/skills/health-and-lifestyle/03.jpg",
-      "/images/skills/health-and-lifestyle/04.jpg"
+      "/images/skills/health-and-lifestyle/06.jpg"
     ]
   },
   {
@@ -413,9 +472,11 @@
     "subcategoryId": "team-management",
     "description": "Научу проводить личные встречи и давать обратную связь без конфликтов",
     "imageUrls": [
+      "/images/skills/business-and-career/04.jpg",
       "/images/skills/business-and-career/01.jpg",
-      "/images/skills/business-and-career/03.jpg",
-      "/images/skills/business-and-career/04.jpg"
+      "/images/skills/business-and-career/07.jpg",
+      "/images/skills/business-and-career/02.jpg",
+      "/images/skills/business-and-career/06.jpg"
     ]
   },
   {
@@ -426,8 +487,10 @@
     "subcategoryId": "video-editing",
     "description": "Покажу, как снимать и монтировать короткие вертикальные ролики",
     "imageUrls": [
-      "/images/skills/creativity-and-art/02.jpg",
       "/images/skills/creativity-and-art/03.jpg",
+      "/images/skills/creativity-and-art/01.jpg",
+      "/images/skills/creativity-and-art/05.jpg",
+      "/images/skills/creativity-and-art/02.jpg",
       "/images/skills/creativity-and-art/04.jpg"
     ]
   },
@@ -439,9 +502,11 @@
     "subcategoryId": "home-repair",
     "description": "Научу выбирать инструмент и безопасно выполнять простые работы дома",
     "imageUrls": [
+      "/images/skills/home-and-comfort/06.jpg",
+      "/images/skills/home-and-comfort/05.jpg",
+      "/images/skills/home-and-comfort/04.jpg",
       "/images/skills/home-and-comfort/01.jpg",
-      "/images/skills/home-and-comfort/02.jpg",
-      "/images/skills/home-and-comfort/04.jpg"
+      "/images/skills/home-and-comfort/03.jpg"
     ]
   },
   {
@@ -452,8 +517,10 @@
     "subcategoryId": "cooking",
     "description": "Разберём тесто, температуру и несколько простых рецептов домашней выпечки",
     "imageUrls": [
+      "/images/skills/home-and-comfort/04.jpg",
+      "/images/skills/home-and-comfort/05.jpg",
+      "/images/skills/home-and-comfort/06.jpg",
       "/images/skills/home-and-comfort/01.jpg",
-      "/images/skills/home-and-comfort/02.jpg",
       "/images/skills/home-and-comfort/03.jpg"
     ]
   },
@@ -465,8 +532,10 @@
     "subcategoryId": "speed-reading",
     "description": "Покажу, как быстрее работать с учебными материалами и делать полезные заметки",
     "imageUrls": [
+      "/images/skills/education-and-development/07.jpg",
+      "/images/skills/education-and-development/05.jpg",
       "/images/skills/education-and-development/01.jpg",
-      "/images/skills/education-and-development/02.jpg",
+      "/images/skills/education-and-development/03.jpg",
       "/images/skills/education-and-development/04.jpg"
     ]
   },
@@ -478,9 +547,11 @@
     "subcategoryId": "personal-brand",
     "description": "Помогу сформулировать сильные стороны и выстроить понятную профессиональную коммуникацию",
     "imageUrls": [
-      "/images/skills/business-and-career/02.jpg",
+      "/images/skills/business-and-career/01.jpg",
       "/images/skills/business-and-career/03.jpg",
-      "/images/skills/business-and-career/04.jpg"
+      "/images/skills/business-and-career/05.jpg",
+      "/images/skills/business-and-career/02.jpg",
+      "/images/skills/business-and-career/07.jpg"
     ]
   },
   {
@@ -491,9 +562,11 @@
     "subcategoryId": "yoga-and-meditation",
     "description": "Покажу базовые позы, дыхательные упражнения и короткую домашнюю практику",
     "imageUrls": [
-      "/images/skills/health-and-lifestyle/01.jpg",
-      "/images/skills/health-and-lifestyle/02.jpg",
-      "/images/skills/health-and-lifestyle/03.jpg"
+      "/images/skills/health-and-lifestyle/03.jpg",
+      "/images/skills/health-and-lifestyle/07.jpg",
+      "/images/skills/health-and-lifestyle/06.jpg",
+      "/images/skills/health-and-lifestyle/05.jpg",
+      "/images/skills/health-and-lifestyle/01.jpg"
     ]
   },
   {
@@ -504,9 +577,11 @@
     "subcategoryId": "teaching-skills",
     "description": "Научу превращать теорию в задания, обсуждения и понятную практику",
     "imageUrls": [
-      "/images/skills/education-and-development/02.jpg",
+      "/images/skills/education-and-development/04.jpg",
+      "/images/skills/education-and-development/06.jpg",
+      "/images/skills/education-and-development/01.jpg",
       "/images/skills/education-and-development/03.jpg",
-      "/images/skills/education-and-development/04.jpg"
+      "/images/skills/education-and-development/02.jpg"
     ]
   },
   {
@@ -517,9 +592,11 @@
     "subcategoryId": "project-management",
     "description": "Разберём цели, этапы, риски и понятное распределение задач внутри команды",
     "imageUrls": [
-      "/images/skills/business-and-career/01.jpg",
+      "/images/skills/business-and-career/05.jpg",
+      "/images/skills/business-and-career/04.jpg",
       "/images/skills/business-and-career/02.jpg",
-      "/images/skills/business-and-career/03.jpg"
+      "/images/skills/business-and-career/06.jpg",
+      "/images/skills/business-and-career/01.jpg"
     ]
   }
 ]
