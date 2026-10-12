@@ -19,7 +19,7 @@
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: var(--space-xl);
+  gap: 0;
 
   --popover-translate-x: -191px;
 }
@@ -34,6 +34,27 @@
   font-weight: 500;
   line-height: var(--line-height-body);
   white-space: nowrap;
+}
+
+.aboutLinkHeader {
+  color: var(--color-text);
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-left: 32px;
+  margin-right: 24px;
+}
+
+.aboutLinkHeader:hover {
+  opacity: 0.8;
+}
+
+.aboutLinkHeader:focus-visible {
+  outline: 2px solid var(--color-text-link);
+  outline-offset: 2px;
 }
 
 .chevron {
@@ -91,11 +112,8 @@
     gap: var(--space-lg);
   }
 
-  .leftSection {
-    gap: var(--space-lg);
-  }
-
-  .skillsButton {
+  .skillsButton,
+  .aboutLinkHeader {
     display: none;
   }
 }
