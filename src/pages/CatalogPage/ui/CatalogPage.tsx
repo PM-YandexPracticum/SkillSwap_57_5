@@ -9,31 +9,40 @@ import { Loader } from '@/shared/ui/Loader'
 
 export default function CatalogPage() {
   const {
+    // Для CatalogPage
+    isLoading,
+    errorMessage,
+    hasActiveFilters,
+
+    // Для FiltersBar
     filters,
     categories,
     cities,
-    activeFilters,
-    isAuthenticated,
-    sections,
-    setRecommendedLoadMoreElement,
-    toggleSection,
-    sortedCatalogUsers,
-    resultCount,
-    isSortedByNewest,
-    hasActiveFilters,
-    isLoading,
-    errorMessage,
-    isRecommendedLoading,
+    isSearchActive,
     handleModeChange,
     handleGenderChange,
     handleCityToggle,
     handleCategoryToggle,
     handleSubcategoryToggle,
     handleResetFilters,
+
+    // Для CatalogSections
+    sections,
+    toggleSection,
+    isRecommendedLoading,
+    setRecommendedLoadMoreElement,
+
+    // Для FiltersResult
+    sortedCatalogUsers,
+    activeFilters,
+    resultCount,
+    isSortedByNewest,
     handleRemoveFilter,
     handleSortToggle,
+
+    // Для CatalogSections и FiltersResult
+    isAuthenticated,
     handleFavoriteToggle,
-    isSearchActive, // <-- важно: добавляем этот проп из useCatalogPage
   } = useCatalogPage()
 
   if (isLoading) {
@@ -64,7 +73,7 @@ export default function CatalogPage() {
         onCategoryToggle={handleCategoryToggle}
         onSubcategoryToggle={handleSubcategoryToggle}
         onReset={handleResetFilters}
-        disabled={isSearchActive} // <-- передаём флаг отключения
+        disabled={isSearchActive}
       />
 
       <div className={styles.content}>

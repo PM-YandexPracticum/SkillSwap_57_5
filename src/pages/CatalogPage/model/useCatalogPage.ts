@@ -26,30 +26,39 @@ import { useCatalogSections } from './useCatalogSections'
 import type { CatalogSection, CatalogSectionId } from './types'
 
 interface UseCatalogPageResult {
+  // Для CatalogPage
+  isLoading: boolean
+  errorMessage: string | null
+  hasActiveFilters: boolean
+
+  // Для FiltersBar
   filters: UseCatalogFiltersResult['filters']
   categories: SkillCategory[]
   cities: City[]
-  activeFilters: ActiveFilter[]
-  isAuthenticated: boolean
-  sections: CatalogSection[]
-  isRecommendedLoading: boolean
-  setRecommendedLoadMoreElement: (element: HTMLDivElement | null) => void
-  toggleSection: (sectionId: CatalogSectionId) => void
-  sortedCatalogUsers: CatalogCardData[]
-  resultCount: number
-  isSortedByNewest: boolean
-  hasActiveFilters: boolean
   isSearchActive: boolean
-  isLoading: boolean
-  errorMessage: string | null
   handleModeChange: UseCatalogFiltersResult['handleModeChange']
   handleGenderChange: UseCatalogFiltersResult['handleGenderChange']
   handleCityToggle: UseCatalogFiltersResult['handleCityToggle']
   handleCategoryToggle: UseCatalogFiltersResult['handleCategoryToggle']
   handleSubcategoryToggle: UseCatalogFiltersResult['handleSubcategoryToggle']
   handleResetFilters: UseCatalogFiltersResult['handleResetFilters']
+
+  // Для CatalogSections
+  sections: CatalogSection[]
+  toggleSection: (sectionId: CatalogSectionId) => void
+  isRecommendedLoading: boolean
+  setRecommendedLoadMoreElement: (element: HTMLDivElement | null) => void
+
+  // Для FiltersResult
+  sortedCatalogUsers: CatalogCardData[]
+  activeFilters: ActiveFilter[]
+  resultCount: number
+  isSortedByNewest: boolean
   handleRemoveFilter: UseCatalogFiltersResult['handleRemoveFilter']
   handleSortToggle: () => void
+
+  // Для CatalogSections и FiltersResult
+  isAuthenticated: boolean
   handleFavoriteToggle: (userId: string) => void
 }
 
@@ -169,31 +178,39 @@ export function useCatalogPage(): UseCatalogPageResult {
 
   // 18. Передаём CatalogPage готовые данные, состояния и обработчики
   return {
+    // Для CatalogPage
+    isLoading: catalogData.isLoading ?? false,
+    errorMessage: catalogData.errorMessage ?? null,
+    hasActiveFilters,
+
+    // Для FiltersBar
     filters,
     categories: catalogData.categories ?? [],
     cities: catalogData.cities ?? [],
-    activeFilters,
-    isAuthenticated,
-    sections,
-    setRecommendedLoadMoreElement,
-    toggleSection,
-    sortedCatalogUsers,
-    // Количество найденных карточек после поиска и фильтров
-    resultCount: searchFilteredUsers.length,
-    isSortedByNewest,
-    hasActiveFilters,
     isSearchActive,
-    isLoading: catalogData.isLoading ?? false,
-    errorMessage: catalogData.errorMessage ?? null,
-    isRecommendedLoading,
     handleModeChange,
     handleGenderChange,
     handleCityToggle,
     handleCategoryToggle,
     handleSubcategoryToggle,
     handleResetFilters,
+
+    // Для CatalogSections
+    sections,
+    toggleSection,
+    isRecommendedLoading,
+    setRecommendedLoadMoreElement,
+
+    // Для FiltersResult
+    sortedCatalogUsers,
+    activeFilters,
+    resultCount: searchFilteredUsers.length,
+    isSortedByNewest,
     handleRemoveFilter,
     handleSortToggle,
+
+    // Для CatalogSections и FiltersResult
+    isAuthenticated,
     handleFavoriteToggle: toggleFavoriteUser,
   }
 }
