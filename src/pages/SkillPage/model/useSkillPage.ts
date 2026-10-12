@@ -4,6 +4,9 @@ import { useAppData } from '@/store/useAppData'
 import type { Skill, SkillId } from '@/entities/skill/model/types'
 import type { User } from '@/entities/user/model/types'
 import type { City } from '@/entities/city/model/types'
+import { useSimilarOffers } from './useSimilarOffer'
+import { useFavoriteUsers } from '@/features/favorite-user/model/useFavoriteUsers'
+import { addFavoriteData } from '@/features/favorite-user/lib/addFavoriteData'
 
 export type SkillPageData = {
   skill: Skill
@@ -20,49 +23,39 @@ export type SkillPageData = {
 export function useSkillPage(id: SkillId | undefined) {
   const { users, cities, categories, skills, isLoading } = useAppData()
 
+  // Временная заглушка авторизации
+  const isAuthenticated = true
+
+  const { likedUserIds, toggleFavoriteUser } = useFavoriteUsers(isAuthenticated)
+
+  const allSubcategories = useMemo(() => {
+    return categories.flatMap((category) => category.subcategories)
+  }, [categories])
+
+  const catalogUsers = useMemo(() => {
+    return users.map((user) => buildCatalogUser(user, skills, cities, allSubcategories, categories))
+  }, [users, skills, cities, allSubcategories, categories])
+
+  const skill = id ? skills.find((s) => s.id === id) : undefined
+  const author = skill ? users.find((u) => u.id === skill.authorId) : undefined
+  const subcategoryId = skill?.subcategoryId ?? ''
+
+  const similarOffers = useSimilarOffers(catalogUsers, subcategoryId, author?.id ?? '')
+
+  const similarOffersWithFavorites = useMemo(() => {
+    return addFavoriteData(similarOffers, likedUserIds ?? [])
+  }, [similarOffers, likedUserIds])
+
   const data = useMemo<SkillPageData | null>(() => {
-    if (!id) return null
-
-    const skill = skills.find((s) => s.id === id)
-    if (!skill) return null
-
-    const author = users.find((u) => u.id === skill.authorId)
-    if (!author) return null
+    if (!id || !skill || !author) return null
 
     const city = cities.find((c) => c.id === author.cityId)
     if (!city) return null
 
-    const allSubcategories = categories.flatMap((category) => category.subcategories)
     const authorCard = buildCatalogUser(author, skills, cities, allSubcategories, categories)
 
     const category = categories.find((c) => c.id === skill.categoryId)
     const subcategory = category?.subcategories.find((s) => s.id === skill.subcategoryId)
-
-    // похожие предложения (исключаем автора)
-    const similarOffers: CatalogCardData[] = users
-      .filter((user) => user.id !== author.id)
-      .slice(0, 8)
-      .map((user) => {
-        // Чему учит этот пользователь
-        const teach = skills.filter((s) => s.authorId === user.id)
-        // Чему хочет научиться этот пользователь (скиллы по его интересам)
-        const learn = user.learningSubcategoryIds?.length
-          ? skills.filter((s) => user.learningSubcategoryIds.includes(s.subcategoryId))
-          : []
-
-        const userCity = cities.find((c) => c.id === user.cityId)
-        return {
-          user,
-          cityName: userCity?.name ?? '',
-          teachSkills: teach,
-          learnSkills: learn,
-          additionalTeachSkillsCount: Math.max(0, teach.length - 1),
-          additionalLearnSkillsCount: Math.max(0, learn.length - 2),
-          latestSkillCreatedAt: '',
-          isFavorite: false,
-          displayedLikeCount: user.likesCount,
-        }
-      })
 
     return {
       skill,
@@ -71,11 +64,17 @@ export function useSkillPage(id: SkillId | undefined) {
       categoryName: category?.name ?? '',
       subcategoryName: subcategory?.name ?? '',
       isFavorite: false,
-      similarOffers,
+      similarOffers: similarOffersWithFavorites,
       authorTeachSkills: authorCard.teachSkills,
       authorLearnSkills: authorCard.learnSkills,
     }
-  }, [id, skills, users, cities, categories])
+  }, [id, skill, author, skills, cities, categories, allSubcategories, similarOffersWithFavorites])
 
-  return { data, loading: isLoading }
+  return {
+    data,
+    loading: isLoading,
+    handleFavoriteToggle: toggleFavoriteUser,
+    isAuthenticated,
+    likedUserIds,
+  }
 }
