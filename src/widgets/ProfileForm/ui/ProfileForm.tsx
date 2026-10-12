@@ -13,7 +13,6 @@ import { FormField } from '@/shared/ui/FormField'
 import { AvatarUploadButton } from '@/shared/ui/AvatarUploadButton'
 import { Popover } from '@/shared/ui/Popover'
 import { MultiSelect } from '@/shared/ui/MultiSelect'
-import { IconButton } from '@/shared/ui/IconButton'
 
 import userInfo from '@/shared/assets/icons/user-info.svg'
 import calendarIcon from '@/shared/assets/icons/calendar.svg'
@@ -103,30 +102,25 @@ export function ProfileForm({ onSubmit, handleBack }: ProfileFormProps) {
           </FormField>
 
           <div className={styles.rowInputs}>
-            <FormField id="birthDate" label="Дата рождения">
+            <FormField id="birthDate" label="Дата рождения" className={styles.dateFormField}>
               <Popover
+                padding="0"
                 trigger={
                   <button
+                    id="birthDate"
                     type="button"
                     className={styles.dateTrigger}
-                    aria-label="Выбрать дату рождения"
+                    aria-label={
+                      birthDate
+                        ? `Дата рождения: ${format(birthDate, 'dd.MM.yyyy')}`
+                        : 'Выбрать дату рождения'
+                    }
                   >
-                    <div className={styles.dateField}>
-                      <Input
-                        id="birthDate-input"
-                        className={styles.dateInput}
-                        readOnly
-                        value={birthDate ? format(birthDate, 'dd.MM.yyyy') : ''}
-                        placeholder="дд.мм.гггг"
-                        onChange={() => {}}
-                      />
-                      <IconButton
-                        src={calendarIcon}
-                        ariaLabel="Календарь"
-                        className={styles.calendarIconButton}
-                        onClick={() => {}}
-                      />
-                    </div>
+                    <span className={birthDate ? undefined : styles.datePlaceholder}>
+                      {birthDate ? format(birthDate, 'dd.MM.yyyy') : 'дд.мм.гггг'}
+                    </span>
+
+                    <img src={calendarIcon} alt="" className={styles.dateIcon} />
                   </button>
                 }
               >
@@ -139,14 +133,26 @@ export function ProfileForm({ onSubmit, handleBack }: ProfileFormProps) {
                     captionLayout="dropdown"
                     locale={ru}
                     showOutsideDays
+                    fixedWeeks
+                    hideNavigation
                     classNames={{
+                      months: styles.calendarMonths,
+                      month_caption: styles.monthCaption,
+                      dropdowns: styles.dropdowns,
+                      dropdown_root: styles.dropdownRoot,
+                      caption_label: styles.captionLabel,
+                      chevron: styles.calendarChevron,
+                      month_grid: styles.monthGrid,
                       weekday: styles.weekday,
+                      day_button: styles.dayButton,
+                      outside: styles.outsideDay,
                       selected: styles.selectedDay,
                     }}
                   />
                   <div className={styles.calendarFooter}>
                     <Button
                       variant="secondary"
+                      className={styles.calendarButton}
                       onClick={() => {
                         setBirthDate(undefined)
                         closePopover()
@@ -154,7 +160,7 @@ export function ProfileForm({ onSubmit, handleBack }: ProfileFormProps) {
                     >
                       Отменить
                     </Button>
-                    <Button variant="primary" onClick={closePopover}>
+                    <Button variant="primary" className={styles.calendarButton} onClick={closePopover}>
                       Выбрать
                     </Button>
                   </div>
@@ -190,27 +196,27 @@ export function ProfileForm({ onSubmit, handleBack }: ProfileFormProps) {
 
           <MultiSelect
             id="categories"
-            label="Категории"
+            label="Категория навыка, которому хотите научиться"
             options={categoryOptions}
             selectedValues={categories}
             onChange={setCategories}
-            placeholder="Выберите категории"
+            placeholder="Выберите категорию"
           />
 
           <MultiSelect
             id="subcategories"
-            label="Подкатегории"
+            label="Подкатегория навыка, которому хотите научиться"
             options={subcategoryOptions}
             selectedValues={subcategories}
             onChange={setSubcategories}
-            placeholder="Выберите подкатегории"
+            placeholder="Выберите подкатегорию"
           />
 
           <div className={styles.buttonContainer}>
-            <Button type="button" variant="secondary" onClick={handleBack}>
+            <Button type="button" variant="secondary" className={styles.button} onClick={handleBack}>
               Назад
             </Button>
-            <Button type="submit">Продолжить</Button>
+            <Button type="submit" className={styles.button}>Продолжить</Button>
           </div>
         </form>
       </div>

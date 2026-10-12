@@ -12,4 +12,6 @@ export interface SelectProps {
   onChange: (value: string) => void
   placeholder?: string
   className?: string
+  disabled?: boolean
+  required?: boolean
 }

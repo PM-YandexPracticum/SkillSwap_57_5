@@ -1,4 +1,4 @@
-// import styles from './RegisterProfilePage.module.css'
+import styles from './RegisterProfilePage.module.css'
 import { useNavigate } from 'react-router-dom'
 
 import { ProfileForm } from '@/widgets/ProfileForm'
@@ -24,7 +24,7 @@ export default function RegisterProfilePage() {
   }
 
   return (
-    <main>
+    <main className={styles.page}>
       <ProfileForm onSubmit={handleSubmit} handleBack={handleBack} />
     </main>
   )
