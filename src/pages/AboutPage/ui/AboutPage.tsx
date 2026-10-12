@@ -1,8 +1,8 @@
 import { developers } from './developers'
 import { DeveloperCard } from './DeveloperCard'
-import styles from './AboutPage.module.css'
+import styles from './AboutePage.module.css'
 
-export function AboutPage() {
+export default function AboutPage() {
   return (
     <section className={styles.page}>
       <h1 className={styles.title}>Команда разработчиков SkillSwap</h1>
