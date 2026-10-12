@@ -1,6 +1,8 @@
 .page {
   box-sizing: border-box;
   padding: 40px 36px 64px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .title {
