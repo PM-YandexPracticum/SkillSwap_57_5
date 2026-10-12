@@ -1,0 +1,112 @@
+.container {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 160px 152px 172px;
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  width: 556px;
+  height: 692px;
+  padding: 40px 60px;
+  background-color: var(--color-surface, #fff);
+  border-radius: 12px;
+}
+
+.infoColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 556px;
+  height: 692px;
+  padding: 60px 40px;
+  background-color: var(--color-surface, #fff);
+  border-radius: 12px;
+}
+
+.infoContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 360px;
+}
+
+.infoImage {
+  width: 160px; /* Крупный размер мольберта из Figma */
+  height: 160px;
+  margin-bottom: 32px;
+}
+
+.infoTitle {
+  margin: 0 0 12px;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h2, 24px);
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: var(--line-height-h2);
+}
+
+.infoDescription {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body, 16px);
+  color: var(--color-caption);
+  line-height: var(--line-height-body);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.buttonWrapper {
+  display: flex;
+  gap: 16px;
+  margin-top: auto;
+}
+
+.button {
+  flex: 1;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.modalTitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h2);
+  color: var(--color-text);
+}
+
+@media (width <= 1180px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px;
+    gap: 32px;
+  }
+
+  .formColumn,
+  .infoColumn {
+    width: 100%;
+    max-width: 556px;
+    height: auto;
+    padding: 30px 24px;
+  }
+}
