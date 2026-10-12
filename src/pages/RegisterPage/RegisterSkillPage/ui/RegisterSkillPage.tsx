@@ -1,10 +1,9 @@
-// import styles from './RegisterSkillPage.module.css'
+import { SkillForm } from '@/widgets/SkillForm'
 
 export default function RegisterSkillPage() {
   return (
     <main>
-      <h1>RegisterSkillPage</h1>
-      <p>Страница в разработке</p>
+      <SkillForm />
     </main>
   )
 }
