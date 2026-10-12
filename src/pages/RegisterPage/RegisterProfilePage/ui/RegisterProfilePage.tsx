@@ -1,10 +1,31 @@
 // import styles from './RegisterProfilePage.module.css'
+import { useNavigate } from 'react-router-dom'
+
+import { ProfileForm } from '@/widgets/ProfileForm'
 
 export default function RegisterProfilePage() {
+
+  const navigate = useNavigate()
+
+  const handleBack = () => {
+    navigate('/register/credentials')
+  }
+
+  const handleSubmit = (data: { 
+      name: string
+      birthDate: Date | undefined
+      gender: string
+      city: string
+      categories: string[]
+      subcategories: string[] 
+    }) => {
+    console.log('registration step 2:', data)
+    navigate('/register/skill')
+  }
+
   return (
     <main>
-      <h1>RegisterProfilePage</h1>
-      <p>Страница в разработке</p>
+      <ProfileForm onSubmit={handleSubmit} handleBack={handleBack} />
     </main>
   )
 }
