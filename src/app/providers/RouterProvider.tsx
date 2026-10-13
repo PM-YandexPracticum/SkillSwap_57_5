@@ -1,9 +1,14 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Routes, Route, useLocation } from 'react-router-dom'
 import { Loader } from '@/shared/ui/Loader'
 import { MainLayout } from '../layouts/MainLayout'
-import { AuthLayout } from '../layouts/AuthLayout' // Наш новый лайаут авторизации
+import { AuthLayout } from '../layouts/AuthLayout'
 import { PrivateRoute } from '@/features/auth'
+import { useAppDispatch } from '@/store/hooks'
+import { useAppData } from '@/store/useAppData'
+import { initializeApp } from '../model/initializeApp'
+
+import styles from './RouterProvider.module.css'
 
 const CatalogPage = lazy(() => import('@/pages/CatalogPage'))
 const AboutPage = lazy(() => import('@/pages/AboutPage'))
@@ -18,19 +23,39 @@ const SkillExchangePage = lazy(() => import('@/pages/SkillExchangePage'))
 const FavoritesPage = lazy(() => import('@/pages/FavoritesPage'))
 const ServerErrorPage = lazy(() => import('@/pages/ServerErrorPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
-// Страница для локального ревью компонентов доступна только при npm run dev
 const UiReviewPage = import.meta.env.DEV ? lazy(() => import('@/pages/UiReviewPage')) : null
 
 export function AppRouter() {
+  const dispatch = useAppDispatch()
   const location = useLocation()
   const backgroundLocation = location.state?.backgroundLocation
+  const { isLoading, errorMessage } = useAppData()
+
+  useEffect(() => {
+    initializeApp(dispatch)
+  }, [dispatch])
+
+  if (isLoading) {
+    return (
+      <div className={styles.centered}>
+        <Loader text="Загружаем данные" />
+      </div>
+    )
+  }
+
+  if (errorMessage) {
+    return (
+      <div className={styles.centered}>
+        <p className={styles.error}>{errorMessage}</p>
+      </div>
+    )
+  }
 
   return (
     <Suspense fallback={<Loader />}>
       <Routes location={backgroundLocation || location}>
         {UiReviewPage && <Route path="/dev" element={<UiReviewPage />} />}
 
-        {/* Главная обёртка MainLayout для обычных страниц (убрали отсюда /login) */}
         <Route element={<MainLayout />}>
           <Route path={'/'} element={<CatalogPage />} />
           <Route path={'/about'} element={<AboutPage />} />
@@ -48,7 +73,6 @@ export function AppRouter() {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
-        {/* НОВАЯ обёртка AuthLayout для страниц входа и регистрации строго по ТЗ! */}
         <Route element={<AuthLayout />}>
           <Route path={'/login'} element={<LoginPage />} />
           <Route path={'/register'} element={<Navigate to="/register/credentials" replace />} />
