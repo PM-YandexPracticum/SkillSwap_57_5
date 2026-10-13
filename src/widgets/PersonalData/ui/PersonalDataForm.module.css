@@ -1,9 +1,10 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
   width: 100%;
   max-width: 460px;
+  overflow: visible;
 }
 
 .aboutField {
@@ -16,6 +17,7 @@
   font: inherit;
   line-height: 24px;
   resize: none;
+  overflow: auto;
 }
 
 .passwordToggle {
@@ -35,18 +37,13 @@
   gap: 24px;
 }
 
-.rowInputs > * {
-  min-width: 0;
+.dateFormField > div {
+  display: block;
 }
 
-.dateFormField {
-  min-width: 0;
-}
-
-.dateFormField > div,
-.dateFormField > div > div {
-  width: 100%;
-  min-width: 0;
+.dateFormField > div > div:nth-child(2) {
+  margin-top: 4px;
+  border-color: var(--color-caption);
 }
 
 .dateTrigger {
@@ -54,25 +51,163 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  box-sizing: border-box;
   width: 100%;
   height: 48px;
-  padding: 12px 20px;
+  padding: 11px 20px;
   border: 1px solid var(--color-caption);
-  border-radius: 12px;
-  background: var(--color-surface);
-  color: inherit;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  color: var(--color-text);
   font: inherit;
   text-align: left;
   cursor: pointer;
+  box-sizing: border-box;
+}
+
+.dateTrigger:focus-visible {
+  outline: 2px solid var(--color-text-link);
+  outline-offset: 2px;
 }
 
 .datePlaceholder {
-  color: #8b8b8b;
+  color: var(--color-caption);
 }
 
 .dateIcon {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
+}
+
+.popoverRoot {
+  position: relative;
+  overflow: visible;
+}
+
+.popoverContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 278px;
+  padding: 15px;
+}
+
+.calendar {
+  width: 100%;
+  font-family: var(--font-body);
+  color: var(--color-text);
+
+  --rdp-accent-color: var(--color-primary);
+  --rdp-accent-background-color: var(--color-primary-hover);
+  --rdp-day-height: 32px;
+  --rdp-day-width: 32px;
+  --rdp-selected-border: none;
+  --rdp-today-color: var(--color-text);
+}
+
+.calendarMonths {
+  width: 224px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.monthCaption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: var(--line-height-body);
+}
+
+.dropdowns {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dropdownRoot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.captionLabel {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 8px 8px 16px;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.calendarChevron {
+  fill: var(--color-text);
+}
+
+.monthGrid {
+  width: 224px;
+  max-width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.calendarFooter {
+  display: grid;
+  grid-template-columns: 125px 115px;
+  align-items: center;
+  gap: 8px;
+}
+
+.calendarButton {
+  padding: 11px 20px;
+  font-weight: 400;
+}
+
+.weekday {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--color-text-link);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+  text-transform: capitalize;
+}
+
+.dayButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+  cursor: pointer;
+}
+
+.dayButton:focus-visible {
+  outline: 2px solid var(--color-text-link);
+  outline-offset: -2px;
+}
+
+.outsideDay {
+  color: var(--color-disabled-text);
+}
+
+.selectedDay {
+  color: var(--color-text);
+}
+
+.selectedDay .dayButton {
+  background-color: var(--color-primary);
 }

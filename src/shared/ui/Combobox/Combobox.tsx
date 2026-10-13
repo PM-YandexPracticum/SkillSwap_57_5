@@ -16,6 +16,8 @@ export function Combobox({
   disabled = false,
   visibleItemsCount = 3,
   showClearButton = true,
+  alwaysShowArrow = false,
+  showAllOnOpen = false,
 }: ComboboxProps) {
   const generatedId = useId()
   const inputId = id ?? generatedId
@@ -35,7 +37,9 @@ export function Combobox({
     if (!isOpen) return
 
     const closeOnOutsideClick = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setIsOpen(false)
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
     }
 
     document.addEventListener('pointerdown', closeOnOutsideClick)
@@ -44,11 +48,14 @@ export function Combobox({
 
   const selectedLabel = options.find((option) => option.value === value)?.label
   const hasUserInputOrValue = Boolean(inputText || value)
-  const text = inputText ?? (isOpen ? '' : (selectedLabel ?? value))
+  const text = inputText ?? selectedLabel ?? value
 
-  const filteredOptions = options.filter((option) =>
-    option.label.toLocaleLowerCase().includes(text?.trim().toLocaleLowerCase() ?? ''),
-  )
+  const filteredOptions =
+    showAllOnOpen && isOpen
+      ? options
+      : options.filter((option) =>
+          option.label.toLocaleLowerCase().includes(text?.trim().toLocaleLowerCase() ?? ''),
+        )
 
   const visibleCount = Math.max(1, visibleItemsCount)
 
@@ -113,40 +120,48 @@ export function Combobox({
           onKeyDown={handleKeyDown}
         />
 
-        {showClearButton && hasUserInputOrValue && (
+        {showClearButton && (
           <button
             type="button"
-            className={styles.clearButton}
-            aria-label="Очистить значение"
+            className={clsx(
+              styles.toggleButton,
+              hasUserInputOrValue && !alwaysShowArrow && styles.clearMode,
+            )}
+            aria-label={
+              alwaysShowArrow
+                ? 'Открыть список'
+                : hasUserInputOrValue
+                  ? 'Очистить значение'
+                  : 'Открыть список'
+            }
             disabled={disabled}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => {
-              setInputText('')
-              onChange('')
-              setActiveIndex(0)
-              setIsOpen(true)
-              inputRef.current?.focus()
+              if (hasUserInputOrValue && !alwaysShowArrow) {
+                setInputText('')
+                onChange('')
+                setActiveIndex(0)
+                setIsOpen(true)
+                inputRef.current?.focus()
+              } else {
+                setInputText(null)
+                setActiveIndex(0)
+                setIsOpen((prev) => !prev)
+                inputRef.current?.focus()
+              }
             }}
           >
-            <span aria-hidden="true">×</span>
+            {alwaysShowArrow ? (
+              <img src={chevronIcon} alt="" className={styles.iconChevron} />
+            ) : hasUserInputOrValue ? (
+              <span aria-hidden="true" className={styles.iconClear}>
+                ×
+              </span>
+            ) : (
+              <img src={chevronIcon} alt="" className={styles.iconChevron} />
+            )}
           </button>
         )}
-
-        <button
-          type="button"
-          className={styles.chevronButton}
-          aria-label="Открыть список"
-          aria-expanded={isOpen}
-          disabled={disabled}
-          onMouseDown={(event) => event.preventDefault()}
-          onClick={() => {
-            setInputText(null)
-            setActiveIndex(0)
-            setIsOpen((prev) => !prev)
-          }}
-        >
-          <img src={chevronIcon} alt="" />
-        </button>
       </div>
 
       {isOpen && !disabled && (

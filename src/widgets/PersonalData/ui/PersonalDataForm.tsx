@@ -48,7 +48,6 @@ export function PersonalDataForm() {
       .then((res) => res.json())
       .then((data: City[]) => {
         setCitiesData(data)
-
         if (data.length > 0) {
           setCity(data[0].id)
         }
@@ -208,10 +207,8 @@ export function PersonalDataForm() {
                   selected: styles.selectedDay,
                 }}
               />
-
               <div className={styles.calendarFooter}>
                 <Button
-                  type="button"
                   variant="secondary"
                   className={styles.calendarButton}
                   onClick={() => {
@@ -221,13 +218,7 @@ export function PersonalDataForm() {
                 >
                   Отменить
                 </Button>
-
-                <Button
-                  type="button"
-                  variant="primary"
-                  className={styles.calendarButton}
-                  onClick={closePopover}
-                >
+                <Button variant="primary" className={styles.calendarButton} onClick={closePopover}>
                   Выбрать
                 </Button>
               </div>
@@ -256,7 +247,9 @@ export function PersonalDataForm() {
           options={cityOptions}
           onChange={setCity}
           placeholder="Выберите город"
-          showClearButton={false}
+          alwaysShowArrow={true}
+          showClearButton={true}
+          showAllOnOpen={true}
         />
       </FormField>
 

@@ -14,4 +14,6 @@ export type ComboboxProps = {
   disabled?: boolean
   visibleItemsCount?: number
   showClearButton?: boolean
+  alwaysShowArrow?: boolean
+  showAllOnOpen?: boolean
 }
