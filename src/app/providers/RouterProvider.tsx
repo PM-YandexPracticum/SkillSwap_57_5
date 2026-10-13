@@ -3,6 +3,7 @@ import { Navigate, Routes, Route, useLocation } from 'react-router-dom'
 import { Loader } from '@/shared/ui/Loader'
 import { MainLayout } from '../layouts/MainLayout'
 import { AuthLayout } from '../layouts/AuthLayout' // Наш новый лайаут авторизации
+import { PrivateRoute } from '@/features/auth'
 
 const CatalogPage = lazy(() => import('@/pages/CatalogPage'))
 const AboutPage = lazy(() => import('@/pages/AboutPage'))
@@ -34,7 +35,14 @@ export function AppRouter() {
           <Route path={'/'} element={<CatalogPage />} />
           <Route path={'/about'} element={<AboutPage />} />
           <Route path={'/skill/:id'} element={<SkillPage />} />
-          <Route path={'/profile'} element={<ProfilePage />} />
+          <Route
+            path={'/profile'}
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
           <Route path={'/favorites'} element={<FavoritesPage />} />
           <Route path={'/500'} element={<ServerErrorPage />} />
           <Route path="*" element={<NotFoundPage />} />
