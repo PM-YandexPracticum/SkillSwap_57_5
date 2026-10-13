@@ -22,7 +22,7 @@ type City = {
   name: string
 }
 
-type EditableField = 'email' | 'name' | 'about'
+type EditableField = 'email' | 'name' | 'about' | 'birthDate' | 'gender' | 'city'
 
 export function PersonalDataForm() {
   const [email, setEmail] = useState('anna@example.com')
@@ -54,7 +54,7 @@ export function PersonalDataForm() {
         }
       })
       .catch((err) => console.error('cities fetch error:', err))
-  })
+  }, [])
 
   useEffect(() => {
     const field =
@@ -278,6 +278,7 @@ export function PersonalDataForm() {
             value={about}
             onChange={(event) => setAbout(event.target.value)}
             onBlur={handleFieldBlur}
+            readOnly={editingField !== 'about'}
             rows={4}
           />
         </InputWithAction>

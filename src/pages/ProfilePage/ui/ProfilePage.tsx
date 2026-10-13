@@ -1,3 +1,5 @@
+import { useRef, useState } from 'react'
+import type { ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 
 import RequestIcon from '@/shared/assets/icons/request.svg'
@@ -5,13 +7,33 @@ import MessageTextIcon from '@/shared/assets/icons/message-text.svg'
 import LikeIcon from '@/shared/assets/icons/like.svg'
 import IdeaIcon from '@/shared/assets/icons/idea.svg'
 import UserIcon from '@/shared/assets/icons/user.svg'
+import GalleryEditIcon from '@/shared/assets/icons/gallery-edit.svg'
 
-import { PersonalDataForm } from './PersonalDataForm/PersonalDataForm'
-import { ProfileAvatar } from './ProfileAvatar/ProfileAvatar'
+import { Avatar } from '@/shared/ui/Avatar'
+import { PersonalDataForm } from '@/widgets/PersonalData'
 
 import styles from './ProfilePage.module.css'
 
 export default function ProfilePage() {
+  const [avatarSrc, setAvatarSrc] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+
+    if (!file || !file.type.startsWith('image/')) return
+
+    const reader = new FileReader()
+
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        setAvatarSrc(reader.result)
+      }
+    }
+
+    reader.readAsDataURL(file)
+  }
+
   return (
     <main className={styles.profile}>
       <aside className={styles.sidebar}>
@@ -26,7 +48,7 @@ export default function ProfilePage() {
             <span>Мои обмены</span>
           </button>
 
-          <Link to="/favourites" className={styles.navItem}>
+          <Link to="/favorites" className={styles.navItem}>
             <img src={LikeIcon} alt="" className={styles.navIcon} />
             <span>Избранное</span>
           </Link>
@@ -53,7 +75,26 @@ export default function ProfilePage() {
         </section>
 
         <div className={styles.avatar}>
-          <ProfileAvatar />
+          <div className={styles.avatarContainer}>
+            <Avatar src={avatarSrc} name="Александр" className={styles.avatarImage} />
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              hidden
+              onChange={handleAvatarChange}
+            />
+
+            <button
+              type="button"
+              className={styles.avatarEditButton}
+              aria-label="Изменить фото"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <img src={GalleryEditIcon} alt="" />
+            </button>
+          </div>
         </div>
       </div>
     </main>
