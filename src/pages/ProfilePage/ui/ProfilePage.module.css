@@ -1,1 +1,111 @@
-/* ProfilePage.module.css */
+.profile {
+  display: grid;
+  grid-template-columns: 324px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.sidebar {
+  min-width: 0;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 244px;
+  max-width: 100%;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navIcon {
+  display: block;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.navItemActive {
+  background-color: #deebc5;
+  font-weight: 400;
+  cursor: default;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 460px) 244px;
+  justify-content: space-between;
+  align-items: start;
+  gap: 24px;
+  min-width: 0;
+}
+
+.personalData {
+  min-width: 0;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.avatarContainer {
+  position: relative;
+  flex-shrink: 0;
+  width: 244px;
+  height: 244px;
+}
+
+.avatarImage {
+  display: block;
+  width: 244px;
+  height: 244px;
+  border-radius: 50%;
+}
+
+.avatarEditButton {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: #deebc5;
+  cursor: pointer;
+}
+
+.avatarEditButton img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}

@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import { useEffect, useId, useRef, useState } from 'react'
 import type { CSSProperties, KeyboardEvent } from 'react'
-import clearIcon from '@/shared/assets/icons/clear.svg'
 import chevronIcon from '@/shared/assets/icons/chevron-down.svg'
 import type { ComboboxProps, ComboboxOptions } from '@/shared/model/uiTypes'
 import styles from './Combobox.module.css'
@@ -16,6 +15,9 @@ export function Combobox({
   className,
   disabled = false,
   visibleItemsCount = 3,
+  showClearButton = true,
+  alwaysShowArrow = false,
+  showAllOnOpen = false,
 }: ComboboxProps) {
   const generatedId = useId()
   const inputId = id ?? generatedId
@@ -35,7 +37,9 @@ export function Combobox({
     if (!isOpen) return
 
     const closeOnOutsideClick = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setIsOpen(false)
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
     }
 
     document.addEventListener('pointerdown', closeOnOutsideClick)
@@ -43,11 +47,15 @@ export function Combobox({
   }, [isOpen])
 
   const selectedLabel = options.find((option) => option.value === value)?.label
+  const hasUserInputOrValue = Boolean(inputText || value)
   const text = inputText ?? selectedLabel ?? value
 
-  const filteredOptions = options.filter((option) =>
-    option.label.toLocaleLowerCase().includes(text?.trim().toLocaleLowerCase() ?? ''),
-  )
+  const filteredOptions =
+    showAllOnOpen && isOpen
+      ? options
+      : options.filter((option) =>
+          option.label.toLocaleLowerCase().includes(text?.trim().toLocaleLowerCase() ?? ''),
+        )
 
   const visibleCount = Math.max(1, visibleItemsCount)
 
@@ -56,13 +64,6 @@ export function Combobox({
     onChange(option.value)
     setIsOpen(false)
     inputRef.current?.blur()
-  }
-
-  const clearValue = () => {
-    onChange('')
-    setInputText('')
-    setIsOpen(true)
-    inputRef.current?.focus()
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -90,8 +91,6 @@ export function Combobox({
       selectOption(filteredOptions[activeIndex])
     }
   }
-
-  const hasUserInputOrValue = !!inputText || !!value
 
   return (
     <div ref={rootRef} className={clsx(styles.root, className)}>
@@ -121,28 +120,46 @@ export function Combobox({
           onKeyDown={handleKeyDown}
         />
 
-        {hasUserInputOrValue && (
+        {showClearButton && (
           <button
             type="button"
-            className={clsx(styles.clearButton)}
-            aria-label="Очистить значение"
+            className={clsx(
+              styles.toggleButton,
+              hasUserInputOrValue && !alwaysShowArrow && styles.clearMode,
+            )}
+            aria-label={
+              alwaysShowArrow
+                ? 'Открыть список'
+                : hasUserInputOrValue
+                  ? 'Очистить значение'
+                  : 'Открыть список'
+            }
             disabled={disabled}
-            onClick={clearValue}
-            style={{ opacity: disabled ? 0.5 : 1 }}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => {
+              if (hasUserInputOrValue && !alwaysShowArrow) {
+                setInputText('')
+                onChange('')
+                setActiveIndex(0)
+                setIsOpen(true)
+                inputRef.current?.focus()
+              } else {
+                setInputText(null)
+                setActiveIndex(0)
+                setIsOpen((prev) => !prev)
+                inputRef.current?.focus()
+              }
+            }}
           >
-            <img src={clearIcon} alt="" />
-          </button>
-        )}
-
-        {!hasUserInputOrValue && (
-          <button
-            type="button"
-            className={clsx(styles.chevronButton)}
-            aria-label="Открыть список"
-            disabled={disabled}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <img src={chevronIcon} alt="" />
+            {alwaysShowArrow ? (
+              <img src={chevronIcon} alt="" className={styles.iconChevron} />
+            ) : hasUserInputOrValue ? (
+              <span aria-hidden="true" className={styles.iconClear}>
+                ×
+              </span>
+            ) : (
+              <img src={chevronIcon} alt="" className={styles.iconChevron} />
+            )}
           </button>
         )}
       </div>

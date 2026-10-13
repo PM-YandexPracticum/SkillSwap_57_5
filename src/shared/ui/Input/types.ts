@@ -2,6 +2,7 @@ export interface InputProps {
   id: string
   value: string
   onChange: (value: string) => void
+  onBlur?: () => void
   type?: string
   placeholder?: string
   className?: string

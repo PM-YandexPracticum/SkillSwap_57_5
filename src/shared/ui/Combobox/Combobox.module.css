@@ -9,20 +9,17 @@
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 46px;
-  padding: 11px 20px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  padding: 12px 20px;
   border: 1px solid var(--color-caption);
   border-radius: 12px;
   background: var(--color-surface);
   transition: border-color 0.2s ease;
-  cursor: default;
 }
 
-.root.open .field {
-  cursor: pointer;
-}
-
-.root:focus-within .field {
+.field.open {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   border-bottom-color: #e4e8df;
@@ -31,16 +28,14 @@
 .input {
   flex: 1;
   min-width: 0;
-  height: auto;
+  height: 100%;
   padding: 0;
   margin: 0;
   border: none;
   outline: none;
   background: transparent;
   color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
+  font: inherit;
   box-sizing: border-box;
 }
 
@@ -56,66 +51,34 @@
   opacity: 0.5;
 }
 
-.clearButton {
-  display: grid;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-  opacity: 0.6;
-  transition:
-    opacity 0.2s,
-    transform 0.2s;
-}
-
-.clearButton:hover:not(:disabled) {
-  opacity: 1;
-}
-
-.clearButton img {
-  width: 24px;
-  height: 24px;
-  display: block;
-}
-
-.field .clearButton,
-.field .chevronButton {
-  z-index: 2;
-}
-
 .chevronButton {
   display: grid;
   place-items: center;
+  flex-shrink: 0;
   width: 24px;
   height: 24px;
-  flex-shrink: 0;
   padding: 0;
   border: none;
-  background: none;
+  background: transparent;
   cursor: pointer;
   opacity: 0.6;
-  transition:
-    opacity 0.2s,
-    transform 0.2s;
+  transition: opacity 0.2s ease;
 }
 
 .chevronButton:hover,
-.root.open .chevronButton {
+.field.open .chevronButton {
   opacity: 1;
 }
 
-.root.open .chevronButton img {
-  transform: rotate(180deg);
-}
-
 .chevronButton img {
+  display: block;
   width: 24px;
   height: 24px;
-  display: block;
+  transition: transform 0.2s ease;
+}
+
+.field.open .chevronButton img {
+  transform: rotate(180deg);
 }
 
 .list {
@@ -124,7 +87,10 @@
   right: 0;
   left: 0;
   z-index: 10;
+  box-sizing: border-box;
+  width: 100%;
   max-height: calc(var(--visible-count) * 48px + 17px);
+  margin: 0;
   padding: 8px 0;
   overflow-y: auto;
   list-style: none;
@@ -140,6 +106,7 @@
   align-items: center;
   min-height: 48px;
   padding: 8px 20px;
+  box-sizing: border-box;
 }
 
 .option {
@@ -153,4 +120,18 @@
 
 .empty {
   color: var(--color-caption);
+}
+
+.clearButton {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
 }
