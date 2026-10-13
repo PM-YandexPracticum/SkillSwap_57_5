@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent } from 'react'
+import { useRef, useState } from 'react'
 
 import GalleryEditIcon from '@/shared/assets/icons/gallery-edit.svg'
 
