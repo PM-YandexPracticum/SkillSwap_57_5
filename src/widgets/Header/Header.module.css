@@ -17,7 +17,6 @@
 
 .leftSection {
   display: flex;
-  flex-shrink: 0;
   align-items: center;
   gap: 0;
 
@@ -64,16 +63,14 @@
 
 .rightSection {
   display: flex;
-  flex-shrink: 0;
   align-items: center;
-  gap: 32px;
 }
 
 .authButtonSection {
   display: flex;
-  flex-shrink: 0;
   align-items: center;
   gap: var(--space-md);
+  margin-left: 32px;
 }
 
 .themeButton {
@@ -92,7 +89,8 @@
 
 .themeButton:focus-visible,
 .skillsButton:focus-visible,
-.logoButton:focus-visible {
+.logoButton:focus-visible,
+.profileTrigger:focus-visible {
   outline: 2px solid var(--color-text-link);
   outline-offset: 2px;
 }
@@ -104,6 +102,58 @@
 
 .loginButton,
 .registerButton {
+  white-space: nowrap;
+}
+
+.authLink {
+  display: block;
+  text-decoration: none;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.iconsGroup {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.iconsGroup img,
+.iconsGroup svg {
+  width: 24px;
+  height: 24px;
+}
+
+.profileTrigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.profileTrigger img,
+.profileTrigger svg,
+.profileTrigger [class*='avatar'] {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userName {
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
   white-space: nowrap;
 }
 
@@ -138,10 +188,7 @@
     height: 40px;
   }
 
-  .loginButton {
-    display: none;
-  }
-
+  .loginButton,
   .registerButton {
     display: none;
   }
@@ -151,9 +198,4 @@
   .container {
     padding-inline: 16px;
   }
-}
-
-.authLink {
-  display: block;
-  text-decoration: none;
 }
