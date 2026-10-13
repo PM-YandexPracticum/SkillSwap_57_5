@@ -256,6 +256,7 @@ export function PersonalDataForm() {
           options={cityOptions}
           onChange={setCity}
           placeholder="Выберите город"
+          showClearButton={false}
         />
       </FormField>
 

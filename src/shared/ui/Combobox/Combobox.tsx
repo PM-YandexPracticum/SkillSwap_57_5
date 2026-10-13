@@ -15,6 +15,7 @@ export function Combobox({
   className,
   disabled = false,
   visibleItemsCount = 3,
+  showClearButton = true,
 }: ComboboxProps) {
   const generatedId = useId()
   const inputId = id ?? generatedId
@@ -42,6 +43,7 @@ export function Combobox({
   }, [isOpen])
 
   const selectedLabel = options.find((option) => option.value === value)?.label
+  const hasUserInputOrValue = Boolean(inputText || value)
   const text = inputText ?? (isOpen ? '' : (selectedLabel ?? value))
 
   const filteredOptions = options.filter((option) =>
@@ -110,6 +112,25 @@ export function Combobox({
           }}
           onKeyDown={handleKeyDown}
         />
+
+        {showClearButton && hasUserInputOrValue && (
+          <button
+            type="button"
+            className={styles.clearButton}
+            aria-label="Очистить значение"
+            disabled={disabled}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => {
+              setInputText('')
+              onChange('')
+              setActiveIndex(0)
+              setIsOpen(true)
+              inputRef.current?.focus()
+            }}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        )}
 
         <button
           type="button"

@@ -13,4 +13,5 @@ export type ComboboxProps = {
   className?: string
   disabled?: boolean
   visibleItemsCount?: number
+  showClearButton?: boolean
 }
