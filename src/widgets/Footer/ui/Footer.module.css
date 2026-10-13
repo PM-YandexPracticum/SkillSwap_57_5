@@ -30,6 +30,7 @@
   flex: 1;
   margin-left: 189px;
   align-self: center;
+  height: 60px;
 }
 
 .navColumn {
@@ -44,9 +45,14 @@
   margin-bottom: 128px;
 }
 
-.navColumn a {
+.navColumn a,
+.aboutLinkFooter {
   color: inherit;
   text-decoration: none;
+}
+
+.aboutLinkFooter:hover {
+  opacity: 0.8;
 }
 
 .skillsButton {

@@ -21,12 +21,16 @@ export function Header() {
         <div className={styles.leftSection}>
           <Logo />
 
+          {/* Строго по Figma: первая ссылка перед кнопкой всех навыков */}
+          <Link to="/about" className={styles.aboutLinkHeader}>
+            О проекте
+          </Link>
+
           <CategoryPopover
             categories={categories}
             trigger={
               <button type="button" className={styles.skillsButton}>
                 <span>Все навыки</span>
-
                 <img src={chevronDownIcon} alt="" aria-hidden="true" className={styles.chevron} />
               </button>
             }

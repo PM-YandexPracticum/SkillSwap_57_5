@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Logo } from '@/shared/ui/Logo'
 
 import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
@@ -17,11 +18,13 @@ export function Footer() {
 
       <nav className={styles.nav}>
         <div className={styles.navColumn}>
-          <a href="#">О проекте</a>
+          <Link to="/about" className={styles.aboutLinkFooter}>
+            О проекте
+          </Link>
 
           <CategoryPopover
             categories={categories}
-            placement='top'
+            placement="top"
             trigger={
               <button type="button" className={styles.skillsButton}>
                 Все навыки
