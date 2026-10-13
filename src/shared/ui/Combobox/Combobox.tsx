@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import { useEffect, useId, useRef, useState } from 'react'
 import type { CSSProperties, KeyboardEvent } from 'react'
-import clearIcon from '@/shared/assets/icons/clear.svg'
 import chevronIcon from '@/shared/assets/icons/chevron-down.svg'
 import type { ComboboxProps, ComboboxOptions } from '@/shared/model/uiTypes'
 import styles from './Combobox.module.css'
@@ -43,7 +42,7 @@ export function Combobox({
   }, [isOpen])
 
   const selectedLabel = options.find((option) => option.value === value)?.label
-  const text = inputText ?? selectedLabel ?? value
+  const text = inputText ?? (isOpen ? '' : (selectedLabel ?? value))
 
   const filteredOptions = options.filter((option) =>
     option.label.toLocaleLowerCase().includes(text?.trim().toLocaleLowerCase() ?? ''),
@@ -56,13 +55,6 @@ export function Combobox({
     onChange(option.value)
     setIsOpen(false)
     inputRef.current?.blur()
-  }
-
-  const clearValue = () => {
-    onChange('')
-    setInputText('')
-    setIsOpen(true)
-    inputRef.current?.focus()
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -90,8 +82,6 @@ export function Combobox({
       selectOption(filteredOptions[activeIndex])
     }
   }
-
-  const hasUserInputOrValue = !!inputText || !!value
 
   return (
     <div ref={rootRef} className={clsx(styles.root, className)}>
@@ -121,30 +111,21 @@ export function Combobox({
           onKeyDown={handleKeyDown}
         />
 
-        {hasUserInputOrValue && (
-          <button
-            type="button"
-            className={clsx(styles.clearButton)}
-            aria-label="Очистить значение"
-            disabled={disabled}
-            onClick={clearValue}
-            style={{ opacity: disabled ? 0.5 : 1 }}
-          >
-            <img src={clearIcon} alt="" />
-          </button>
-        )}
-
-        {!hasUserInputOrValue && (
-          <button
-            type="button"
-            className={clsx(styles.chevronButton)}
-            aria-label="Открыть список"
-            disabled={disabled}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <img src={chevronIcon} alt="" />
-          </button>
-        )}
+        <button
+          type="button"
+          className={styles.chevronButton}
+          aria-label="Открыть список"
+          aria-expanded={isOpen}
+          disabled={disabled}
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => {
+            setInputText(null)
+            setActiveIndex(0)
+            setIsOpen((prev) => !prev)
+          }}
+        >
+          <img src={chevronIcon} alt="" />
+        </button>
       </div>
 
       {isOpen && !disabled && (

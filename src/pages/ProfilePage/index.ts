@@ -1,3 +1,1 @@
-import ProfilePage from './ui/ProfilePage'
-
-export default ProfilePage
+export { default } from './ui/ProfilePage'
