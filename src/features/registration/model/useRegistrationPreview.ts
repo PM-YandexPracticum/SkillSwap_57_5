@@ -1,10 +1,9 @@
 import { useMemo } from 'react'
 import { useAppSelector } from '@/store/hooks'
-import { useAppData } from '@/store/useAppData'
 
 export function useRegistrationPreview() {
   const skill = useAppSelector((state) => state.registration?.skill)
-  const { categories } = useAppData()
+  const categories = useAppSelector((state) => state.categories.items)
 
   const data = useMemo(() => {
     if (!skill) return null
