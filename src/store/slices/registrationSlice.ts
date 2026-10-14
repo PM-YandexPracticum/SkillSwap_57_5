@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { Gender } from '@/entities/user'
+import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/category'
 
 interface RegistrationState {
   credentials: {
@@ -12,8 +13,8 @@ interface RegistrationState {
     birthDate: string
     gender: Gender | null
     cityId: string
-    learningCategoryId: string
-    learningSubcategoryIds: string[]
+    learningCategoryIds: SkillCategoryId[]
+    learningSubcategoryIds: SkillSubcategoryId[]
   }
   skill: {
     title: string
@@ -35,7 +36,7 @@ const initialState: RegistrationState = {
     birthDate: '',
     gender: null,
     cityId: '',
-    learningCategoryId: '',
+    learningCategoryIds: [],
     learningSubcategoryIds: [],
   },
   skill: {
