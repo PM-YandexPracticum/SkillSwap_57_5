@@ -157,15 +157,60 @@
   white-space: nowrap;
 }
 
-@media (width <= 1100px) {
-  .container {
-    gap: var(--space-lg);
-  }
+.profileMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
 
-  .skillsButton,
-  .aboutLinkHeader {
-    display: none;
-  }
+.profileMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 26px 40px;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: var(--line-height-body);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.profileMenuItem:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.profileMenuItem:focus-visible {
+  outline: 2px solid var(--color-text-link);
+  outline-offset: -2px;
+}
+
+.profileMenuItemDanger:hover {
+  background-color: var(--color-error);
+  color: var(--color-surface);
+}
+
+.profileMenuItemDanger:focus-visible {
+  outline-color: var(--color-error);
+}
+
+.profileMenuItemDanger:hover .profileMenuIcon {
+  filter: brightness(0) invert(1);
+}
+
+.profileMenuIcon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
 }
 
 @media (width <= 720px) {
