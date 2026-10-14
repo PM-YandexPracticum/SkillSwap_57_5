@@ -3,17 +3,19 @@
   gap: 24px;
   justify-content: center;
   align-items: flex-start;
+  box-sizing: border-box;
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 160px 152px 172px;
+  padding: 0 152px 172px;
 }
 
 .formColumn {
   display: flex;
   flex-direction: column;
   width: 556px;
-  height: 692px;
+  min-height: 692px;
+  height: auto;
   padding: 40px 60px;
   background-color: var(--color-surface, #fff);
   border-radius: 12px;
