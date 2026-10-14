@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { DayPicker } from 'react-day-picker'
 import { ru } from 'react-day-picker/locale'
 import { format } from 'date-fns'
@@ -6,6 +6,8 @@ import 'react-day-picker/style.css'
 
 import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/category'
 import type { Gender } from '@/entities/user'
+
+import { useAppData } from '@/store/useAppData'
 
 import { Select } from '@/shared/ui/Select'
 import { InfoBlock } from '@/shared/ui/InfoBlock'
@@ -51,14 +53,6 @@ interface ProfileFormProps {
     }
   }
 
-type Category = {
-  id: string
-  name: string
-  subcategories: { id: string; name: string }[]
-}
-
-type City = { id: string; name: string }
-
 export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: ProfileFormProps) {
   const [name, setName] = useState(savedValues?.name || '')
   const [birthDate, setBirthDate] = useState<Date | undefined>(
@@ -73,27 +67,12 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
     savedValues?.learningSubcategoryIds || []
   )
 
-  const [categoriesData, setCategoriesData] = useState<Category[]>([])
-  const [citiesData, setCitiesData] = useState<City[]>([])
-
   const closePopover = () => {
     const event = new MouseEvent('pointerdown', { bubbles: true })
     document.dispatchEvent(event)
   }
 
-  useEffect(() => {
-    fetch('/db/categories.json')
-      .then((res) => res.json())
-      .then(setCategoriesData)
-      .catch((err) => console.error('categories fetch error:', err))
-  }, [])
-
-  useEffect(() => {
-    fetch('/db/cities.json')
-      .then((res) => res.json())
-      .then((data: City[]) => setCitiesData(data))
-      .catch((err) => console.error('cities fetch error:', err))
-  }, [])
+  const { categories: categoriesData, cities: citiesData } = useAppData()
 
   const categoryOptions = categoriesData.map((cat) => ({
     value: cat.id,
