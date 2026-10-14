@@ -4,6 +4,9 @@ import { ru } from 'react-day-picker/locale'
 import { format } from 'date-fns'
 import 'react-day-picker/style.css'
 
+import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/category'
+import type { Gender } from '@/entities/user'
+
 import { Select } from '@/shared/ui/Select'
 import { InfoBlock } from '@/shared/ui/InfoBlock'
 import { Button } from '@/shared/ui/Button'
@@ -13,6 +16,7 @@ import { FormField } from '@/shared/ui/FormField'
 import { AvatarUploadButton } from '@/shared/ui/AvatarUploadButton'
 import { Popover } from '@/shared/ui/Popover'
 import { MultiSelect } from '@/shared/ui/MultiSelect'
+
 
 import userInfo from '@/shared/assets/icons/user-info.svg'
 import calendarIcon from '@/shared/assets/icons/calendar.svg'
@@ -25,11 +29,27 @@ interface ProfileFormProps {
     birthDate: Date | undefined
     gender: string
     city: string
-    categories: string[]
-    subcategories: string[]
+    categories: SkillCategoryId[]
+    subcategories: SkillSubcategoryId[]
   }) => void
-  handleBack: () => void
-}
+    handleBack: () => void
+    errors?: {
+      name?: string
+      birthDate?: string
+      gender?: string
+      city?: string
+      categories?: string
+      subcategories?: string
+    }
+    savedValues?: {
+      name: string
+      birthDate: string
+      gender: Gender | null
+      cityId: string
+      learningCategoryIds: SkillCategoryId[]
+      learningSubcategoryIds: SkillSubcategoryId[]
+    }
+  }
 
 type Category = {
   id: string
