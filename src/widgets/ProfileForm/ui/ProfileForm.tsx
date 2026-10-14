@@ -59,13 +59,19 @@ type Category = {
 
 type City = { id: string; name: string }
 
-export function ProfileForm({ onSubmit, handleBack }: ProfileFormProps) {
-  const [name, setName] = useState('')
-  const [birthDate, setBirthDate] = useState<Date | undefined>()
-  const [gender, setGender] = useState('')
-  const [city, setCity] = useState<string>('')
-  const [categories, setCategories] = useState<string[]>([])
-  const [subcategories, setSubcategories] = useState<string[]>([])
+export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: ProfileFormProps) {
+  const [name, setName] = useState(savedValues?.name || '')
+  const [birthDate, setBirthDate] = useState<Date | undefined>(
+    savedValues?.birthDate ? new Date(savedValues.birthDate) : undefined
+  )
+  const [gender, setGender] = useState(savedValues?.gender || '')
+  const [city, setCity] = useState<string>(savedValues?.cityId || '')
+  const [categories, setCategories] = useState<SkillCategoryId[]>(
+    savedValues?.learningCategoryIds || []
+  )
+  const [subcategories, setSubcategories] = useState<SkillSubcategoryId[]>(
+    savedValues?.learningSubcategoryIds || []
+  )
 
   const [categoriesData, setCategoriesData] = useState<Category[]>([])
   const [citiesData, setCitiesData] = useState<City[]>([])
@@ -117,120 +123,138 @@ export function ProfileForm({ onSubmit, handleBack }: ProfileFormProps) {
         <form onSubmit={handleSubmit} className={styles.form}>
           <AvatarUploadButton />
 
-          <FormField id="name" label="Имя">
-            <Input id="name" value={name} onChange={setName} placeholder="Введите ваше имя" />
-          </FormField>
-
-          <div className={styles.rowInputs}>
-            <FormField id="birthDate" label="Дата рождения" className={styles.dateFormField}>
-              <Popover
-                padding="0"
-                trigger={
-                  <button
-                    id="birthDate"
-                    type="button"
-                    className={styles.dateTrigger}
-                    aria-label={
-                      birthDate
-                        ? `Дата рождения: ${format(birthDate, 'dd.MM.yyyy')}`
-                        : 'Выбрать дату рождения'
-                    }
-                  >
-                    <span className={birthDate ? undefined : styles.datePlaceholder}>
-                      {birthDate ? format(birthDate, 'dd.MM.yyyy') : 'дд.мм.гггг'}
-                    </span>
-
-                    <img src={calendarIcon} alt="" className={styles.dateIcon} />
-                  </button>
-                }
-              >
-                <div className={styles.popoverContent}>
-                  <DayPicker
-                    mode="single"
-                    className={styles.calendar}
-                    selected={birthDate}
-                    onSelect={setBirthDate}
-                    captionLayout="dropdown"
-                    locale={ru}
-                    showOutsideDays
-                    fixedWeeks
-                    hideNavigation
-                    classNames={{
-                      months: styles.calendarMonths,
-                      month_caption: styles.monthCaption,
-                      dropdowns: styles.dropdowns,
-                      dropdown_root: styles.dropdownRoot,
-                      caption_label: styles.captionLabel,
-                      chevron: styles.calendarChevron,
-                      month_grid: styles.monthGrid,
-                      weekday: styles.weekday,
-                      day_button: styles.dayButton,
-                      outside: styles.outsideDay,
-                      selected: styles.selectedDay,
-                    }}
-                  />
-                  <div className={styles.calendarFooter}>
-                    <Button
-                      variant="secondary"
-                      className={styles.calendarButton}
-                      onClick={() => {
-                        setBirthDate(undefined)
-                        closePopover()
-                      }}
-                    >
-                      Отменить
-                    </Button>
-                    <Button variant="primary" className={styles.calendarButton} onClick={closePopover}>
-                      Выбрать
-                    </Button>
-                  </div>
-                </div>
-              </Popover>
+          <div>
+            <FormField id="name" label="Имя">
+              <Input id="name" value={name} onChange={setName} placeholder="Введите ваше имя" />
             </FormField>
-
-            <Select
-              id="gender"
-              label="Пол"
-              options={[
-                { value: '', label: 'Не указан' },
-                { value: 'male', label: 'Мужской' },
-                { value: 'female', label: 'Женский' },
-              ]}
-              value={gender}
-              onChange={setGender}
-              placeholder="Не выбрано"
-            />
+            {errors?.name && <p  className={styles.errorHint} >{errors.name}</p>}
           </div>
 
-          <FormField id="city" label="Город">
-            <Combobox
-              id="city"
-              ariaLabel="Выберите город"
-              value={city}
-              onChange={setCity}
-              options={cityOptions}
-              placeholder="Выберите город"
-              disabled={citiesData.length === 0}
+          <div className={styles.rowInputs}>
+            <div>
+              <FormField id="birthDate" label="Дата рождения" className={styles.dateFormField}>
+                <Popover
+                  padding="0"
+                  trigger={
+                    <button
+                      id="birthDate"
+                      type="button"
+                      className={styles.dateTrigger}
+                      aria-label={
+                        birthDate
+                          ? `Дата рождения: ${format(birthDate, 'dd.MM.yyyy')}`
+                          : 'Выбрать дату рождения'
+                      }
+                    >
+                      <span className={birthDate ? undefined : styles.datePlaceholder}>
+                        {birthDate ? format(birthDate, 'dd.MM.yyyy') : 'дд.мм.гггг'}
+                      </span>
+
+                      <img src={calendarIcon} alt="" className={styles.dateIcon} />
+                    </button>
+                  }
+                >
+                  <div className={styles.popoverContent}>
+                    <DayPicker
+                      mode="single"
+                      className={styles.calendar}
+                      selected={birthDate}
+                      onSelect={setBirthDate}
+                      captionLayout="dropdown"
+                      locale={ru}
+                      showOutsideDays
+                      fixedWeeks
+                      hideNavigation
+                      classNames={{
+                        months: styles.calendarMonths,
+                        month_caption: styles.monthCaption,
+                        dropdowns: styles.dropdowns,
+                        dropdown_root: styles.dropdownRoot,
+                        caption_label: styles.captionLabel,
+                        chevron: styles.calendarChevron,
+                        month_grid: styles.monthGrid,
+                        weekday: styles.weekday,
+                        day_button: styles.dayButton,
+                        outside: styles.outsideDay,
+                        selected: styles.selectedDay,
+                      }}
+                    />
+                    <div className={styles.calendarFooter}>
+                      <Button
+                        variant="secondary"
+                        className={styles.calendarButton}
+                        onClick={() => {
+                          setBirthDate(undefined)
+                          closePopover()
+                        }}
+                      >
+                        Отменить
+                      </Button>
+                      <Button variant="primary" className={styles.calendarButton} onClick={closePopover}>
+                        Выбрать
+                      </Button>
+                    </div>
+                  </div>
+                </Popover>
+              </FormField>
+              {errors?.birthDate && <p className={styles.errorHint}>{errors.birthDate}</p>}
+            </div>
+
+            <div>
+              <Select
+                id="gender"
+                label="Пол"
+                options={[
+                  { value: '', label: 'Не указан' },
+                  { value: 'male', label: 'Мужской' },
+                  { value: 'female', label: 'Женский' },
+                ]}
+                value={gender}
+                onChange={setGender}
+                placeholder="Не выбрано"
+              />
+              {errors?.gender && <p className={styles.errorHint}>{errors.gender}</p>}
+            </div>
+          </div>
+
+          <div>
+            <FormField id="city" label="Город">
+              <Combobox
+                id="city"
+                ariaLabel="Выберите город"
+                value={city}
+                onChange={setCity}
+                options={cityOptions}
+                placeholder="Выберите город"
+                disabled={citiesData.length === 0}
+              />
+            </FormField>
+            {errors?.city && <p className={styles.errorHint}>{errors.city}</p>}
+          </div>
+
+          <div>
+            <MultiSelect
+              id="categories"
+              label="Категория навыка, которому хотите научиться"
+              options={categoryOptions}
+              selectedValues={categories}
+              onChange={setCategories}
+              placeholder="Выберите категорию"
             />
-          </FormField>
+            {errors?.categories && <p className={styles.errorHint}>{errors.categories}</p>}
+          </div>
 
-          <MultiSelect
-            id="categories"
-            label="Категория навыка, которому хотите научиться"
-            options={categoryOptions}
-            selectedValues={categories}
-            onChange={setCategories}
-            placeholder="Выберите категорию"
-          />
-
-          <MultiSelect
-            id="subcategories"
-            label="Подкатегория навыка, которому хотите научиться"
-            options={subcategoryOptions}
-            selectedValues={subcategories}
-            onChange={setSubcategories}
-            placeholder="Выберите подкатегорию"
-          />
+          <div>
+            <MultiSelect
+              id="subcategories"
+              label="Подкатегория навыка, которому хотите научиться"
+              options={subcategoryOptions}
+              selectedValues={subcategories}
+              onChange={setSubcategories}
+              placeholder="Выберите подкатегорию"
+            />
+            {errors?.subcategories && <p className={styles.errorHint}>{errors.subcategories}</p>}
+          </div>
 
           <div className={styles.buttonContainer}>
             <Button type="button" variant="secondary" className={styles.button} onClick={handleBack}>
