@@ -5,3 +5,10 @@
   gap: 32px;
   width: 100%;
 }
+
+.steps {
+  width: 100%;
+  max-width: 212px;
+  min-height: 44px;
+  margin: 0 auto;
+}

@@ -84,7 +84,7 @@ export function AppRouter() {
 
       {backgroundLocation && (
         <Routes>
-          <Route path="/register/skill/:id" element={<RegisterPreviewPage />} />
+          <Route path="/register/preview" element={<RegisterPreviewPage />} />
           <Route path="/skill/:id/exchange" element={<SkillExchangePage />} />
         </Routes>
       )}

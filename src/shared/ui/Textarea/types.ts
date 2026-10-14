@@ -9,4 +9,5 @@ export interface TextareaProps {
   maxLength?: number
   ariaLabel?: string
   readOnly?: boolean
+  autoResize?: boolean
 }
