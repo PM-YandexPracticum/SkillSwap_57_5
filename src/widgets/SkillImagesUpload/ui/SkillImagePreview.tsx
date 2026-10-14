@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import CrossIcon from '@/shared/assets/icons/cross.svg'
+
 import styles from './SkillImagePreview.module.css'
 
 interface SkillImagePreviewProps {
@@ -28,7 +30,9 @@ export function SkillImagePreview({ file, onRemove }: SkillImagePreviewProps) {
         className={styles.remove}
         onClick={onRemove}
         aria-label={`Удалить ${file.name}`}
-      >х</button>
+      >
+        <img src={CrossIcon} alt="Удалить изображение" />
+      </button>
     </div>
   )
 }

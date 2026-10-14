@@ -18,14 +18,25 @@ export function useRegistrationCredentials() {
   const dispatch = useAppDispatch()
   
   const savedValues = useAppSelector((state) => state.registration?.credentials)
+  const users = useAppSelector((state) => state.users.items)
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
 
   const processRegistrationStep1 = async (data: { email: string; password: string }) => {
     try {
       await validationSchema.validate(data, { abortEarly: false })
+      const email = data.email.trim().toLowerCase()
+      const emailExists = users.some(
+        (user) => user.email.trim().toLowerCase() === email,
+      )
+
+      if (emailExists) {
+        setErrors({ email: 'Пользователь с таким email уже существует' })
+        return false
+      }
+
       setErrors({})
       
-      dispatch(setCredentials(data))
+      dispatch(setCredentials({ ...data, email }))
       navigate('/register/profile')
       return true
     } catch (err) {
