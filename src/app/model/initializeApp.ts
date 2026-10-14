@@ -1,5 +1,5 @@
 import type { AppDispatch } from '@/store'
-import { getAuthUser } from '@/features/auth'
+import { restoreAuthSession } from '@/features/auth'
 import { loadUsers, setSession } from '@/store/slices/usersSlice'
 import { loadSkills } from '@/store/slices/skillsSlice'
 import { loadCities } from '@/store/slices/citiesSlice'
@@ -14,7 +14,7 @@ export async function initializeApp(dispatch: AppDispatch): Promise<void> {
 
   isAppInitialized = true
 
-  const authUser = getAuthUser()
+  const authUser = restoreAuthSession()
 
   if (authUser) {
     dispatch(setSession({ userId: authUser.id, token: authUser.token }))
