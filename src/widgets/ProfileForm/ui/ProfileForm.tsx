@@ -66,6 +66,9 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
   const [subcategories, setSubcategories] = useState<SkillSubcategoryId[]>(
     savedValues?.learningSubcategoryIds || []
   )
+  const [manuallySelectedCategories, setManuallySelectedCategories] = useState<SkillCategoryId[]>(
+    savedValues?.learningCategoryIds || []
+  )
 
   const closePopover = () => {
     const event = new MouseEvent('pointerdown', { bubbles: true })
@@ -79,17 +82,62 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
     label: cat.name,
   }))
 
-  const subcategoryOptions = categoriesData.flatMap((cat) =>
-    cat.subcategories.map((sub) => ({
-      value: sub.id,
-      label: sub.name,
-    })),
+  const subcategoryOptions = categoriesData
+    .filter(
+      (cat) =>
+        manuallySelectedCategories.length === 0 || manuallySelectedCategories.includes(cat.id),
+    )
+    .flatMap((cat) =>
+      cat.subcategories.map((sub) => ({
+        value: sub.id,
+        label: sub.name,
+      })),
   )
 
   const cityOptions = citiesData.map((city) => ({
     value: city.id,
     label: city.name,
   }))
+
+  const handleCategoryToggle = (newCategories: SkillCategoryId[]) => {
+
+    const removedCategories = categories.filter((id) => !newCategories.includes(id))
+
+    if (removedCategories.length > 0) {
+      const removedSubIds = categoriesData
+        .filter((cat) => removedCategories.includes(cat.id))
+        .flatMap((cat) => cat.subcategories.map((sub) => sub.id))
+
+      setSubcategories((prev) => prev.filter((id) => !removedSubIds.includes(id)))
+    }
+
+    setCategories(newCategories)
+    setManuallySelectedCategories(newCategories)
+  }
+
+  const handleSubcategoryToggle = (newSubcategories: SkillSubcategoryId[]) => {
+
+    const addedSubcategories = newSubcategories.filter((id) => !subcategories.includes(id))
+
+    if (addedSubcategories.length > 0) {
+      const parentCategoryIds = categoriesData
+        .filter((cat) => cat.subcategories.some((sub) => addedSubcategories.includes(sub.id)))
+        .map((cat) => cat.id)
+
+      const newCategories = [...categories]
+      parentCategoryIds.forEach((id) => {
+        if (!newCategories.includes(id)) {
+          newCategories.push(id)
+        }
+      })
+
+      if (newCategories.length !== categories.length) {
+        setCategories(newCategories)
+      }
+    }
+
+    setSubcategories(newSubcategories)
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -217,7 +265,7 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
               label="Категория навыка, которому хотите научиться"
               options={categoryOptions}
               selectedValues={categories}
-              onChange={setCategories}
+              onChange={handleCategoryToggle}
               placeholder="Выберите категорию"
             />
             {errors?.categories && <p className={styles.errorHint}>{errors.categories}</p>}
@@ -229,7 +277,7 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
               label="Подкатегория навыка, которому хотите научиться"
               options={subcategoryOptions}
               selectedValues={subcategories}
-              onChange={setSubcategories}
+              onChange={handleSubcategoryToggle}
               placeholder="Выберите подкатегорию"
             />
             {errors?.subcategories && <p className={styles.errorHint}>{errors.subcategories}</p>}
