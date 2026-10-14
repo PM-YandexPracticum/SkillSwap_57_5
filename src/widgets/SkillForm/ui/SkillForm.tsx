@@ -21,7 +21,7 @@ export function SkillForm() {
   const [category, setCategory] = useState('')
   const [subCategory, setSubCategory] = useState('')
   const [description, setDescription] = useState('')
-  
+
   const [, setSelectedFiles] = useState<File[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -82,6 +82,7 @@ export function SkillForm() {
               value={description}
               onChange={setDescription}
               placeholder="Коротко опишите, чему можете научить"
+              autoResize
             />
           </FormField>
 
@@ -105,7 +106,7 @@ export function SkillForm() {
 
       {/* Правая колонка — Передаем данные в универсальный InfoBlock */}
       <div className={styles.infoColumn}>
-        <InfoBlock 
+        <InfoBlock
           src={easelIcon}
           title="Укажите, чем вы готовы поделиться"
           description="Так другие люди смогут увидеть ваши предложения и предложить вам обмен!"
@@ -113,8 +114,8 @@ export function SkillForm() {
         />
       </div>
 
-      <Modal 
-        open={isModalOpen} 
+      <Modal
+        open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         ariaLabel="Окно успешного завершения регистрации"
       >

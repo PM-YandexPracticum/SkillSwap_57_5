@@ -61,6 +61,7 @@
   background: transparent;
   color: inherit;
   font: inherit;
+  font-weight: 400;
   text-align: left;
   cursor: pointer;
 }
