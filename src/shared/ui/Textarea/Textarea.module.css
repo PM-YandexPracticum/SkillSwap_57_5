@@ -10,6 +10,13 @@
   font: inherit;
   outline: none;
   resize: vertical;
+  overflow-y: hidden;
+}
+
+.autoResize {
+  height: auto;
+  resize: none;
+  overflow-y: hidden;
 }
 
 .textarea::placeholder {
