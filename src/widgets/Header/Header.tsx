@@ -1,15 +1,18 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import clsx from 'clsx'
+
 import { SearchSkills } from '@/features/search-skills'
 import { Button } from '@/shared/ui/Button'
 import { IconButton } from '@/shared/ui/IconButton'
 import { Logo } from '@/shared/ui/Logo'
 import { Avatar } from '@/shared/ui/Avatar'
+import { Popover } from '@/shared/ui/Popover'
 
-// Импортируем иконки строго по распутанным и проверенным именам файлов в assets/icons
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
 import moonIcon from '@/shared/assets/icons/moon.svg'
-import bellIcon from '@/shared/assets/icons/bell.svg' 
-import heartIcon from '@/shared/assets/icons/heart.svg' 
+import bellIcon from '@/shared/assets/icons/bell.svg'
+import heartIcon from '@/shared/assets/icons/heart.svg'
+import logoutIcon from '@/shared/assets/icons/logout.svg'
 
 import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
 import { useAppSelector } from '@/store/hooks'
@@ -18,17 +21,30 @@ import { selectIsAuthenticated, selectCurrentUserName } from '@/store/selectors/
 import styles from './Header.module.css'
 
 export function Header() {
+  const navigate = useNavigate()
   const categories = useAppSelector((state) => state.categories.items)
-  
-  // Используем только готовые типизированные хуки из проекта строго по ТЗ
+
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const userName = useAppSelector(selectCurrentUserName)
 
-  // Получаем объект текущего пользователя для безопасного извлечения аватарки
   const currentUser = useAppSelector((state) => {
     const userId = state.users.currentUserId
     return state.users.items.find((u) => u.id === userId) || null
   })
+
+  const closePopover = () => {
+    const event = new MouseEvent('pointerdown', { bubbles: true })
+    document.dispatchEvent(event)
+  }
+
+  const handleProfileClick = () => {
+    closePopover()
+    navigate('/profile')
+  }
+
+  const handleLogoutClick = () => {
+    closePopover()
+  }
 
   return (
     <header className={styles.header}>
@@ -56,7 +72,6 @@ export function Header() {
         <div className={styles.rightSection}>
           {isAuthenticated ? (
             <div className={styles.userSection}>
-              {/* Группа иконок из Figma: Луна -> Колокольчик -> Сердечко (каждая в IconButton) */}
               <div className={styles.iconsGroup}>
                 <IconButton
                   src={moonIcon}
@@ -75,12 +90,44 @@ export function Header() {
                   onClick={() => {}}
                 />
               </div>
-              
-              {/* Общий button для последующей реализации поповера. Имя строго слева от аватарки */}
-              <button type="button" className={styles.profileTrigger}>
-                <span className={styles.userName}>{userName || 'Пользователь'}</span>
-                <Avatar src={currentUser?.avatarUrl || ''} name={userName || 'Пользователь'} />
-              </button>
+
+              <Popover
+                align="right"
+                padding="0"
+                trigger={
+                  <button type="button" className={styles.profileTrigger}>
+                    <span className={styles.userName}>{userName || 'Пользователь'}</span>
+                    <Avatar
+                      src={currentUser?.avatarUrl || ''}
+                      name={userName || 'Пользователь'}
+                    />
+                  </button>
+                }
+              >
+                <div className={styles.profileMenu}>
+                  <button
+                    type="button"
+                    className={styles.profileMenuItem}
+                    onClick={handleProfileClick}
+                  >
+                    <span>Личный кабинет</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className={clsx(styles.profileMenuItem, styles.profileMenuItemDanger)}
+                    onClick={handleLogoutClick}
+                  >
+                    <span>Выйти из аккаунта</span>
+                    <img
+                      src={logoutIcon}
+                      alt=""
+                      aria-hidden="true"
+                      className={styles.profileMenuIcon}
+                    />
+                  </button>
+                </div>
+              </Popover>
             </div>
           ) : (
             <div className={styles.authButtonSection}>
