@@ -43,7 +43,7 @@ export function useCompleteRegistration() {
       return false
     }
 
-    if (!skillTitle || !skillCategoryId || !skillSubcategoryId || !skillDescription) {
+    if (!skillTitle || !skillCategoryId || !skillSubcategoryId) {
       setError('Заполните данные навыка')
       return false
     }

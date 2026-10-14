@@ -8,10 +8,11 @@ import { Input } from '@/shared/ui/Input'
 import { InputWithAction } from '@/shared/ui/InputWithAction'
 import { FormField } from '@/shared/ui/FormField'
 
-import lightBulb from '@/shared/assets/icons/light-bulb.svg'
-import appleIcon from '@/shared/assets/icons/Apple.svg'
-import googleIcon from '@/shared/assets/icons/Google.svg'
-import eyeIcon from '@/shared/assets/icons/eye.svg'
+import LightBulb from '@/shared/assets/icons/light-bulb.svg'
+import AppleIcon from '@/shared/assets/icons/Apple.svg'
+import GoogleIcon from '@/shared/assets/icons/Google.svg'
+import EyeIcon from '@/shared/assets/icons/eye.svg'
+import EyeOffIcon from '@/shared/assets/icons/eye-off.svg'
 
 import styles from './CredentialsForm.module.css'
 
@@ -46,11 +47,11 @@ export function CredentialsForm({ variant, onSubmit, savedValues, errors }: Cred
       <div className={styles.contentContainer}>
         <div className={styles.serviceButtonWrapper}>
           <Button className={styles.serviceButton} variant={'secondary'}>
-            <img alt="" aria-hidden="true" src={googleIcon} className={styles.buttonIcon} />
+            <img alt="" aria-hidden="true" src={GoogleIcon} className={styles.buttonIcon} />
             Продолжить с Google
           </Button>
           <Button className={styles.serviceButton} variant={'secondary'}>
-            <img alt="" aria-hidden="true" src={appleIcon} className={styles.buttonIcon} />
+            <img alt="" aria-hidden="true" src={AppleIcon} className={styles.buttonIcon} />
             Продолжить с Apple
           </Button>
         </div>
@@ -86,7 +87,7 @@ export function CredentialsForm({ variant, onSubmit, savedValues, errors }: Cred
             <InputWithAction
               id="password"
               label="Пароль"
-              actionIconSrc={eyeIcon}
+              actionIconSrc={showPassword ? EyeOffIcon : EyeIcon}
               actionLabel={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
               onAction={() => setShowPassword(!showPassword)}
               showAction={true}
@@ -128,7 +129,7 @@ export function CredentialsForm({ variant, onSubmit, savedValues, errors }: Cred
       </div>
       <div className={styles.contentContainer}>
         <InfoBlock
-          src={lightBulb}
+          src={LightBulb}
           title={'Добро пожаловать в SkillSwap!'}
           description={
             'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'
