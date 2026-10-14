@@ -1,3 +1,1 @@
-import RegisterSkillPage from './ui/RegisterSkillPage'
-
-export default RegisterSkillPage
+export { default } from './ui/RegisterSkillPage'
