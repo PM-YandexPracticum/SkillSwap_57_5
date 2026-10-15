@@ -58,7 +58,7 @@ export function useRegistrationProfile() {
         
         dispatch(
           setProfile({
-            name: data.name,
+            name: data.name.trim(),
             avatarUrl: '',
             birthDate: data.birthDate ? format(data.birthDate, 'yyyy-MM-dd') : '',
             gender: (data.gender as Gender) ?? null,

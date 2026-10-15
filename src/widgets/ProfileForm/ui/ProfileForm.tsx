@@ -7,7 +7,7 @@ import 'react-day-picker/style.css'
 import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/category'
 import type { Gender } from '@/entities/user'
 
-import { useAppData } from '@/store/useAppData'
+import { useAppSelector } from '@/store/hooks'
 
 import { Select } from '@/shared/ui/Select'
 import { InfoBlock } from '@/shared/ui/InfoBlock'
@@ -18,7 +18,6 @@ import { FormField } from '@/shared/ui/FormField'
 import { AvatarUploadButton } from '@/shared/ui/AvatarUploadButton'
 import { Popover } from '@/shared/ui/Popover'
 import { MultiSelect } from '@/shared/ui/MultiSelect'
-
 
 import userInfo from '@/shared/assets/icons/user-info.svg'
 import calendarIcon from '@/shared/assets/icons/calendar.svg'
@@ -34,40 +33,40 @@ interface ProfileFormProps {
     categories: SkillCategoryId[]
     subcategories: SkillSubcategoryId[]
   }) => void
-    handleBack: () => void
-    errors?: {
-      name?: string
-      birthDate?: string
-      gender?: string
-      city?: string
-      categories?: string
-      subcategories?: string
-    }
-    savedValues?: {
-      name: string
-      birthDate: string
-      gender: Gender | null
-      cityId: string
-      learningCategoryIds: SkillCategoryId[]
-      learningSubcategoryIds: SkillSubcategoryId[]
-    }
+  handleBack: () => void
+  errors?: {
+    name?: string
+    birthDate?: string
+    gender?: string
+    city?: string
+    categories?: string
+    subcategories?: string
   }
+  savedValues?: {
+    name: string
+    birthDate: string
+    gender: Gender | null
+    cityId: string
+    learningCategoryIds: SkillCategoryId[]
+    learningSubcategoryIds: SkillSubcategoryId[]
+  }
+}
 
 export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: ProfileFormProps) {
   const [name, setName] = useState(savedValues?.name || '')
   const [birthDate, setBirthDate] = useState<Date | undefined>(
-    savedValues?.birthDate ? new Date(savedValues.birthDate) : undefined
+    savedValues?.birthDate ? new Date(savedValues.birthDate) : undefined,
   )
   const [gender, setGender] = useState(savedValues?.gender || '')
   const [city, setCity] = useState<string>(savedValues?.cityId || '')
   const [categories, setCategories] = useState<SkillCategoryId[]>(
-    savedValues?.learningCategoryIds || []
+    savedValues?.learningCategoryIds || [],
   )
   const [subcategories, setSubcategories] = useState<SkillSubcategoryId[]>(
-    savedValues?.learningSubcategoryIds || []
+    savedValues?.learningSubcategoryIds || [],
   )
   const [manuallySelectedCategories, setManuallySelectedCategories] = useState<SkillCategoryId[]>(
-    savedValues?.learningCategoryIds || []
+    savedValues?.learningCategoryIds || [],
   )
 
   const closePopover = () => {
@@ -75,13 +74,13 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
     document.dispatchEvent(event)
   }
 
-  const { categories: categoriesData, cities: citiesData } = useAppData()
+  const categoriesData = useAppSelector((state) => state.categories.items)
+  const citiesData = useAppSelector((state) => state.cities.items)
 
   const categoryOptions = categoriesData.map((cat) => ({
     value: cat.id,
     label: cat.name,
   }))
-
   const subcategoryOptions = categoriesData
     .filter(
       (cat) =>
@@ -92,15 +91,13 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
         value: sub.id,
         label: sub.name,
       })),
-  )
-
+    )
   const cityOptions = citiesData.map((city) => ({
     value: city.id,
     label: city.name,
   }))
 
   const handleCategoryToggle = (newCategories: SkillCategoryId[]) => {
-
     const removedCategories = categories.filter((id) => !newCategories.includes(id))
 
     if (removedCategories.length > 0) {
@@ -116,7 +113,6 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
   }
 
   const handleSubcategoryToggle = (newSubcategories: SkillSubcategoryId[]) => {
-
     const addedSubcategories = newSubcategories.filter((id) => !subcategories.includes(id))
 
     if (addedSubcategories.length > 0) {
@@ -154,7 +150,7 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
             <FormField id="name" label="Имя">
               <Input id="name" value={name} onChange={setName} placeholder="Введите ваше имя" />
             </FormField>
-            {errors?.name && <p  className={styles.errorHint} >{errors.name}</p>}
+            {errors?.name && <p className={styles.errorHint}>{errors.name}</p>}
           </div>
 
           <div className={styles.rowInputs}>
@@ -217,7 +213,11 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
                       >
                         Отменить
                       </Button>
-                      <Button variant="primary" className={styles.calendarButton} onClick={closePopover}>
+                      <Button
+                        variant="primary"
+                        className={styles.calendarButton}
+                        onClick={closePopover}
+                      >
                         Выбрать
                       </Button>
                     </div>
@@ -284,10 +284,17 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
           </div>
 
           <div className={styles.buttonContainer}>
-            <Button type="button" variant="secondary" className={styles.button} onClick={handleBack}>
+            <Button
+              type="button"
+              variant="secondary"
+              className={styles.button}
+              onClick={handleBack}
+            >
               Назад
             </Button>
-            <Button type="submit" className={styles.button}>Продолжить</Button>
+            <Button type="submit" className={styles.button}>
+              Продолжить
+            </Button>
           </div>
         </form>
       </div>
