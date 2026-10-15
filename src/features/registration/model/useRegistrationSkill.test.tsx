@@ -2,6 +2,7 @@ import type { PropsWithChildren } from 'react'
 import { act, renderHook } from '@testing-library/react'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import type { SkillCategory } from '@/entities/category'
 import categoriesReducer, { loadCategories } from '@/store/slices/categoriesSlice'
@@ -37,7 +38,11 @@ function renderRegistrationHook() {
   })
   store.dispatch(loadCategories.fulfilled(categories, 'categories-test', undefined))
 
-  const wrapper = ({ children }: PropsWithChildren) => <Provider store={store}>{children}</Provider>
+  const wrapper = ({ children }: PropsWithChildren) => (
+    <MemoryRouter>
+      <Provider store={store}>{children}</Provider>
+    </MemoryRouter>
+  )
   const hook = renderHook(() => useRegistrationSkill(), { wrapper })
 
   return { ...hook, store }

@@ -1,9 +1,12 @@
 import { useMemo } from 'react'
 import { useAppSelector } from '@/store/hooks'
+import { useRegistrationGuard } from '../lib/useRegistrationGuard'
 
 export function useRegistrationPreview() {
   const skill = useAppSelector((state) => state.registration?.skill)
   const categories = useAppSelector((state) => state.categories.items)
+
+  useRegistrationGuard(['credentials', 'profile', 'skill'])
 
   const data = useMemo(() => {
     if (!skill) return null
