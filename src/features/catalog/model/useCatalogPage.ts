@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useAppSelector } from '@/store/hooks'
 
 import {
   buildActiveFilters,
@@ -77,8 +78,10 @@ export function useCatalogPage(): UseCatalogPageResult {
 
   // 3. Получаем строку поиска из URL
   const searchQuery = useSearchQuery()
-  // 4. Временная заглушка авторизации: кнопки избранного доступны всем
-  const isAuthenticated = true
+  // 4. Проверяем, авторизован ли пользователь
+  const isAuthenticated = useAppSelector(
+    (state) => state.users.currentUserId !== null,
+  )
 
   // 5. Получаем ID избранных пользователей из localStorage и функцию переключения
   const { likedUserIds, toggleFavoriteUser } = useFavoriteUsers(isAuthenticated)
