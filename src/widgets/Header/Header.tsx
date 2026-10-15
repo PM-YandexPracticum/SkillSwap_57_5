@@ -7,6 +7,7 @@ import { IconButton } from '@/shared/ui/IconButton'
 import { Logo } from '@/shared/ui/Logo'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Popover } from '@/shared/ui/Popover'
+import { useLogout } from '@/features/auth'
 
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
 import moonIcon from '@/shared/assets/icons/moon.svg'
@@ -22,6 +23,7 @@ import styles from './Header.module.css'
 
 export function Header() {
   const navigate = useNavigate()
+  const logoutHandler = useLogout()
   const categories = useAppSelector((state) => state.categories.items)
 
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -44,6 +46,7 @@ export function Header() {
 
   const handleLogoutClick = () => {
     closePopover()
+    logoutHandler()
   }
 
   return (

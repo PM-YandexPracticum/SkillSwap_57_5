@@ -6,3 +6,5 @@ export {
 } from './model/authUtils'
 
 export { PrivateRoute } from './ui/PrivateRoute'
+
+export { useLogout } from './model/useLogout'
