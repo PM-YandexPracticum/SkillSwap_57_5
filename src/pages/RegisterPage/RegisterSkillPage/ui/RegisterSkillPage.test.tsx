@@ -5,7 +5,11 @@ import { Link, MemoryRouter, Route, Routes } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import type { SkillCategory } from '@/entities/category'
 import categoriesReducer, { loadCategories } from '@/store/slices/categoriesSlice'
-import registrationReducer, { setSkillDraft } from '@/store/slices/registrationSlice'
+import registrationReducer, {
+  setCredentials,
+  setProfile,
+  setSkillDraft,
+} from '@/store/slices/registrationSlice'
 import RegisterSkillPage from './RegisterSkillPage'
 
 const categories: SkillCategory[] = [
@@ -29,6 +33,20 @@ function renderSkillPage(savedDraft?: Parameters<typeof setSkillDraft>[0]) {
     reducer: { registration: registrationReducer, categories: categoriesReducer },
   })
   store.dispatch(loadCategories.fulfilled(categories, 'categories-test', undefined))
+
+  store.dispatch(setCredentials({ email: 'test@example.com', password: 'Password123' }))
+  store.dispatch(
+    setProfile({
+      name: 'Тестовый пользователь',
+      avatarUrl: '',
+      birthDate: '2000-01-01',
+      gender: 'female',
+      cityId: 'moscow',
+      learningCategoryIds: [],
+      learningSubcategoryIds: [],
+    }),
+  )
+
   if (savedDraft) store.dispatch(setSkillDraft(savedDraft))
 
   render(

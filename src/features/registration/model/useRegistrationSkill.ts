@@ -4,6 +4,7 @@ import type { SkillCategory } from '@/entities/category'
 import type { RootState } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setSkillDraft } from '@/store/slices/registrationSlice'
+import { useRegistrationGuard } from '../lib/useRegistrationGuard'
 
 export type RegistrationSkillValues = Omit<RootState['registration']['skill'], 'imageUrls'>
 export type RegistrationSkillErrors = Partial<Record<keyof RegistrationSkillValues, string>>
@@ -49,6 +50,8 @@ export function useRegistrationSkill() {
   const categories = useAppSelector((state) => state.categories.items)
   const savedValues = useAppSelector((state) => state.registration.skill)
   const [errors, setErrors] = useState<RegistrationSkillErrors>({})
+
+  useRegistrationGuard(['credentials', 'profile'])
 
   const processRegistrationStep3 = async (data: RegistrationSkillValues): Promise<boolean> => {
     try {

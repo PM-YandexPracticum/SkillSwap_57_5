@@ -6,6 +6,7 @@ import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/category'
 import { setProfile } from '@/store/slices/registrationSlice'
 import { format } from 'date-fns'
 import type { Gender } from '@/entities/user'
+import { useRegistrationGuard } from '../lib/useRegistrationGuard'
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -33,7 +34,7 @@ const validationSchema = Yup.object().shape({
 export function useRegistrationProfile() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  
+
   const savedValues = useAppSelector((state) => state.registration?.profile)
   const [errors, setErrors] = useState<{
     name?: string
@@ -43,6 +44,8 @@ export function useRegistrationProfile() {
     categories?: string
     subcategories?: string
   }>({})
+
+  useRegistrationGuard(['credentials'])
 
   const processRegistrationStep2 = async (data: {
     name: string
@@ -55,7 +58,7 @@ export function useRegistrationProfile() {
       try {
         await validationSchema.validate(data, { abortEarly: false })
         setErrors({})
-        
+
         dispatch(
           setProfile({
             name: data.name.trim(),
@@ -81,7 +84,7 @@ export function useRegistrationProfile() {
         return false
       }
     }
-  
+
     return {
       processRegistrationStep2,
       errors,
