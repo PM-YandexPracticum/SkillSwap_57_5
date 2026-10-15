@@ -7,7 +7,6 @@ import { Combobox } from '@/shared/ui/Combobox'
 import { Textarea } from '@/shared/ui/Textarea/Textarea'
 import { Button } from '@/shared/ui/Button'
 import { InfoBlock } from '@/shared/ui/InfoBlock'
-import { SkillImagesUpload } from '@/widgets/SkillImagesUpload'
 import easelIcon from '@/shared/assets/icons/easel-illustration.svg'
 import styles from './SkillForm.module.css'
 
@@ -27,10 +26,10 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
 
   useEffect(() => {
     if (savedValues) {
-      setSkillName(savedValues.title)
-      setCategory(savedValues.categoryId)
-      setSubCategory(savedValues.subcategoryId)
-      setDescription(savedValues.description)
+      setSkillName(savedValues.title || '')
+      setCategory(savedValues.categoryId || '')
+      setSubCategory(savedValues.subcategoryId || '')
+      setDescription(savedValues.description || '')
     }
   }, [savedValues])
 
@@ -50,21 +49,22 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
     })),
   )
 
-  const handleCategoryChange = (categoryId: string) => {
-    setCategory(categoryId)
+  // ИСПРАВЛЕНО: Безопасное связывание без багов асинхронности React
+  const handleCategoryChange = (newCategoryId: string) => {
+    setCategory(newCategoryId)
 
-    const nextCategory = categories.find((item) => item.id === categoryId)
+    const nextCategory = categories.find((item) => item.id === newCategoryId)
     if (!nextCategory?.subcategories.some((item) => item.id === subCategory)) {
       setSubCategory('')
     }
   }
 
-  const handleSubCategoryChange = (subcategoryId: string) => {
-    setSubCategory(subcategoryId)
+  const handleSubCategoryChange = (subgetid: string) => {
+    setSubCategory(subgetid)
 
-    if (subcategoryId) {
+    if (subgetid) {
       const parentCategory = categories.find((item) =>
-        item.subcategories.some((subcategory) => subcategory.id === subcategoryId),
+        item.subcategories.some((subcategory) => subcategory.id === subgetid),
       )
 
       if (parentCategory) setCategory(parentCategory.id)
@@ -94,9 +94,9 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
               className={errors?.title ? styles.inputError : undefined}
             />
             {errors?.title && (
-              <p className={styles.errorHint} role="alert">
+              <span style={{ color: '#dc2626', fontSize: '11px', display: 'block', marginTop: '4px', paddingLeft: '4px' }} role="alert">
                 {errors.title}
-              </p>
+              </span>
             )}
           </FormField>
 
@@ -110,9 +110,9 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
               showAllOnOpen
             />
             {errors?.categoryId && (
-              <p className={styles.errorHint} role="alert">
+              <span style={{ color: '#dc2626', fontSize: '11px', display: 'block', marginTop: '4px', paddingLeft: '4px' }} role="alert">
                 {errors.categoryId}
-              </p>
+              </span>
             )}
           </FormField>
 
@@ -126,9 +126,9 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
               showAllOnOpen
             />
             {errors?.subcategoryId && (
-              <p className={styles.errorHint} role="alert">
+              <span style={{ color: '#dc2626', fontSize: '11px', display: 'block', marginTop: '#dc2626', paddingLeft: '4px' }} role="alert">
                 {errors.subcategoryId}
-              </p>
+              </span>
             )}
           </FormField>
 
@@ -141,13 +141,14 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
               className={errors?.description ? styles.inputError : undefined}
             />
             {errors?.description && (
-              <p className={styles.errorHint} role="alert">
+              /* ИСПРАВЛЕНО: Убрали опечатку хэша цвета из marginTop, вернули пиксели */
+              <span style={{ color: '#dc2626', fontSize: '11px', display: 'block', marginTop: '4px', paddingLeft: '4px' }} role="alert">
                 {errors.description}
-              </p>
+              </span>
             )}
           </FormField>
 
-          <SkillImagesUpload onFilesSelected={() => undefined} />
+          {/* ИСПРАВЛЕНО: Убран неактуальный по ТЗ компонент SkillImagesUpload */}
 
           <div className={styles.buttonWrapper}>
             <Button

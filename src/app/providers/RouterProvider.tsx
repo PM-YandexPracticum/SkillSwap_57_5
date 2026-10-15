@@ -71,22 +71,36 @@ export function AppRouter() {
           />
           <Route path={'/favorites'} element={<FavoritesPage />} />
           <Route path={'/500'} element={<ServerErrorPage />} />
+          
+          {/* ИСПРАВЛЕНО: Вынесли страницу успеха в основной блок, чтобы она открывалась на весь экран по ТЗ */}
+          <Route path={'/register/success'} element={<RegisterSuccessPage />} />
+          
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
         <Route element={<AuthLayout />}>
-          <Route path={'/login'} element={<LoginPage />} />
+          {/* ИСПРАВЛЕНО: Только страница логина является гостевой зоной (onlyUnAuth) */}
+          <Route 
+            path={'/login'} 
+            element={
+              <PrivateRoute onlyUnAuth>
+                <LoginPage />
+              </PrivateRoute>
+            } 
+          />
           <Route path={'/register'} element={<Navigate to="/register/credentials" replace />} />
+          
+          {/* ИСПРАВЛЕНО: Убрали onlyUnAuth с шагов регистрации, чтобы авторизованного юзера не выкидывало */}
           <Route path={'/register/credentials'} element={<RegisterCredentialsPage />} />
           <Route path={'/register/profile'} element={<RegisterProfilePage />} />
           <Route path={'/register/skill'} element={<RegisterSkillPage />} />
         </Route>
       </Routes>
 
+      {/* Оставляем здесь только реальные модальные окна, требующие заднего фона */}
       {backgroundLocation && (
         <Routes>
           <Route path="/register/preview" element={<RegisterPreviewPage />} />
-          <Route path="/register/success" element={<RegisterSuccessPage />} />
           <Route path="/skill/:id/exchange" element={<SkillExchangePage />} />
         </Routes>
       )}
