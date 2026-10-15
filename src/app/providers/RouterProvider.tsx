@@ -19,6 +19,7 @@ const RegisterProfilePage = lazy(() => import('@/pages/RegisterPage/RegisterProf
 const RegisterSkillPage = lazy(() => import('@/pages/RegisterPage/RegisterSkillPage'))
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'))
 const RegisterPreviewPage = lazy(() => import('@/pages/RegisterPreviewPage'))
+const RegisterSuccessPage = lazy(() => import('@/pages/RegisterSuccessPage'))
 const SkillExchangePage = lazy(() => import('@/pages/SkillExchangePage'))
 const FavoritesPage = lazy(() => import('@/pages/FavoritesPage'))
 const ServerErrorPage = lazy(() => import('@/pages/ServerErrorPage'))
@@ -85,6 +86,7 @@ export function AppRouter() {
       {backgroundLocation && (
         <Routes>
           <Route path="/register/preview" element={<RegisterPreviewPage />} />
+          <Route path="/register/success" element={<RegisterSuccessPage />} />
           <Route path="/skill/:id/exchange" element={<SkillExchangePage />} />
         </Routes>
       )}
