@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react' 
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -7,7 +7,7 @@ import { setProfile } from '@/store/slices/registrationSlice'
 import { format } from 'date-fns'
 import type { Gender } from '@/entities/user'
 
-import { saveImage } from '@/shared/lib/imageStorage'
+import { saveImage, getImage  } from '@/shared/lib/imageStorage'
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -48,6 +48,17 @@ export function useRegistrationProfile() {
   }>({})
 
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
+
+  useEffect(() => {
+    const avatarKey = savedValues?.avatarKey
+    if (!avatarKey) return
+
+    getImage(avatarKey).then((file) => {
+      if (file) {
+        setAvatarPreview(URL.createObjectURL(file))
+      }
+    })
+  }, [savedValues?.avatarKey])
 
   const handleAvatarChange = async (file: File) => {
     const MAX_SIZE = 2 * 1024 * 1024
