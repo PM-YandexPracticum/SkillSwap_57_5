@@ -6,11 +6,11 @@ import galleryAddIcon from '../../../shared/assets/icons/gallery-add.svg'
 import styles from './SkillImagesUpload.module.css'
 
 interface SkillImagesUploadProps {
-  onFilesSelected: (files: File[]) => void
+  files: File[]
+  onFilesChange: (files: File[]) => void
 }
 
-export function SkillImagesUpload({ onFilesSelected }: SkillImagesUploadProps) {
-  const [files, setFiles] = useState<File[]>([])
+export function SkillImagesUpload({ files, onFilesChange }: SkillImagesUploadProps) {
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -20,18 +20,13 @@ export function SkillImagesUpload({ onFilesSelected }: SkillImagesUploadProps) {
 
     const newFiles = Array.from(selectedFiles).filter((file) => file.type.startsWith('image/'))
 
-    const updatedFiles = [...files, ...newFiles]
-
-    setFiles(updatedFiles)
-    onFilesSelected(updatedFiles)
+    onFilesChange([...files, ...newFiles])
   }
 
-  //Удаление изображения
   const handleRemoveImage = (index: number) => {
     const updatedFiles = files.filter((_, imageIndex) => imageIndex !== index)
 
-    setFiles(updatedFiles)
-    onFilesSelected(updatedFiles)
+    onFilesChange(updatedFiles)
   }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

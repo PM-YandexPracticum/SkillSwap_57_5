@@ -1,14 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import type { SkillCategory } from '@/entities/category'
 import type { RootState } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setSkillDraft } from '@/store/slices/registrationSlice'
+import { saveImage, getImage } from '@/shared/lib/imageStorage'
 
 export type RegistrationSkillValues = Omit<
   RootState['registration']['skill'],
   'imageUrls' | 'imageKeys'>
-export type RegistrationSkillErrors = Partial<Record<keyof RegistrationSkillValues, string>>
+
+export type RegistrationSkillErrors = Partial<
+  Record<keyof RegistrationSkillValues | 'images', string>
+>
 
 function createValidationSchema(
   categories: SkillCategory[],
@@ -51,8 +55,68 @@ export function useRegistrationSkill() {
   const categories = useAppSelector((state) => state.categories.items)
   const savedValues = useAppSelector((state) => state.registration.skill)
   const [errors, setErrors] = useState<RegistrationSkillErrors>({})
+  const [files, setFiles] = useState<File[]>([])
+
+  const MAX_SIZE = 2 * 1024 * 1024
+
+  const handleFilesChange = async (newFiles: File[]) => {
+    const validFiles: File[] = []
+    let hasOversizedFile = false
+
+    for (const file of newFiles) {
+      if (file.size > MAX_SIZE) {
+        hasOversizedFile = true
+      } else {
+        validFiles.push(file)
+      }
+    }
+
+    setErrors((prev) => ({
+      ...prev,
+      images: hasOversizedFile ? 'Файл не должен превышать 2 МБ' : undefined,
+    }))
+
+    const keys: string[] = []
+    for (let i = 0; i < validFiles.length; i++) {
+      const key = `skill-image-${i}`
+      await saveImage(key, validFiles[i])
+      keys.push(key)
+    }
+
+    setFiles(validFiles)
+
+    dispatch(
+      setSkillDraft({
+        ...savedValues,
+        imageKeys: keys,
+      }),
+    )
+  }
+
+  useEffect(() => {
+    const imageKeys = savedValues?.imageKeys
+    if (!imageKeys || imageKeys.length === 0) return
+
+    let cancelled = false
+
+    Promise.all(imageKeys.map((key) => getImage(key))).then((loadedFiles) => {
+      if (cancelled) return
+
+      const validFiles = loadedFiles.filter((file): file is File => file !== undefined)
+      setFiles(validFiles)
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [savedValues?.imageKeys])
 
   const processRegistrationStep3 = async (data: RegistrationSkillValues): Promise<boolean> => {
+    if (files.length === 0) {
+      setErrors({ images: 'Загрузите хотя бы одно фото навыка' })
+      return false
+    }
+
     try {
       const values = await createValidationSchema(categories).validate(data, { abortEarly: false })
 
@@ -63,7 +127,7 @@ export function useRegistrationSkill() {
           subcategoryId: values.subcategoryId,
           description: values.description,
           imageUrls: [],
-          imageKeys: [],
+          imageKeys: files.map((_, index) => `skill-image-${index}`),
         }),
       )
       setErrors({})
@@ -91,5 +155,11 @@ export function useRegistrationSkill() {
     }
   }
 
-  return { processRegistrationStep3, errors, savedValues }
+  return {
+    processRegistrationStep3,
+    errors,
+    savedValues,
+    files,
+    handleFilesChange,
+  }
 }

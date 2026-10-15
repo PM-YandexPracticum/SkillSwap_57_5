@@ -16,9 +16,18 @@ interface SkillFormProps {
   handleBack: () => void
   errors?: RegistrationSkillErrors
   savedValues?: RegistrationSkillValues
+  skillImages: File[]
+  onSkillImagesChange: (files: File[]) => void
 }
 
-export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFormProps) {
+export function SkillForm({
+  onSubmit,
+  handleBack,
+  errors,
+  savedValues,
+  skillImages,
+  onSkillImagesChange,
+}: SkillFormProps) {
   const categories = useAppSelector((state) => state.categories.items)
   const [skillName, setSkillName] = useState(savedValues?.title ?? '')
   const [category, setCategory] = useState(savedValues?.categoryId ?? '')
@@ -146,8 +155,13 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
               </p>
             )}
           </FormField>
-
-          <SkillImagesUpload onFilesSelected={() => undefined} />
+          
+          <SkillImagesUpload files={skillImages} onFilesChange={onSkillImagesChange} />
+          {errors?.images && (
+            <p className={styles.errorHint} role="alert">
+              {errors.images}
+            </p>
+          )}
 
           <div className={styles.buttonWrapper}>
             <Button
