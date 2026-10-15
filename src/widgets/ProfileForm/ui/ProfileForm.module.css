@@ -209,3 +209,16 @@
 .selectedDay .dayButton {
   background-color: var(--color-primary);
 }
+
+.inputError {
+  border-color: var(--color-error);
+}
+
+.errorHint {
+  margin-top: 4px;
+  color: var(--color-error);
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: 0.02em;
+}

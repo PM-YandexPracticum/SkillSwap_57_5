@@ -2,25 +2,15 @@ import styles from './RegisterProfilePage.module.css'
 import { useNavigate } from 'react-router-dom'
 
 import { ProfileForm } from '@/widgets/ProfileForm'
+import { useRegistrationProfile } from '@/features/registration'
 import { StepIndicator } from '@/shared/ui/StepIndicator'
 
 export default function RegisterProfilePage() {
   const navigate = useNavigate()
+  const { processRegistrationStep2, errors, savedValues } = useRegistrationProfile()
 
   const handleBack = () => {
     navigate('/register/credentials')
-  }
-
-  const handleSubmit = (data: {
-    name: string
-    birthDate: Date | undefined
-    gender: string
-    city: string
-    categories: string[]
-    subcategories: string[]
-  }) => {
-    console.log('registration step 2:', data)
-    navigate('/register/skill')
   }
 
   return (
@@ -28,8 +18,12 @@ export default function RegisterProfilePage() {
       <div className={styles.steps}>
         <StepIndicator currentStep={2} totalSteps={3} />
       </div>
-
-      <ProfileForm onSubmit={handleSubmit} handleBack={handleBack} />
+      <ProfileForm
+        onSubmit={processRegistrationStep2}
+        handleBack={handleBack}
+        errors={errors}
+        savedValues={savedValues}
+      />
     </main>
   )
 }
