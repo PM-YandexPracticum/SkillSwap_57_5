@@ -170,6 +170,7 @@ describe('RegisterSkillPage', () => {
       subcategoryId: 'english',
       description: 'Разговорная практика',
       imageUrls: [],
+      imageKeys: [],
     })
 
     expect(screen.getByLabelText('Название навыка')).toHaveValue('Английский язык')

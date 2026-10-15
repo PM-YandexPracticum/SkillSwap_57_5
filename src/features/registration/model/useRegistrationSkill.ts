@@ -5,7 +5,9 @@ import type { RootState } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setSkillDraft } from '@/store/slices/registrationSlice'
 
-export type RegistrationSkillValues = Omit<RootState['registration']['skill'], 'imageUrls'>
+export type RegistrationSkillValues = Omit<
+  RootState['registration']['skill'],
+  'imageUrls' | 'imageKeys'>
 export type RegistrationSkillErrors = Partial<Record<keyof RegistrationSkillValues, string>>
 
 function createValidationSchema(
@@ -61,6 +63,7 @@ export function useRegistrationSkill() {
           subcategoryId: values.subcategoryId,
           description: values.description,
           imageUrls: [],
+          imageKeys: [],
         }),
       )
       setErrors({})

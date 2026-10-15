@@ -60,6 +60,7 @@ export function useRegistrationProfile() {
           setProfile({
             name: data.name.trim(),
             avatarUrl: '',
+            avatarKey: null,
             birthDate: data.birthDate ? format(data.birthDate, 'yyyy-MM-dd') : '',
             gender: (data.gender as Gender) ?? null,
             cityId: data.city,

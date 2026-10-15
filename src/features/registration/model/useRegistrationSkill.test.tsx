@@ -83,7 +83,7 @@ describe('useRegistrationSkill', () => {
 
   it('возвращает ошибки всех полей и сохраняет предыдущий черновик при невалидной форме', async () => {
     const { result, store } = renderRegistrationHook()
-    const previousDraft = { ...validValues, imageUrls: [] }
+    const previousDraft = { ...validValues, imageUrls: [], imageKeys: []  }
 
     act(() => {
       store.dispatch(setSkillDraft(previousDraft))
@@ -131,7 +131,7 @@ describe('useRegistrationSkill', () => {
     const { result, store } = renderRegistrationHook()
 
     act(() => {
-      store.dispatch(setSkillDraft({ ...validValues, imageUrls: ['previous-image.png'] }))
+      store.dispatch(setSkillDraft({ ...validValues, imageUrls: ['previous-image.png'], imageKeys: []  }))
     })
 
     await act(async () => {
