@@ -7,6 +7,8 @@ import { setProfile } from '@/store/slices/registrationSlice'
 import { format } from 'date-fns'
 import type { Gender } from '@/entities/user'
 
+import { saveImage } from '@/shared/lib/imageStorage'
+
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .trim()
@@ -33,7 +35,7 @@ const validationSchema = Yup.object().shape({
 export function useRegistrationProfile() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  
+
   const savedValues = useAppSelector((state) => state.registration?.profile)
   const [errors, setErrors] = useState<{
     name?: string
@@ -42,7 +44,23 @@ export function useRegistrationProfile() {
     city?: string
     categories?: string
     subcategories?: string
+    avatar?: string
   }>({})
+
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
+
+  const handleAvatarChange = async (file: File) => {
+    const MAX_SIZE = 2 * 1024 * 1024
+
+    if (file.size > MAX_SIZE) {
+      setErrors((prev) => ({ ...prev, avatar: 'Файл не должен превышать 2 МБ' }))
+      return
+    }
+
+    setErrors((prev) => ({ ...prev, avatar: undefined }))
+    await saveImage('avatar', file)
+    setAvatarPreview(URL.createObjectURL(file))
+  }
 
   const processRegistrationStep2 = async (data: {
     name: string
@@ -52,41 +70,50 @@ export function useRegistrationProfile() {
     categories: SkillCategoryId[]
     subcategories: SkillSubcategoryId[]
   }) => {
-      try {
-        await validationSchema.validate(data, { abortEarly: false })
-        setErrors({})
-        
-        dispatch(
-          setProfile({
-            name: data.name.trim(),
-            avatarUrl: '',
-            avatarKey: null,
-            birthDate: data.birthDate ? format(data.birthDate, 'yyyy-MM-dd') : '',
-            gender: (data.gender as Gender) ?? null,
-            cityId: data.city,
-            learningCategoryIds: data.categories,
-            learningSubcategoryIds: data.subcategories,
-          }),
-        )
-        navigate('/register/skill')
-        return true
-      } catch (err) {
-        if (err instanceof Yup.ValidationError) {
-          const validationErrors: typeof errors = {}
-          err.inner.forEach((error) => {
-            const path = error.path as keyof typeof errors
-            if (path) validationErrors[path] = error.message
-          })
-          setErrors(validationErrors)
-        }
-        return false
-      }
-    }
-  
-    return {
-      processRegistrationStep2,
-      errors,
-      savedValues,
+    const validationErrors: typeof errors = {}
+
+    if (!avatarPreview) {
+      validationErrors.avatar = 'Добавьте фото'
     }
 
+    try {
+      await validationSchema.validate(data, { abortEarly: false })
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach((error) => {
+          const path = error.path as keyof typeof errors
+          if (path) validationErrors[path] = error.message
+        })
+      }
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return false
+    }
+
+    setErrors({})
+    dispatch(
+      setProfile({
+        name: data.name.trim(),
+        avatarUrl: '',
+        avatarKey: avatarPreview ? 'avatar' : null,
+        birthDate: data.birthDate ? format(data.birthDate, 'yyyy-MM-dd') : '',
+        gender: (data.gender as Gender) ?? null,
+        cityId: data.city,
+        learningCategoryIds: data.categories,
+        learningSubcategoryIds: data.subcategories,
+      }),
+    )
+    navigate('/register/skill')
+    return true
   }
+
+  return {
+    processRegistrationStep2,
+    errors,
+    savedValues,
+    avatarPreview,
+    handleAvatarChange,
+  }
+}

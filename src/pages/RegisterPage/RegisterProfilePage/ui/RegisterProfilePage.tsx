@@ -7,7 +7,13 @@ import { StepIndicator } from '@/shared/ui/StepIndicator'
 
 export default function RegisterProfilePage() {
   const navigate = useNavigate()
-  const { processRegistrationStep2, errors, savedValues } = useRegistrationProfile()
+  const {
+    processRegistrationStep2,
+    errors,
+    savedValues,
+    avatarPreview,
+    handleAvatarChange,
+  } = useRegistrationProfile()
 
   const handleBack = () => {
     navigate('/register/credentials')
@@ -23,6 +29,8 @@ export default function RegisterProfilePage() {
         handleBack={handleBack}
         errors={errors}
         savedValues={savedValues}
+        avatarPreview={avatarPreview}
+        onAvatarChange={handleAvatarChange}
       />
     </main>
   )

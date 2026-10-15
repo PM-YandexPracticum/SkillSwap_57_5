@@ -41,6 +41,7 @@ interface ProfileFormProps {
     city?: string
     categories?: string
     subcategories?: string
+    avatar?: string 
   }
   savedValues?: {
     name: string
@@ -50,9 +51,18 @@ interface ProfileFormProps {
     learningCategoryIds: SkillCategoryId[]
     learningSubcategoryIds: SkillSubcategoryId[]
   }
+  avatarPreview: string | null
+  onAvatarChange: (file: File) => void
 }
 
-export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: ProfileFormProps) {
+export function ProfileForm({ 
+  onSubmit, 
+  handleBack, 
+  errors, 
+  savedValues, 
+  avatarPreview,
+  onAvatarChange, 
+}: ProfileFormProps) {
   const [name, setName] = useState(savedValues?.name || '')
   const [birthDate, setBirthDate] = useState<Date | undefined>(
     savedValues?.birthDate ? new Date(savedValues.birthDate) : undefined,
@@ -144,7 +154,11 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
     <section className={styles.container}>
       <div className={styles.contentContainer}>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <AvatarUploadButton />
+          
+          <div className={styles.avatarButtonWrapper}>
+            <AvatarUploadButton onAvatarChange={onAvatarChange} previewUrl={avatarPreview} />
+            {errors?.avatar && <p className={styles.errorHint}>{errors.avatar}</p>}
+          </div>
 
           <div>
             <FormField id="name" label="Имя">
