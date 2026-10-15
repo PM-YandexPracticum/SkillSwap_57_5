@@ -1,0 +1,1 @@
+export { saveImage, getImage, deleteImage } from './imageStorage'
