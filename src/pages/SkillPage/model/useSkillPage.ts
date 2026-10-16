@@ -8,6 +8,7 @@ import { useSimilarOffers } from './useSimilarOffer'
 import { useFavoriteUsers } from '@/features/favorite-user/model/useFavoriteUsers'
 import { addFavoriteData } from '@/features/favorite-user/lib/addFavoriteData'
 import { useAppSelector } from '@/store/hooks'
+import { selectIsAuthenticated } from '@/store/selectors/userSelectors'
 
 export type SkillPageData = {
   skill: Skill
@@ -24,9 +25,7 @@ export type SkillPageData = {
 export function useSkillPage(id: SkillId | undefined) {
   const { users, cities, categories, skills, isLoading } = useAppData()
 
-  const isAuthenticated = useAppSelector(
-    (state) => state.users.currentUserId !== null,
-  )
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
 
   const { likedUserIds, toggleFavoriteUser } = useFavoriteUsers(isAuthenticated)
 
