@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: var(--space-40);
 }
 
 .image {
@@ -19,21 +19,21 @@
 }
 
 .registration .textContainer {
-  gap: 12px;
+  gap: var(--space-12);
   max-width: 436px;
 }
 
 .error .textContainer {
-  gap: 4px;
+  gap: var(--space-4);
   max-width: 460px;
 }
 
 .title {
   font-family: var(--font-heading);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-h2);
   line-height: var(--line-height-h2);
-  letter-spacing: 0.011em;
+  letter-spacing: var(--letter-spacing-heading);
   text-align: center;
   color: var(--color-text);
 }

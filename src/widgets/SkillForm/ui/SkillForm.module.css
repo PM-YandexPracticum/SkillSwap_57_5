@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  gap: 24px;
+  gap: var(--space-24);
   justify-content: center;
   align-items: stretch;
   width: 100%;
@@ -14,9 +14,9 @@
   min-width: 0;
   width: 556px;
   min-height: 692px;
-  padding: 40px 60px;
-  background-color: var(--color-surface, #fff);
-  border-radius: 12px;
+  padding: var(--space-40) 60px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-12);
 }
 
 .infoColumn {
@@ -27,9 +27,9 @@
   min-width: 0;
   width: 556px;
   min-height: 692px;
-  padding: 60px 40px;
-  background-color: var(--color-surface, #fff);
-  border-radius: 12px;
+  padding: 60px var(--space-40);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-12);
 }
 
 .infoContent {
@@ -43,16 +43,17 @@
 .infoImage {
   width: 160px; /* Крупный размер мольберта из Figma */
   height: 160px;
-  margin-bottom: 32px;
+  margin-bottom: var(--space-32);
 }
 
 .infoTitle {
-  margin: 0 0 12px;
+  margin: 0 0 var(--space-12);
   font-family: var(--font-heading);
-  font-size: var(--font-size-h2, 24px);
-  font-weight: 600;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text);
   line-height: var(--line-height-h2);
+  letter-spacing: var(--letter-spacing-heading);
 }
 
 .infoDescription {
@@ -67,13 +68,13 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 20px;
+  gap: var(--space-20);
   width: 100%;
 }
 
 .buttonWrapper {
   display: flex;
-  gap: 16px;
+  gap: var(--space-16);
   margin-top: auto;
 }
 

@@ -1,6 +1,6 @@
 .page {
   display: grid;
   min-height: 100vh;
-  padding: 32px 20px;
+  padding: var(--space-32) var(--space-20);
   place-items: center;
 }

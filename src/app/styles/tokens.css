@@ -1,0 +1,82 @@
+:root {
+  /* Colors */
+  --color-text: #253017;
+  --color-caption: #69735d;
+  --color-toggle: #b2b9a9;
+  --color-disabled-text: #9ca197;
+  --color-disabled: #e4e8df;
+  --color-text-link: #508826;
+  --color-primary: #abd27a;
+  --color-primary-hover: #deebc5;
+  --color-bg: #f9faf7;
+  --color-surface: #fff;
+  --color-alarm: #e0796e;
+  --color-error: #bf3920;
+  --color-focus: rgb(105 115 93 / 30%);
+
+  /* Skill tags */
+  --color-tag-business: #eee7f7;
+  --color-tag-creativity: #f7e7f2;
+  --color-tag-languages: #ebe5c5;
+  --color-tag-education: #e7f2f6;
+  --color-tag-home: #f7ebe5;
+  --color-tag-health: #e9f7e7;
+  --color-tag-additional: #e8ecf7;
+
+  /* Typography */
+  --font-heading: 'Jost', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  --font-name: 'Open Sans', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --letter-spacing-heading: -0.011em;
+  --letter-spacing-body: 0.02em;
+
+  /* Font sizes */
+  --font-size-h1: 32px;
+  --font-size-h2: 24px;
+  --font-size-h3: 20px;
+  --font-size-h4: 16px;
+  --font-size-body: 16px;
+  --font-size-caption: 12px;
+
+  /* Line heights */
+  --line-height-h1: 40px;
+  --line-height-h2: 28px;
+  --line-height-h3: 24px;
+  --line-height-h4: 24px;
+  --line-height-body: 24px;
+  --line-height-caption: 16px;
+
+  /* Spacing */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+
+  /* Borders */
+  --radius-4: 4px;
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-20: 20px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
+  --shadow-md: 0 4px 6px rgb(0 0 0 / 7%);
+  --shadow-card: 0 1px 4px rgb(37 48 23 / 4%);
+}
+
+/* Тёмная тема — добавить поддержку через data-theme="dark" */
+[data-theme='dark'] {
+  --color-bg: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-border: #334155;
+}

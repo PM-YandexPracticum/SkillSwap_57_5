@@ -2,21 +2,21 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-8);
   width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  background: #fff;
+  padding: var(--space-12);
+  border-radius: var(--radius-12);
+  background: var(--color-surface);
 }
 
 .root:focus-within {
-  box-shadow: 0 0 0 2px rgb(105 115 93 / 30%);
+  box-shadow: 0 0 0 2px var(--color-focus);
 }
 
 .icon {
   display: flex;
   flex-shrink: 0;
-  color: #69735d;
+  color: var(--color-caption);
 }
 
 .root .field {
