@@ -40,3 +40,4 @@ export const PrivateRoute: FC<TProtectedRouteProps> = ({
 
   return children;
 };
+
