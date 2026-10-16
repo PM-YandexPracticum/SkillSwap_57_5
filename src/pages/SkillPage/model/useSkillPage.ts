@@ -7,6 +7,7 @@ import type { City } from '@/entities/city/model/types'
 import { useSimilarOffers } from './useSimilarOffer'
 import { useFavoriteUsers } from '@/features/favorite-user/model/useFavoriteUsers'
 import { addFavoriteData } from '@/features/favorite-user/lib/addFavoriteData'
+import { useAppSelector } from '@/store/hooks'
 
 export type SkillPageData = {
   skill: Skill
@@ -23,8 +24,9 @@ export type SkillPageData = {
 export function useSkillPage(id: SkillId | undefined) {
   const { users, cities, categories, skills, isLoading } = useAppData()
 
-  // Временная заглушка авторизации
-  const isAuthenticated = true
+  const isAuthenticated = useAppSelector(
+    (state) => state.users.currentUserId !== null,
+  )
 
   const { likedUserIds, toggleFavoriteUser } = useFavoriteUsers(isAuthenticated)
 
