@@ -6,24 +6,23 @@ import styles from './RegisterSkillPage.module.css'
 
 export default function RegisterSkillPage() {
   const navigate = useNavigate()
-  const { 
-    processRegistrationStep3, 
-    errors, 
-    savedValues, 
-    files, 
-    handleFilesChange 
-  } = useRegistrationSkill()
+  const { submitRegistrationSkill, errors, savedValues, files, handleSkillImagesChange } =
+    useRegistrationSkill()
+
+  const handleBack = () => {
+    navigate('/register/profile')
+  }
 
   return (
     <main className={styles.page}>
       <StepIndicator currentStep={3} totalSteps={3} />
       <SkillForm
-        onSubmit={processRegistrationStep3}
-        handleBack={() => navigate('/register/profile')}
+        onSubmit={submitRegistrationSkill}
         errors={errors}
         savedValues={savedValues}
         skillImages={files}
-        onSkillImagesChange={handleFilesChange}
+        onSkillImagesChange={handleSkillImagesChange}
+        onBackButton={handleBack}
       />
     </main>
   )

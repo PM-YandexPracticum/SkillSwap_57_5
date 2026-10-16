@@ -1,7 +1,7 @@
 import type { ChangeEvent } from 'react'
 import type { AvatarUploadButtonProps } from './types'
 import clsx from 'clsx'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { IconButton } from '@/shared/ui/IconButton'
 import Icon_and_add from '@/shared/assets/icons/Icon_and_add.svg'
 import styles from './AvatarUploadButton.module.css'
@@ -9,9 +9,26 @@ import styles from './AvatarUploadButton.module.css'
 export function AvatarUploadButton({
   onAvatarChange = () => {},
   className,
-  previewUrl,
+  file,
 }: AvatarUploadButtonProps) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const [previewUrl, setPreviewUrl] = useState('')
+
+  // Создаём адрес для предпросмотра выбранного аватара
+  useEffect(() => {
+    if (!file) {
+      setPreviewUrl('')
+      return
+    }
+
+    const url = URL.createObjectURL(file)
+    setPreviewUrl(url)
+
+    // При замене фото или уходе со страницы удаляем из памяти браузера старый blob-адрес предпросмотра аватара
+    return () => {
+      URL.revokeObjectURL(url)
+    }
+  }, [file])
 
   const handleClick = () => {
     inputRef.current?.click()

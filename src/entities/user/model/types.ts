@@ -13,6 +13,7 @@ export interface User {
   password: string
   name: string
   avatarUrl: string
+  avatarKey?: string
   birthDate: string
   gender: Gender
   cityId: CityId

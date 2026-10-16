@@ -1,5 +1,6 @@
 import type { Skill } from '@/entities/skill'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
+import { getImage } from '@/shared/lib/imageStorage'
 
 const BASE_URL = '/db'
 
@@ -8,7 +9,29 @@ export async function fetchSkills(): Promise<Skill[]> {
 
   if (storedSkills) {
     try {
-      return JSON.parse(storedSkills) as Skill[]
+      const skills = JSON.parse(storedSkills) as Skill[]
+
+      // Восстанавливаем фотографии из IndexedDB по ключам и создаём свежие URL для отображения
+      return Promise.all(
+        skills.map(async (skill) => {
+          if (!skill.imageKeys?.length) return skill
+
+          const imageUrls: string[] = []
+
+          for (const key of skill.imageKeys) {
+            const file = await getImage(key)
+
+            if (file) {
+              imageUrls.push(URL.createObjectURL(file))
+            }
+          }
+
+          return {
+            ...skill,
+            imageUrls,
+          }
+        }),
+      )
     } catch {
       localStorage.removeItem(LOCAL_STORAGE_KEYS.SKILLS)
     }

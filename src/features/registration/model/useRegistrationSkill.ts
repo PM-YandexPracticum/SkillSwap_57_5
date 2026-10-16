@@ -1,23 +1,39 @@
 import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { nanoid } from '@reduxjs/toolkit'
 import * as Yup from 'yup'
-import type { SkillCategory } from '@/entities/category'
 import type { RootState } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setSkillDraft } from '@/store/slices/registrationSlice'
-import { saveImage, getImage, deleteImage  } from '@/shared/lib/imageStorage'
+import { SKILL_IMAGE_PREFIX, saveImage, getImage, deleteImage } from '@/shared/lib/imageStorage'
 
 export type RegistrationSkillValues = Omit<
   RootState['registration']['skill'],
-  'imageUrls' | 'imageKeys'>
-
-export type RegistrationSkillErrors = Partial<
-  Record<keyof RegistrationSkillValues | 'images', string>
+  'imageUrls' | 'imageKeys'
 >
 
-function createValidationSchema(
-  categories: SkillCategory[],
-): Yup.ObjectSchema<RegistrationSkillValues> {
-  return Yup.object({
+export type RegistrationSkillErrors = {
+  title?: string
+  categoryId?: string
+  subcategoryId?: string
+  description?: string
+  images?: string
+}
+
+export function useRegistrationSkill() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const dispatch = useAppDispatch()
+
+  const categories = useAppSelector((state) => state.categories.items)
+  const savedValues = useAppSelector((state) => state.registration.skill)
+
+  const [errors, setErrors] = useState<RegistrationSkillErrors>({})
+  const [files, setFiles] = useState<File[]>([])
+  const [imageKeys, setImageKeys] = useState<string[]>(savedValues.imageKeys)
+
+  // Правила валидации Yup
+  const validationSchema = Yup.object({
     title: Yup.string()
       .trim()
       .required('Введите название навыка')
@@ -48,121 +64,112 @@ function createValidationSchema(
       .defined('Описание должно быть строкой')
       .max(500, 'Описание должно содержать не более 500 символов'),
   })
-}
 
-export function useRegistrationSkill() {
-  const dispatch = useAppDispatch()
-  const categories = useAppSelector((state) => state.categories.items)
-  const savedValues = useAppSelector((state) => state.registration.skill)
-  const [errors, setErrors] = useState<RegistrationSkillErrors>({})
-  const [files, setFiles] = useState<File[]>([])
-
-  const MAX_SIZE = 2 * 1024 * 1024
-
-  const handleFilesChange = async (newFiles: File[]) => {
-    const validFiles: File[] = []
-    let hasOversizedFile = false
+  // При выборе фотографий валидируем файлы, сохраняем их в IndexedDB и обновляем предпросмотр
+  const handleSkillImagesChange = async (newFiles: File[]) => {
+    // Каждый файл не более 5 МБ
+    const MAX_SIZE = 5 * 1024 * 1024
 
     for (const file of newFiles) {
+      // Валидируем размер файла
       if (file.size > MAX_SIZE) {
-        hasOversizedFile = true
-      } else {
-        validFiles.push(file)
+        setErrors((prev) => ({ ...prev, images: 'Файл не должен превышать 5 МБ' }))
+        return
+      }
+
+      // Валидируем формат файла
+      if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type)) {
+        setErrors((prev) => ({ ...prev, images: 'Выберите изображение PNG, JPEG или WebP' }))
+        return
       }
     }
 
-    setErrors((prev) => ({
-      ...prev,
-      images: hasOversizedFile ? 'Файл не должен превышать 2 МБ' : undefined,
-    }))
+    try {
+      const keys: string[] = []
 
-    const oldKeys = savedValues?.imageKeys ?? []
-    await Promise.all(oldKeys.map((key) => deleteImage(key)))
+      // Сохраняем каждую фотографию под уникальным ключом
+      for (let index = 0; index < newFiles.length; index++) {
+        const key = `${SKILL_IMAGE_PREFIX}${nanoid()}`
+        await saveImage(key, newFiles[index])
+        keys.push(key)
+      }
 
-    const keys: string[] = []
-    for (let i = 0; i < validFiles.length; i++) {
-      const key = `skill-image-${i}`
-      await saveImage(key, validFiles[i])
-      keys.push(key)
+      // Удаляем записи, которые больше не входят в выбранный список фотографий
+      const unusedKeys = imageKeys.filter((key) => !keys.includes(key))
+      await Promise.all(unusedKeys.map((key) => deleteImage(key)))
+
+      // Обновляем фотографии для предпросмотра и их ключи
+      setFiles(newFiles)
+      setImageKeys(keys)
+
+      // Очищаем предыдущую ошибку, если была
+      setErrors((prev) => ({ ...prev, images: undefined }))
+    } catch {
+      setErrors((prev) => ({ ...prev, images: 'Не удалось сохранить фотографии' }))
     }
-
-    setFiles(validFiles)
-
-    dispatch(
-      setSkillDraft({
-        ...savedValues,
-        imageKeys: keys,
-      }),
-    )
   }
 
+  // Восстанавливаем фотографии из IndexedDB по сохранённым ключам и передаём файлы для предпросмотра
   useEffect(() => {
     const imageKeys = savedValues?.imageKeys
     if (!imageKeys || imageKeys.length === 0) return
 
-    let cancelled = false
-
-    Promise.all(imageKeys.map((key) => getImage(key))).then((loadedFiles) => {
-      if (cancelled) return
-
-      const validFiles = loadedFiles.filter((file): file is File => file !== undefined)
-      setFiles(validFiles)
-    })
-
-    return () => {
-      cancelled = true
-    }
+    // Получаем фотографии по ключам, при ошибке загрузки показываем сообщение в форме
+    Promise.all(imageKeys.map((key) => getImage(key)))
+      .then((loadedFiles) => {
+        const validFiles = loadedFiles.filter((file): file is File => file !== undefined)
+        setFiles(validFiles)
+        setImageKeys(imageKeys)
+      })
+      .catch(() => {
+        setErrors((prev) => ({ ...prev, images: 'Не удалось загрузить фотографии' }))
+      })
   }, [savedValues?.imageKeys])
 
-  const processRegistrationStep3 = async (data: RegistrationSkillValues): Promise<boolean> => {
+  // По кнопке "Продолжить" проверяем наличие фотографий, валидируем поля формы, сохраняем навык в Redux и открываем предпросмотр
+  const submitRegistrationSkill = async (data: RegistrationSkillValues): Promise<boolean> => {
+    const validationErrors: typeof errors = {}
+
     if (files.length === 0) {
-      setErrors({ images: 'Загрузите хотя бы одно фото навыка' })
-      return false
+      validationErrors.images = 'Загрузите хотя бы одно фото навыка'
     }
 
     try {
-      const values = await createValidationSchema(categories).validate(data, { abortEarly: false })
-
-      dispatch(
-        setSkillDraft({
-          title: values.title,
-          categoryId: values.categoryId,
-          subcategoryId: values.subcategoryId,
-          description: values.description,
-          imageUrls: [],
-          imageKeys: files.map((_, index) => `skill-image-${index}`),
-        }),
-      )
-      setErrors({})
-      return true
+      await validationSchema.validate(data, { abortEarly: false })
     } catch (err) {
       if (!(err instanceof Yup.ValidationError)) throw err
 
-      const validationErrors: RegistrationSkillErrors = {}
+      err.inner.forEach((error) => {
+        const path = error.path as keyof typeof errors
+        if (path) validationErrors[path] = error.message
+      })
+    }
 
-      for (const error of err.inner.length > 0 ? err.inner : [err]) {
-        const field = error.path
-
-        if (
-          field === 'title' ||
-          field === 'categoryId' ||
-          field === 'subcategoryId' ||
-          field === 'description'
-        ) {
-          validationErrors[field] ??= error.message
-        }
-      }
-
+    if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
       return false
     }
+
+    setErrors({})
+    dispatch(
+      setSkillDraft({
+        title: data.title.trim(),
+        categoryId: data.categoryId,
+        subcategoryId: data.subcategoryId,
+        description: data.description,
+        imageUrls: [],
+        imageKeys,
+      }),
+    )
+    navigate('/register/preview', { state: { backgroundLocation: location } })
+    return true
   }
 
   return {
-    processRegistrationStep3,
+    submitRegistrationSkill,
     errors,
     savedValues,
     files,
-    handleFilesChange,
+    handleSkillImagesChange,
   }
 }

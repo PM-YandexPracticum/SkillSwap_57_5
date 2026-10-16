@@ -1,5 +1,8 @@
 import { openDB, type IDBPDatabase } from 'idb'
 
+export const AVATAR_IMAGE_PREFIX = 'avatar-'
+export const SKILL_IMAGE_PREFIX = 'skill-image-'
+
 const DB_NAME = 'skillswap-images'
 const DB_VERSION = 1
 const STORE_NAME = 'images'

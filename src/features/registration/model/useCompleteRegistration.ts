@@ -61,9 +61,7 @@ export function useCompleteRegistration() {
     const avatarFile = profile.avatarKey ? await getImage(profile.avatarKey) : undefined
     const avatarUrl = avatarFile ? URL.createObjectURL(avatarFile) : ''
 
-    const skillImageFiles = await Promise.all(
-      (skill.imageKeys ?? []).map((key) => getImage(key)),
-    )
+    const skillImageFiles = await Promise.all((skill.imageKeys ?? []).map((key) => getImage(key)))
     const skillImageUrls = skillImageFiles
       .filter((file): file is File => file !== undefined)
       .map((file) => URL.createObjectURL(file))
@@ -73,7 +71,8 @@ export function useCompleteRegistration() {
       email,
       password,
       name,
-      avatarUrl: avatarUrl,
+      avatarUrl,
+      avatarKey: profile.avatarKey ?? undefined,
       birthDate,
       gender,
       cityId,
@@ -92,6 +91,7 @@ export function useCompleteRegistration() {
       subcategoryId: skillSubcategoryId,
       description: skillDescription,
       imageUrls: skillImageUrls,
+      imageKeys: skill.imageKeys,
     }
 
     const nextUsers = [...users, newUser]
