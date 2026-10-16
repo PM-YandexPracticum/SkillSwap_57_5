@@ -1,1 +1,1 @@
-export { saveImage, getImage, deleteImage } from './imageStorage'
+export { saveImage, getImage, deleteImage, clearAllImages } from './imageStorage'

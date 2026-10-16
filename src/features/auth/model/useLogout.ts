@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '@/store/hooks'
 import { logout } from '@/store/slices/usersSlice'
 import { clearAuthUser } from './authUtils'
+import { clearAllImages } from '@/shared/lib/imageStorage'
 
 export const useLogout = () => {
   
@@ -9,7 +10,8 @@ export const useLogout = () => {
 
   const dispatch = useAppDispatch()
 
-  return () => {
+  return async () => {
+    await clearAllImages()
     clearAuthUser()
     dispatch(logout())
     

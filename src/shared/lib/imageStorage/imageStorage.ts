@@ -33,3 +33,8 @@ export async function deleteImage(key: string): Promise<void> {
   const db = await getDB()
   await db.delete(STORE_NAME, key)
 }
+
+export async function clearAllImages(): Promise<void> {
+  const db = await getDB()
+  await db.clear(STORE_NAME)
+}
