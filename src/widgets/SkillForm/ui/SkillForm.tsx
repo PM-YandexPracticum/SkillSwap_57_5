@@ -25,13 +25,12 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
   const [subCategory, setSubCategory] = useState(savedValues?.subcategoryId ?? '')
   const [description, setDescription] = useState(savedValues?.description ?? '')
 
-  // Безопасное заполнение сохраненных значений из Redux без падения TypeScript
   useEffect(() => {
     if (savedValues) {
-      setSkillName(savedValues.title ?? '')
-      setCategory(savedValues.categoryId ?? '')
-      setSubCategory(savedValues.subcategoryId ?? '')
-      setDescription(savedValues.description ?? '')
+      setSkillName(savedValues.title)
+      setCategory(savedValues.categoryId)
+      setSubCategory(savedValues.subcategoryId)
+      setDescription(savedValues.description)
     }
   }, [savedValues])
 
@@ -60,13 +59,12 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
     }
   }
 
-  // ОПЕЧАТКА ИСПРАВЛЕНА: Теперь имя переменной subCategoryId написано без пробелов
-  const handleSubCategoryChange = (subCategoryId: string) => {
-    setSubCategory(subCategoryId)
+  const handleSubCategoryChange = (subcategoryId: string) => {
+    setSubCategory(subcategoryId)
 
-    if (subCategoryId) {
+    if (subcategoryId) {
       const parentCategory = categories.find((item) =>
-        item.subcategories.some((subcategory) => subcategory.id === subCategoryId),
+        item.subcategories.some((subcategory) => subcategory.id === subcategoryId),
       )
 
       if (parentCategory) setCategory(parentCategory.id)
@@ -149,7 +147,6 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
             )}
           </FormField>
 
-          {/* Сохраняем оригинальный виджет Яндекса для идеального совпадения с макетом Figma */}
           <SkillImagesUpload onFilesSelected={() => undefined} />
 
           <div className={styles.buttonWrapper}>
