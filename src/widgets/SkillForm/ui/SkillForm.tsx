@@ -16,9 +16,16 @@ interface SkillFormProps {
   handleBack: () => void
   errors?: RegistrationSkillErrors
   savedValues?: RegistrationSkillValues
+  onSubmitSuccess?: () => void
 }
 
-export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFormProps) {
+export function SkillForm({
+  onSubmit,
+  handleBack,
+  errors,
+  savedValues,
+  onSubmitSuccess,
+}: SkillFormProps) {
   const categories = useAppSelector((state) => state.categories.items)
   const [skillName, setSkillName] = useState(savedValues?.title ?? '')
   const [category, setCategory] = useState(savedValues?.categoryId ?? '')
@@ -73,12 +80,16 @@ export function SkillForm({ onSubmit, handleBack, errors, savedValues }: SkillFo
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    await onSubmit({
+    const success = await onSubmit({
       title: skillName,
       categoryId: category,
       subcategoryId: subCategory,
       description,
     })
+
+    if (success) {
+      onSubmitSuccess?.()
+    }
   }
 
   return (

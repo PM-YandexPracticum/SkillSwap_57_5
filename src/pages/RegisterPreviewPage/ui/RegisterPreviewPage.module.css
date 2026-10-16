@@ -1,1 +1,11 @@
-/* RegisterPreviewPage.module.css */
+.previewModal.previewModal {
+  width: 1024px;
+  height: 532px;
+  padding: 0;
+}
+
+.error {
+  color: var(--color-error);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}

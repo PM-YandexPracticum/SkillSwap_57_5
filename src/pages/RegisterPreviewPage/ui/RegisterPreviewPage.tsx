@@ -1,4 +1,4 @@
-// import styles from './RegisterPreviewPage.module.css'
+import styles from './RegisterPreviewPage.module.css'
 import { useCompleteRegistration } from '@/features/registration/model/useCompleteRegistration'
 import { useRegistrationPreview } from '@/features/registration/model/useRegistrationPreview'
 import { Modal } from '@/shared/ui/Modal'
@@ -26,7 +26,12 @@ export default function RegisterPreviewPage() {
   }
 
   return (
-    <Modal open={modalOpen} onClose={() => {}} ariaLabel="Предпросмотр предложения">
+    <Modal
+      open={modalOpen}
+      onClose={() => {}}
+      ariaLabel="Предпросмотр предложения"
+      className={styles.previewModal}
+    >
       <OfferSkillPreview
         title={data.title}
         description={data.description}
@@ -36,7 +41,7 @@ export default function RegisterPreviewPage() {
         onEdit={() => {}}
         onConfirm={handleConfirm}
       />
-      {error && <p>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
     </Modal>
   )
 }
