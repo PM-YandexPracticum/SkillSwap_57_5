@@ -1,5 +1,6 @@
 import type { User } from '@/entities/user'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
+import { getImage } from '@/shared/lib/imageStorage'
 
 const BASE_URL = '/db'
 
@@ -8,7 +9,21 @@ export async function fetchUsers(): Promise<User[]> {
 
   if (storedUsers) {
     try {
-      return JSON.parse(storedUsers) as User[]
+      const users = JSON.parse(storedUsers) as User[]
+
+      // Восстанавливаем аватары из IndexedDB по ключам и создаём свежие URL для отображения
+      return Promise.all(
+        users.map(async (user) => {
+          if (!user.avatarKey) return user
+
+          const file = await getImage(user.avatarKey)
+
+          return {
+            ...user,
+            avatarUrl: file ? URL.createObjectURL(file) : '',
+          }
+        }),
+      )
     } catch {
       localStorage.removeItem(LOCAL_STORAGE_KEYS.USERS)
     }

@@ -1,4 +1,3 @@
-
 import { Button } from '@/shared/ui/Button'
 
 import { Gallery } from '@/shared/ui/Gallery'
@@ -6,32 +5,35 @@ import { Gallery } from '@/shared/ui/Gallery'
 import editIcon from '@/shared/assets/icons/edit.svg'
 import styles from './OfferSkillPreview.module.css'
 
-
 interface OfferSkillPreviewProps {
+  // Данные из useRegistrationPreview
   title: string
   description: string
   categoryName: string
   subcategoryName: string
   imageUrls: string[]
-  onEdit: () => void
-  onConfirm: () => void
+
+  // Обработчики кнопок "Редактировать" и "Готово"
+  onEditButton: () => void
+  onConfirmButton: () => void
 }
 
 export function OfferSkillPreview({
+  // Данные из useRegistrationPreview
   title,
   description,
   categoryName,
   subcategoryName,
   imageUrls,
-  onEdit,
-  onConfirm,
+
+  // Обработчики кнопок "Редактировать" и "Готово"
+  onEditButton,
+  onConfirmButton,
 }: OfferSkillPreviewProps) {
   return (
     <section className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.blockTitle}>
-          Ваше предложение
-        </h2>
+        <h2 className={styles.blockTitle}>Ваше предложение</h2>
         <p className={styles.blockSubtitle}>
           Пожалуйста, проверьте и подтвердите правильность данных
         </p>
@@ -47,11 +49,11 @@ export function OfferSkillPreview({
             <p className={styles.description}>{description}</p>
           </div>
           <div className={styles.buttonContainer}>
-            <Button variant={'secondary'} className={styles.button} onClick={onEdit}>
+            <Button variant="secondary" className={styles.button} onClick={onEditButton}>
               Редактировать
               <img alt="" aria-hidden="true" src={editIcon} className={styles.buttonIcon} />
             </Button>
-            <Button className={styles.button} onClick={onConfirm}>
+            <Button className={styles.button} onClick={onConfirmButton}>
               Готово
             </Button>
           </div>

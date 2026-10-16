@@ -4,15 +4,14 @@ import { logout } from '@/store/slices/usersSlice'
 import { clearAuthUser } from './authUtils'
 
 export const useLogout = () => {
-  
   const navigate = useNavigate()
 
   const dispatch = useAppDispatch()
 
-  return () => {
+  return async () => {
     clearAuthUser()
     dispatch(logout())
-    
+
     navigate('/login')
   }
 }

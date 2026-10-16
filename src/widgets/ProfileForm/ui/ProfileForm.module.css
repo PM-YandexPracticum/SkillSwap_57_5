@@ -222,3 +222,11 @@
   line-height: var(--line-height-caption);
   letter-spacing: 0.02em;
 }
+
+.avatarButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}

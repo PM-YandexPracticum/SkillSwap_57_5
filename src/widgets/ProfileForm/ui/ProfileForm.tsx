@@ -6,6 +6,7 @@ import 'react-day-picker/style.css'
 
 import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/category'
 import type { Gender } from '@/entities/user'
+import type { RegistrationProfileValues, RegistrationProfileErrors } from '@/features/registration'
 
 import { useAppSelector } from '@/store/hooks'
 
@@ -25,23 +26,9 @@ import calendarIcon from '@/shared/assets/icons/calendar.svg'
 import styles from './ProfileForm.module.css'
 
 interface ProfileFormProps {
-  onSubmit: (data: {
-    name: string
-    birthDate: Date | undefined
-    gender: string
-    city: string
-    categories: SkillCategoryId[]
-    subcategories: SkillSubcategoryId[]
-  }) => void
-  handleBack: () => void
-  errors?: {
-    name?: string
-    birthDate?: string
-    gender?: string
-    city?: string
-    categories?: string
-    subcategories?: string
-  }
+  // Данные и обработчики из useRegistrationProfile
+  onSubmit: (data: RegistrationProfileValues) => Promise<boolean>
+  errors?: RegistrationProfileErrors
   savedValues?: {
     name: string
     birthDate: string
@@ -50,9 +37,24 @@ interface ProfileFormProps {
     learningCategoryIds: SkillCategoryId[]
     learningSubcategoryIds: SkillSubcategoryId[]
   }
+  avatarFile: File | null
+  onAvatarChange: (file: File) => void
+
+  // Обработчик навигации для кнопки "Назад"
+  onBackButton: () => void
 }
 
-export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: ProfileFormProps) {
+export function ProfileForm({
+  // Данные и обработчики из useRegistrationProfile
+  onSubmit,
+  errors,
+  savedValues,
+  avatarFile,
+  onAvatarChange,
+
+  // Обработчик навигации для кнопки "Назад"
+  onBackButton,
+}: ProfileFormProps) {
   const [name, setName] = useState(savedValues?.name || '')
   const [birthDate, setBirthDate] = useState<Date | undefined>(
     savedValues?.birthDate ? new Date(savedValues.birthDate) : undefined,
@@ -69,18 +71,15 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
     savedValues?.learningCategoryIds || [],
   )
 
-  const closePopover = () => {
-    const event = new MouseEvent('pointerdown', { bubbles: true })
-    document.dispatchEvent(event)
-  }
-
   const categoriesData = useAppSelector((state) => state.categories.items)
   const citiesData = useAppSelector((state) => state.cities.items)
 
+  // Формируем опции для поля выбора категорий MultiSelect
   const categoryOptions = categoriesData.map((cat) => ({
     value: cat.id,
     label: cat.name,
   }))
+  // Формируем опции подкатегорий MultiSelect с учётом выбранных вручную категорий
   const subcategoryOptions = categoriesData
     .filter(
       (cat) =>
@@ -92,11 +91,13 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
         label: sub.name,
       })),
     )
+  // Формируем опции для поля выбора города Combobox
   const cityOptions = citiesData.map((city) => ({
     value: city.id,
     label: city.name,
   }))
 
+  // Обновляем категории и убираем подкатегории удалённых категорий
   const handleCategoryToggle = (newCategories: SkillCategoryId[]) => {
     const removedCategories = categories.filter((id) => !newCategories.includes(id))
 
@@ -112,6 +113,7 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
     setManuallySelectedCategories(newCategories)
   }
 
+  // Обновляем подкатегории и добавляем соответствующие им категории
   const handleSubcategoryToggle = (newSubcategories: SkillSubcategoryId[]) => {
     const addedSubcategories = newSubcategories.filter((id) => !subcategories.includes(id))
 
@@ -135,16 +137,26 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
     setSubcategories(newSubcategories)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onSubmit({ name, birthDate, gender, city, categories, subcategories })
+  // Собираем значения полей формы и передаём их в onSubmit
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    await onSubmit({ name, birthDate, gender, city, categories, subcategories })
+  }
+
+  // Закрываем календарь выбора даты
+  const closePopover = () => {
+    const event = new MouseEvent('pointerdown', { bubbles: true })
+    document.dispatchEvent(event)
   }
 
   return (
     <section className={styles.container}>
       <div className={styles.contentContainer}>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <AvatarUploadButton />
+          <div className={styles.avatarButtonWrapper}>
+            <AvatarUploadButton onAvatarChange={onAvatarChange} file={avatarFile} />
+            {errors?.avatar && <p className={styles.errorHint}>{errors.avatar}</p>}
+          </div>
 
           <div>
             <FormField id="name" label="Имя">
@@ -207,6 +219,7 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
                         variant="secondary"
                         className={styles.calendarButton}
                         onClick={() => {
+                          // Сбрасываем дату и закрываем календарь
                           setBirthDate(undefined)
                           closePopover()
                         }}
@@ -288,7 +301,7 @@ export function ProfileForm({ onSubmit, handleBack, errors, savedValues }: Profi
               type="button"
               variant="secondary"
               className={styles.button}
-              onClick={handleBack}
+              onClick={onBackButton}
             >
               Назад
             </Button>

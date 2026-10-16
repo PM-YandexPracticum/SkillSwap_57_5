@@ -13,4 +13,5 @@ export interface Skill {
   subcategoryId: SkillSubcategoryId
   description: string
   imageUrls: string[]
+  imageKeys?: string[]
 }
