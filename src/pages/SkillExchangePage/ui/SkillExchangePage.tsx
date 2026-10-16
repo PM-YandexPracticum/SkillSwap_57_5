@@ -29,7 +29,7 @@ export default function SkillExchangePage() {
           <img src={NotificationBellIcon} alt="" className={styles.notificationBellIcon} />
 
           <div className={styles.description}>
-            <h1 className={styles.title}>вы предложили обмен</h1>
+            <h1 className={styles.title}>Вы предложили обмен</h1>
 
             <p className={styles.text}>Теперь дождитесь подтверждения. Вам придёт уведомление</p>
           </div>
