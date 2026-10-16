@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 import { getImage } from '@/shared/lib/imageStorage'
 import { useAppSelector } from '@/store/hooks'
+import { useRegistrationGuard } from '../lib/useRegistrationGuard'
 
 export function useRegistrationPreview() {
   const savedValues = useAppSelector((state) => state.registration.skill)
   const categories = useAppSelector((state) => state.categories.items)
+
+  // Проверяем все шаги, иначе возвращаем на первый незаполненный
+  useRegistrationGuard(['credentials', 'profile', 'skill'])
 
   const [imageUrls, setImageUrls] = useState<string[]>([])
 

@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import type { RootState } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setSkillDraft } from '@/store/slices/registrationSlice'
+import { useRegistrationGuard } from '../lib/useRegistrationGuard'
 import { SKILL_IMAGE_PREFIX, saveImage, getImage, deleteImage } from '@/shared/lib/imageStorage'
 
 export type RegistrationSkillValues = Omit<
@@ -27,6 +28,9 @@ export function useRegistrationSkill() {
 
   const categories = useAppSelector((state) => state.categories.items)
   const savedValues = useAppSelector((state) => state.registration.skill)
+
+  // Проверяем предыдущие шаги, иначе возвращаем на первый незаполненный
+  useRegistrationGuard(['credentials', 'profile'])
 
   const [errors, setErrors] = useState<RegistrationSkillErrors>({})
   const [files, setFiles] = useState<File[]>([])

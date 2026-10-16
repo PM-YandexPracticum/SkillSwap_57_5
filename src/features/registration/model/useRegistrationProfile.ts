@@ -7,6 +7,7 @@ import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/category'
 import { setProfile } from '@/store/slices/registrationSlice'
 import { format } from 'date-fns'
 import type { Gender } from '@/entities/user'
+import { useRegistrationGuard } from '../lib/useRegistrationGuard'
 
 import { AVATAR_IMAGE_PREFIX, saveImage, getImage } from '@/shared/lib/imageStorage'
 
@@ -34,6 +35,9 @@ export function useRegistrationProfile() {
   const dispatch = useAppDispatch()
 
   const savedValues = useAppSelector((state) => state.registration?.profile)
+
+  // Проверяем заполнение первого шага, иначе возвращаем на него
+  useRegistrationGuard(['credentials'])
 
   const [errors, setErrors] = useState<RegistrationProfileErrors>({})
   const [avatarFile, setAvatarFile] = useState<File | null>(null)
