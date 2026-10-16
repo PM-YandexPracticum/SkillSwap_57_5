@@ -10,7 +10,7 @@ import hugeIcon from '@/shared/assets/icons/hugeicons.svg'
 
 import styles from './Notifications.module.css'
 
-const NOTIFICATION_SUBTEXT = 'Примите обмен, чтобы обсудить детали'
+const NOTIFICATION_SUBTEXT = 'Перейдите к навыку, чтобы посмотреть подробности'
 
 function formatNotificationDate(isoDate: string): string {
   const date = new Date(isoDate)
@@ -41,6 +41,8 @@ export function Notifications() {
   }
 
   const handleGoToSkill = (skillId: string) => {
+    // Закрываем Popover перед переходом к навыку
+    document.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }))
     navigate(`/skill/${skillId}`)
   }
 
@@ -103,13 +105,6 @@ export function Notifications() {
                   </div>
                   <p className={styles.itemDate}>{formatNotificationDate(notification.createdAt)}</p>
                 </div>
-                <Button
-                  type="button"
-                  className={styles.itemButton}
-                  onClick={() => handleGoToSkill(notification.skillId)}
-                >
-                  Перейти
-                </Button>
               </article>
             ))}
           </div>
