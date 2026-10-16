@@ -4,7 +4,7 @@ import type { SkillCategory } from '@/entities/category'
 import type { RootState } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setSkillDraft } from '@/store/slices/registrationSlice'
-import { saveImage, getImage } from '@/shared/lib/imageStorage'
+import { saveImage, getImage, deleteImage  } from '@/shared/lib/imageStorage'
 
 export type RegistrationSkillValues = Omit<
   RootState['registration']['skill'],
@@ -75,6 +75,9 @@ export function useRegistrationSkill() {
       ...prev,
       images: hasOversizedFile ? 'Файл не должен превышать 2 МБ' : undefined,
     }))
+
+    const oldKeys = savedValues?.imageKeys ?? []
+    await Promise.all(oldKeys.map((key) => deleteImage(key)))
 
     const keys: string[] = []
     for (let i = 0; i < validFiles.length; i++) {
