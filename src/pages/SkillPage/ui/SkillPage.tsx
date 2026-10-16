@@ -4,13 +4,14 @@ import { SkillInfo } from '@/widgets/SkillInfo'
 import { useParams } from 'react-router-dom'
 import { useSkillPage } from '../model/useSkillPage'
 import { SimilarOffers } from './SimilarOffers'
+import NotFoundPage from '@/pages/NotFoundPage'
 
 export default function SkillPage() {
   const skillId = useParams<{ id: string }>().id
   const { data, handleFavoriteToggle, isAuthenticated, likedUserIds } = useSkillPage(skillId)
   const isAuthorFavorite = likedUserIds?.includes(data?.author.id ?? '') ?? false
 
-  if (!skillId || !data) return null
+  if (!skillId || !data) return <NotFoundPage />
 
   return (
     <>
