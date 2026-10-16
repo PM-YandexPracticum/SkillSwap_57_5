@@ -1,7 +1,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-16);
   width: 100%;
   max-width: 460px;
   overflow: visible;
@@ -11,9 +11,9 @@
   width: 100%;
   min-height: 120px;
   box-sizing: border-box;
-  padding: 12px 20px;
+  padding: var(--space-12) var(--space-20);
   border: 1px solid var(--color-caption);
-  border-radius: 12px;
+  border-radius: var(--radius-12);
   font: inherit;
   line-height: 24px;
   resize: none;
@@ -34,7 +34,7 @@
 .rowInputs {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  gap: var(--space-24);
 }
 
 .dateFormField > div {
@@ -42,7 +42,7 @@
 }
 
 .dateFormField > div > div:nth-child(2) {
-  margin-top: 4px;
+  margin-top: var(--space-4);
   border-color: var(--color-caption);
 }
 
@@ -50,12 +50,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-12);
   width: 100%;
   height: 48px;
-  padding: 11px 20px;
+  padding: 11px var(--space-20);
   border: 1px solid var(--color-caption);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-12);
   background-color: var(--color-surface);
   color: var(--color-text);
   font: inherit;
@@ -87,7 +87,7 @@
 .popoverContent {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-16);
   width: 278px;
   padding: 15px;
 }
@@ -138,7 +138,7 @@
   z-index: 1;
   display: inline-flex;
   align-items: center;
-  padding: 8px 8px 8px 16px;
+  padding: var(--space-8) var(--space-8) var(--space-8) var(--space-16);
   white-space: nowrap;
   text-transform: capitalize;
 }
@@ -158,11 +158,11 @@
   display: grid;
   grid-template-columns: 125px 115px;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-8);
 }
 
 .calendarButton {
-  padding: 11px 20px;
+  padding: 11px var(--space-20);
   font-weight: 400;
 }
 

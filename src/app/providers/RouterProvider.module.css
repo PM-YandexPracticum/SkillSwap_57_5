@@ -4,7 +4,7 @@
   justify-content: center;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: 24px;
+  padding: var(--space-24);
   background-color: var(--color-bg);
 }
 

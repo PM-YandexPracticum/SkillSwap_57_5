@@ -5,8 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
-  border-radius: var(--radius-lg);
+  gap: var(--space-40);
+  border-radius: var(--radius-12);
   background-color: var(--color-surface);
 }
 
@@ -14,15 +14,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px
+  gap: var(--space-8)
 }
 
 .blockTitle {
   font-family: var(--font-heading);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-h2);
   line-height: var(--line-height-h2);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--letter-spacing-heading);
   color: var(--color-text);
 }
 
@@ -45,16 +45,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 20px;
+  gap: var(--space-20);
   max-width: 420px;
 }
 
 .title {
   font-family: var(--font-heading);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-h1);
   line-height: var(--line-height-h1);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--letter-spacing-heading);
   color: var(--color-text);
 }
 
@@ -65,7 +65,7 @@
   line-height: var(--line-height-caption);
   letter-spacing: 0.02em;
   color: var(--color-caption);
-  margin-top: 4px;
+  margin-top: var(--space-4);
 }
 
 .description {
@@ -75,20 +75,20 @@
   line-height: var(--line-height-body);
   letter-spacing: 0.02em;
   color: var(--color-text);
-  margin-top: 20px;
+  margin-top: var(--space-20);
 }
 
 .buttonContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px
+  gap: var(--space-12)
 }
 
 .button {
   display: flex;
-  gap: 8px;
+  gap: var(--space-8);
 }
 
 .gallery {
-  border-radius: 12px;
+  border-radius: var(--radius-12);
 }
