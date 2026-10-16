@@ -73,7 +73,11 @@ export function CredentialsForm({ variant, onSubmit, savedValues, errors }: Cred
                 value={email}
                 onChange={setEmail}
                 placeholder="Введите email"
-                className={errors?.email ? styles.inputError : undefined}
+                className={
+                  errors?.email || (variant === 'login' && errors?.password)
+                    ? styles.inputError
+                    : undefined
+                }
               />
             </FormField>
             {errors?.email && (
