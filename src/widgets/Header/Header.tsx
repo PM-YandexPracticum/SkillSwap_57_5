@@ -8,6 +8,7 @@ import { Logo } from '@/shared/ui/Logo'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Popover } from '@/shared/ui/Popover'
 import { useLogout } from '@/features/auth'
+import { Notifications } from '@/features/notifications'
 
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
 import moonIcon from '@/shared/assets/icons/moon.svg'
@@ -82,11 +83,19 @@ export function Header() {
                   ariaLabel="Переключить тему"
                   onClick={() => console.log('Смена темы')}
                 />
-                <IconButton
-                  src={bellIcon}
-                  ariaLabel="Уведомления"
-                  onClick={() => {}}
-                />
+                <Popover
+                  align="right"
+                  padding="0"
+                  trigger={
+                    <IconButton
+                      src={bellIcon}
+                      ariaLabel="Уведомления"
+                      onClick={() => {}}
+                    />
+                  }
+                >
+                  <Notifications />
+                </Popover>
                 <IconButton
                   src={heartIcon}
                   ariaLabel="Избранное"
