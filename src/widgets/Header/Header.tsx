@@ -16,14 +16,16 @@ import heartIcon from '@/shared/assets/icons/heart.svg'
 import logoutIcon from '@/shared/assets/icons/logout.svg'
 
 import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
-import { useAppSelector } from '@/store/hooks'
+import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { selectIsAuthenticated, selectCurrentUserName } from '@/store/selectors/userSelectors'
+import { setRegistrationSource } from '@/features/registration'
 
 import styles from './Header.module.css'
 
 export function Header() {
   const navigate = useNavigate()
   const logoutHandler = useLogout()
+  const dispatch = useAppDispatch()
   const categories = useAppSelector((state) => state.categories.items)
 
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -47,6 +49,16 @@ export function Header() {
   const handleLogoutClick = () => {
     closePopover()
     logoutHandler()
+  }
+
+  const handleRegisterClick = () => {
+    dispatch(
+      setRegistrationSource({
+        from: 'header',
+        skillId: null,
+        backgroundLocation: '/',
+      }),
+    )
   }
 
   return (
@@ -82,16 +94,8 @@ export function Header() {
                   ariaLabel="Переключить тему"
                   onClick={() => console.log('Смена темы')}
                 />
-                <IconButton
-                  src={bellIcon}
-                  ariaLabel="Уведомления"
-                  onClick={() => {}}
-                />
-                <IconButton
-                  src={heartIcon}
-                  ariaLabel="Избранное"
-                  onClick={() => {}}
-                />
+                <IconButton src={bellIcon} ariaLabel="Уведомления" onClick={() => {}} />
+                <IconButton src={heartIcon} ariaLabel="Избранное" onClick={() => {}} />
               </div>
 
               <Popover
@@ -100,10 +104,7 @@ export function Header() {
                 trigger={
                   <button type="button" className={styles.profileTrigger}>
                     <span className={styles.userName}>{userName || 'Пользователь'}</span>
-                    <Avatar
-                      src={currentUser?.avatarUrl || ''}
-                      name={userName || 'Пользователь'}
-                    />
+                    <Avatar src={currentUser?.avatarUrl || ''} name={userName || 'Пользователь'} />
                   </button>
                 }
               >
@@ -144,7 +145,7 @@ export function Header() {
                 <Button variant="secondary">Войти</Button>
               </Link>
 
-              <Link to="/register" className={styles.authLink}>
+              <Link to="/register" onClick={handleRegisterClick} className={styles.authLink}>
                 <Button variant="primary">Зарегистрироваться</Button>
               </Link>
             </div>

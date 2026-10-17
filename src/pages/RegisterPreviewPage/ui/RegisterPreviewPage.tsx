@@ -3,15 +3,14 @@ import { useCompleteRegistration } from '@/features/registration/model/useComple
 import { useRegistrationPreview } from '@/features/registration/model/useRegistrationPreview'
 import { Modal } from '@/shared/ui/Modal'
 import { OfferSkillPreview } from '@/widgets/OfferSkillPreview'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 export default function RegisterPreviewPage() {
   const data = useRegistrationPreview()
 
   const { completeRegistration, error } = useCompleteRegistration()
   const navigate = useNavigate()
-
-  const modalOpen = true
+  const location = useLocation()
 
   if (!data) {
     return null
@@ -19,16 +18,22 @@ export default function RegisterPreviewPage() {
 
   const handleConfirm = () => {
     const success = completeRegistration()
-
     if (success) {
-      navigate('/register/success')
+      navigate('/register/success', {
+        state: { backgroundLocation: location.state?.backgroundLocation },
+      })
     }
+    // при ошибке остаёмся здесь — error покажется ниже
+  }
+
+  const handleClose = () => {
+    navigate(-1)
   }
 
   return (
     <Modal
-      open={modalOpen}
-      onClose={() => {}}
+      open
+      onClose={handleClose}
       ariaLabel="Предпросмотр предложения"
       className={styles.previewModal}
     >
@@ -38,7 +43,7 @@ export default function RegisterPreviewPage() {
         categoryName={data.categoryName}
         subcategoryName={data.subcategoryName}
         imageUrls={data.imageUrls}
-        onEdit={() => {}}
+        onEdit={handleClose}
         onConfirm={handleConfirm}
       />
       {error && <p className={styles.error}>{error}</p>}
