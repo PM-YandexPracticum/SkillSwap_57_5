@@ -1,5 +1,6 @@
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { selectCurrentUser } from '@/store/selectors/userSelectors'
 import { updateUser } from '@/store/slices/usersSlice'
 
 interface UseFavoriteUsersResult {
@@ -11,10 +12,8 @@ export function useFavoriteUsers(
   isAuthenticated: boolean,
 ): UseFavoriteUsersResult {
   const dispatch = useAppDispatch()
-  const currentUserId = useAppSelector((state) => state.users.currentUserId)
   const users = useAppSelector((state) => state.users.items)
-
-  const currentUser = users.find((user) => user.id === currentUserId)
+  const currentUser = useAppSelector(selectCurrentUser)
   const likedUserIds = currentUser?.favoriteUserIds ?? []
 
   const toggleFavoriteUser = (userId: string) => {

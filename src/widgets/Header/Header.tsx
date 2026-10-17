@@ -18,7 +18,11 @@ import logoutIcon from '@/shared/assets/icons/logout.svg'
 
 import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
 import { useAppSelector } from '@/store/hooks'
-import { selectIsAuthenticated, selectCurrentUserName } from '@/store/selectors/userSelectors'
+import {
+  selectIsAuthenticated,
+  selectCurrentUser,
+  selectCurrentUserName,
+} from '@/store/selectors/userSelectors'
 
 import styles from './Header.module.css'
 
@@ -29,11 +33,7 @@ export function Header() {
 
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const userName = useAppSelector(selectCurrentUserName)
-
-  const currentUser = useAppSelector((state) => {
-    const userId = state.users.currentUserId
-    return state.users.items.find((u) => u.id === userId) || null
-  })
+  const currentUser = useAppSelector(selectCurrentUser)
 
   const closePopover = () => {
     const event = new MouseEvent('pointerdown', { bubbles: true })
