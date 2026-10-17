@@ -17,11 +17,11 @@ export default function SkillPage() {
 
   const { data, handleFavoriteToggle, isAuthenticated, likedUserIds } = useSkillPage(skillId)
 
+  const { proposeExchange, canProposeExchange, isAlreadyProposed } = useProposeExchange(data?.skill)
+
   const isAuthorFavorite = likedUserIds?.includes(data?.author.id ?? '') ?? false
 
   if (!skillId || !data) return <NotFoundPage />
-
-  const { proposeExchange, canProposeExchange, isAlreadyProposed } = useProposeExchange(data.skill)
 
   const handleExchange = () => {
     if (!isAuthenticated) {
