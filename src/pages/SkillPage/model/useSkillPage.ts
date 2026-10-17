@@ -7,6 +7,7 @@ import type { City } from '@/entities/city/model/types'
 import { useSimilarOffers } from './useSimilarOffer'
 import { useFavoriteUsers } from '@/features/favorite-user/model/useFavoriteUsers'
 import { addFavoriteData } from '@/features/favorite-user/lib/addFavoriteData'
+import { useProposeExchange } from '@/features/exchange'
 import { useAppSelector } from '@/store/hooks'
 import { selectIsAuthenticated } from '@/store/selectors/userSelectors'
 
@@ -38,6 +39,7 @@ export function useSkillPage(id: SkillId | undefined) {
   }, [users, skills, cities, allSubcategories, categories])
 
   const skill = id ? skills.find((s) => s.id === id) : undefined
+  const { proposeExchange, canProposeExchange, isAlreadyProposed } = useProposeExchange(skill)
   const author = skill ? users.find((u) => u.id === skill.authorId) : undefined
   const subcategoryId = skill?.subcategoryId ?? ''
 
@@ -77,5 +79,8 @@ export function useSkillPage(id: SkillId | undefined) {
     handleFavoriteToggle: toggleFavoriteUser,
     isAuthenticated,
     likedUserIds,
+    proposeExchange,
+    canProposeExchange,
+    isAlreadyProposed,
   }
 }

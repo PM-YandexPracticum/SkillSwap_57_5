@@ -18,6 +18,10 @@ interface SkillInfoProps {
   isFavorite: boolean
   isAuthenticated: boolean
   onFavoriteToggle?: () => void
+  onProposeExchange: () => void
+  canProposeExchange: boolean
+  isAlreadyProposed: boolean
+  onLoginRequired: () => void
 }
 
 export function SkillInfo({
@@ -28,6 +32,10 @@ export function SkillInfo({
   isFavorite,
   isAuthenticated,
   onFavoriteToggle,
+  onProposeExchange,
+  canProposeExchange,
+  isAlreadyProposed,
+  onLoginRequired,
 }: SkillInfoProps) {
   return (
     <section className={styles.container}>
@@ -45,11 +53,7 @@ export function SkillInfo({
           ariaLabel="Поделиться"
           onClick={() => console.log('Поделиться')}
         />
-        <IconButton
-          src={optionIcon}
-          ariaLabel="Опции"
-          onClick={() => console.log('Опции')}
-        />
+        <IconButton src={optionIcon} ariaLabel="Опции" onClick={() => console.log('Опции')} />
       </div>
 
       <div className={styles.content}>
@@ -61,8 +65,12 @@ export function SkillInfo({
             </p>
             <p className={styles.description}>{skill.description}</p>
           </div>
-          <Button className={styles.button} onClick={() => console.log('Предложен обмен')}>
-            Предложить обмен
+          <Button
+            className={styles.button}
+            onClick={isAuthenticated ? onProposeExchange : onLoginRequired}
+            disabled={isAuthenticated && !canProposeExchange}
+          >
+            {isAlreadyProposed ? 'Обмен предложен' : 'Предложить обмен'}
           </Button>
         </div>
 

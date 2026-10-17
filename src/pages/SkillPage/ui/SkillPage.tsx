@@ -1,14 +1,35 @@
 import styles from './SkillPage.module.css'
 import { SkillAuthor } from '@/widgets/SkillAuthor'
 import { SkillInfo } from '@/widgets/SkillInfo'
-import { useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useSkillPage } from '../model/useSkillPage'
 import { SimilarOffers } from './SimilarOffers'
 import NotFoundPage from '@/pages/NotFoundPage'
 
 export default function SkillPage() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
   const skillId = useParams<{ id: string }>().id
-  const { data, handleFavoriteToggle, isAuthenticated, likedUserIds } = useSkillPage(skillId)
+  const {
+    data,
+    handleFavoriteToggle,
+    isAuthenticated,
+    likedUserIds,
+    proposeExchange,
+    canProposeExchange,
+    isAlreadyProposed,
+  } = useSkillPage(skillId)
+
+  const handleProposeExchange = () => {
+    if (!canProposeExchange || !skillId) return
+
+    proposeExchange()
+
+    navigate(`/skill/${skillId}/exchange`, {
+      state: { backgroundLocation: location },
+    })
+  }
   const isAuthorFavorite = likedUserIds?.includes(data?.author.id ?? '') ?? false
 
   if (!skillId || !data) return <NotFoundPage />
@@ -31,6 +52,10 @@ export default function SkillPage() {
             isFavorite={isAuthorFavorite}
             isAuthenticated={isAuthenticated}
             onFavoriteToggle={() => handleFavoriteToggle(data.author.id)}
+            onProposeExchange={handleProposeExchange}
+            canProposeExchange={canProposeExchange}
+            isAlreadyProposed={isAlreadyProposed}
+            onLoginRequired={() => navigate('/login')}
           ></SkillInfo>
         </section>
         <SimilarOffers
