@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import { useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Thumbs } from 'swiper/modules'
-import type { Swiper as SwiperClass } from 'swiper'
 
 import 'swiper/css'
 import 'swiper/css/thumbs'
@@ -15,8 +14,10 @@ import styles from './Gallery.module.css'
 const MAX_VISIBLE_THUMBS = 3
 
 export function Gallery({ imageUrls }: GalleryProps) {
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null)
-  const mainSwiperRef = useRef<SwiperClass | null>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const mainSwiperRef = useRef<any>(null)
+  const thumbsSwiperRef = useRef<any>(null)
 
   if (imageUrls.length === 0) {
     return <p className={styles.empty}>Нет фотографий</p>
@@ -26,20 +27,29 @@ export function Gallery({ imageUrls }: GalleryProps) {
   const visibleThumbs = imageUrls.slice(0, MAX_VISIBLE_THUMBS)
   const hiddenThumbsCount = imageUrls.length - MAX_VISIBLE_THUMBS
 
+  const goTo = (index: number) => {
+    const safeIndex = Math.max(0, Math.min(imageUrls.length - 1, index))
+    setActiveIndex(safeIndex)
+
+    mainSwiperRef.current?.slideTo(safeIndex, 0)
+    thumbsSwiperRef.current?.slideTo(Math.min(safeIndex, visibleThumbs.length - 1), 0)
+  }
+
   return (
     <div className={styles.gallery}>
       <div className={styles.mainWrapper}>
         <Swiper
           modules={[Thumbs]}
-          thumbs={{ swiper: thumbsSwiper }}
+          className={styles.mainSwiper}
+          initialSlide={activeIndex}
           onSwiper={(swiper) => {
             mainSwiperRef.current = swiper
+            swiper.slideTo(activeIndex, 0)
           }}
-          className={styles.mainSwiper}
         >
           {imageUrls.map((imageUrl) => (
             <SwiperSlide key={imageUrl}>
-              <img className={styles.mainImage} src={imageUrl} alt="" />
+              <img className={styles.mainImage} src={imageUrl} alt="" loading="lazy" />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -48,13 +58,12 @@ export function Gallery({ imageUrls }: GalleryProps) {
           <>
             <CarouselButton
               direction="left"
-              onClick={() => mainSwiperRef.current?.slidePrev()}
+              onClick={() => goTo(activeIndex - 1)}
               className={clsx(styles.navButton, styles.navPrev)}
             />
-
             <CarouselButton
               direction="right"
-              onClick={() => mainSwiperRef.current?.slideNext()}
+              onClick={() => goTo(activeIndex + 1)}
               className={clsx(styles.navButton, styles.navNext)}
             />
           </>
@@ -64,24 +73,26 @@ export function Gallery({ imageUrls }: GalleryProps) {
       <div className={styles.thumbsWrapper}>
         <Swiper
           modules={[Thumbs]}
-          onSwiper={setThumbsSwiper}
+          className={styles.thumbsSwiper}
           direction="vertical"
           slidesPerView={MAX_VISIBLE_THUMBS}
           spaceBetween={24}
           watchSlidesProgress
           allowTouchMove={false}
-          className={styles.thumbsSwiper}
+          initialSlide={Math.min(activeIndex, visibleThumbs.length - 1)}
+          onSwiper={(swiper) => {
+            thumbsSwiperRef.current = swiper
+            swiper.slideTo(Math.min(activeIndex, visibleThumbs.length - 1), 0)
+          }}
         >
           {visibleThumbs.map((imageUrl, index) => {
             const isLastVisible = index === visibleThumbs.length - 1
             const showOverlay = isLastVisible && hiddenThumbsCount > 0
 
             return (
-              <SwiperSlide key={imageUrl} className={styles.thumbSlide}>
+              <SwiperSlide key={imageUrl} className={styles.thumbSlide} onClick={() => goTo(index)}>
                 <img className={styles.thumbImage} src={imageUrl} alt="" />
-                {showOverlay && (
-                  <span className={styles.thumbOverlay}>+{hiddenThumbsCount}</span>
-                )}
+                {showOverlay && <span className={styles.thumbOverlay}>+{hiddenThumbsCount}</span>}
               </SwiperSlide>
             )
           })}

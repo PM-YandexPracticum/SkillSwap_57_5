@@ -14,7 +14,7 @@ export default function SkillExchangePage() {
 
   const handleClose = () => {
     setIsOpen(false)
-    navigate('/')
+    navigate(-1)
   }
 
   return (
