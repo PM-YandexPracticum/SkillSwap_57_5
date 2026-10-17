@@ -17,23 +17,25 @@ import heartIcon from '@/shared/assets/icons/heart.svg'
 import logoutIcon from '@/shared/assets/icons/logout.svg'
 
 import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
-import { useAppSelector } from '@/store/hooks'
-import { selectIsAuthenticated, selectCurrentUserName } from '@/store/selectors/userSelectors'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { setRegistrationSource } from '@/features/registration'
+import {
+  selectIsAuthenticated,
+  selectCurrentUser,
+  selectCurrentUserName,
+} from '@/store/selectors/userSelectors'
 
 import styles from './Header.module.css'
 
 export function Header() {
   const navigate = useNavigate()
   const logoutHandler = useLogout()
+  const dispatch = useAppDispatch()
   const categories = useAppSelector((state) => state.categories.items)
 
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const userName = useAppSelector(selectCurrentUserName)
-
-  const currentUser = useAppSelector((state) => {
-    const userId = state.users.currentUserId
-    return state.users.items.find((u) => u.id === userId) || null
-  })
+  const currentUser = useAppSelector(selectCurrentUser)
 
   const closePopover = () => {
     const event = new MouseEvent('pointerdown', { bubbles: true })
@@ -48,6 +50,16 @@ export function Header() {
   const handleLogoutClick = () => {
     closePopover()
     logoutHandler()
+  }
+
+  const handleRegisterClick = () => {
+    dispatch(
+      setRegistrationSource({
+        from: 'header',
+        skillId: null,
+        backgroundLocation: '/',
+      }),
+    )
   }
 
   return (
@@ -153,7 +165,7 @@ export function Header() {
                 <Button variant="secondary">Войти</Button>
               </Link>
 
-              <Link to="/register" className={styles.authLink}>
+              <Link to="/register" onClick={handleRegisterClick} className={styles.authLink}>
                 <Button variant="primary">Зарегистрироваться</Button>
               </Link>
             </div>

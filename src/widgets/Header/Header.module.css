@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  margin-bottom: 32px;
+  margin-bottom: var(--space-32);
   background-color: var(--color-bg);
 }
 
@@ -11,7 +11,7 @@
   max-width: 1440px;
   min-height: 104px;
   padding: 0 36px;
-  gap: var(--space-xl);
+  gap: var(--space-32);
   margin: 0 auto;
 }
 
@@ -26,8 +26,8 @@
 .skillsButton {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: 8px 0;
+  gap: var(--space-8);
+  padding: var(--space-8) 0;
   color: var(--color-text);
   font-size: var(--font-size-body);
   font-weight: 400;
@@ -43,8 +43,8 @@
   line-height: 24px;
   text-decoration: none;
   white-space: nowrap;
-  margin-left: 32px;
-  margin-right: 24px;
+  margin-left: var(--space-32);
+  margin-right: var(--space-24);
 }
 
 .aboutLinkHeader:hover {
@@ -69,8 +69,8 @@
 .authButtonSection {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  margin-left: 32px;
+  gap: var(--space-12);
+  margin-left: var(--space-32);
 }
 
 .themeButton {
@@ -113,13 +113,13 @@
 .userSection {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: var(--space-24);
 }
 
 .iconsGroup {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: var(--space-20);
 }
 
 .iconsGroup img,
@@ -131,7 +131,7 @@
 .profileTrigger {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-8);
   padding: 0;
   border: none;
   background: transparent;
@@ -168,8 +168,8 @@
 .profileMenuItem {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 26px 40px;
+  gap: var(--space-8);
+  padding: 26px var(--space-40);
   border: none;
   background: transparent;
   color: var(--color-text);
@@ -217,7 +217,7 @@
   .container {
     min-height: 72px;
     padding-inline: 24px;
-    gap: var(--space-md);
+    gap: var(--space-12);
   }
 
   .logo {
@@ -225,7 +225,7 @@
   }
 
   .rightSection {
-    gap: var(--space-sm);
+    gap: var(--space-8);
   }
 
   .themeButton {

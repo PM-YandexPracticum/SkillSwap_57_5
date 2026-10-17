@@ -5,24 +5,38 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useSkillPage } from '../model/useSkillPage'
 import { SimilarOffers } from './SimilarOffers'
 import NotFoundPage from '@/pages/NotFoundPage'
+import { useAppDispatch } from '@/store/hooks'
+import { setRegistrationSource } from '@/features/registration'
+import { useProposeExchange } from '@/features/exchange'
 
 export default function SkillPage() {
-  const location = useLocation()
-  const navigate = useNavigate()
-
   const skillId = useParams<{ id: string }>().id
-  const {
-    data,
-    handleFavoriteToggle,
-    isAuthenticated,
-    likedUserIds,
-    proposeExchange,
-    canProposeExchange,
-    isAlreadyProposed,
-  } = useSkillPage(skillId)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const dispatch = useAppDispatch()
 
-  const handleProposeExchange = () => {
-    if (!canProposeExchange || !skillId) return
+  const { data, handleFavoriteToggle, isAuthenticated, likedUserIds } = useSkillPage(skillId)
+
+  const isAuthorFavorite = likedUserIds?.includes(data?.author.id ?? '') ?? false
+
+  if (!skillId || !data) return <NotFoundPage />
+
+  const { proposeExchange, canProposeExchange, isAlreadyProposed } = useProposeExchange(data.skill)
+
+  const handleExchange = () => {
+    if (!isAuthenticated) {
+      dispatch(
+        setRegistrationSource({
+          from: 'skill',
+          skillId,
+          backgroundLocation: `/skill/${skillId}`,
+        }),
+      )
+      navigate('/login')
+      return
+    }
+
+    if (!canProposeExchange) return
 
     proposeExchange()
 
@@ -30,9 +44,6 @@ export default function SkillPage() {
       state: { backgroundLocation: location },
     })
   }
-  const isAuthorFavorite = likedUserIds?.includes(data?.author.id ?? '') ?? false
-
-  if (!skillId || !data) return <NotFoundPage />
 
   return (
     <>
@@ -52,11 +63,10 @@ export default function SkillPage() {
             isFavorite={isAuthorFavorite}
             isAuthenticated={isAuthenticated}
             onFavoriteToggle={() => handleFavoriteToggle(data.author.id)}
-            onProposeExchange={handleProposeExchange}
+            onExchange={handleExchange}
             canProposeExchange={canProposeExchange}
             isAlreadyProposed={isAlreadyProposed}
-            onLoginRequired={() => navigate('/login')}
-          ></SkillInfo>
+          />
         </section>
         <SimilarOffers
           items={data.similarOffers}

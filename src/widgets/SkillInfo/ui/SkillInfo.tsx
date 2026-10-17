@@ -18,10 +18,9 @@ interface SkillInfoProps {
   isFavorite: boolean
   isAuthenticated: boolean
   onFavoriteToggle?: () => void
-  onProposeExchange: () => void
+  onExchange: () => void
   canProposeExchange: boolean
   isAlreadyProposed: boolean
-  onLoginRequired: () => void
 }
 
 export function SkillInfo({
@@ -32,10 +31,9 @@ export function SkillInfo({
   isFavorite,
   isAuthenticated,
   onFavoriteToggle,
-  onProposeExchange,
+  onExchange,
   canProposeExchange,
   isAlreadyProposed,
-  onLoginRequired,
 }: SkillInfoProps) {
   return (
     <section className={styles.container}>
@@ -67,7 +65,7 @@ export function SkillInfo({
           </div>
           <Button
             className={styles.button}
-            onClick={isAuthenticated ? onProposeExchange : onLoginRequired}
+            onClick={onExchange}
             disabled={isAuthenticated && !canProposeExchange}
           >
             {isAlreadyProposed ? 'Обмен предложен' : 'Предложить обмен'}

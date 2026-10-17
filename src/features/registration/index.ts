@@ -20,3 +20,6 @@ export {
   isSkillFilled,
 } from './lib/registrationSteps'
 export { useRegistrationGuard } from './lib/useRegistrationGuard'
+
+export { setRegistrationSource, clearRegistrationSource } from '@/store/slices/registrationSlice'
+export type { RegistrationSource } from '@/store/slices/registrationSlice'

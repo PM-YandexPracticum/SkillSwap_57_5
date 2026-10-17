@@ -4,14 +4,14 @@
   align-items: flex-start;
   gap: 10px;
   width: 100%;
-  padding: 12px 20px;
-  border: 1px solid #69735d;
-  border-radius: 12px;
-  background: #fff;
+  padding: var(--space-12) var(--space-20);
+  border: 1px solid var(--color-caption);
+  border-radius: var(--radius-12);
+  background: var(--color-surface);
 }
 
 .root:focus-within {
-  box-shadow: 0 0 0 2px rgb(105 115 93 / 30%);
+  box-shadow: 0 0 0 2px var(--color-focus);
 }
 
 
@@ -35,7 +35,7 @@
   padding: 0;
   border: none;
   background: none;
-  color: #69735d;
+  color: var(--color-caption);
   cursor: pointer;
 }
 

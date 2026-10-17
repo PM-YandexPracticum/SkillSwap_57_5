@@ -2,8 +2,8 @@
   display: inline-flex;
   align-items: center;
   min-height: 32px;
-  padding: var(--space-sm) var(--space-md);
-  border-radius: 20px;
+  padding: var(--space-8) var(--space-12);
+  border-radius: var(--radius-20);
   font-family: var(--font-body);
   font-size: var(--font-size-caption);
   font-weight: 400;
