@@ -2,6 +2,12 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { Gender } from '@/entities/user'
 import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/category'
 
+export interface RegistrationSource {
+  from: 'header' | 'skill' | null
+  skillId: string | null
+  backgroundLocation: string | null
+}
+
 interface RegistrationState {
   credentials: {
     email: string
@@ -25,6 +31,13 @@ interface RegistrationState {
     imageUrls: string[]
     imageKeys: string[]
   }
+  source: RegistrationSource
+}
+
+const emptySource: RegistrationSource = {
+  from: null,
+  skillId: null,
+  backgroundLocation: null,
 }
 
 const initialState: RegistrationState = {
@@ -50,6 +63,7 @@ const initialState: RegistrationState = {
     imageUrls: [],
     imageKeys: [],
   },
+  source: emptySource,
 }
 
 const registrationSlice = createSlice({
@@ -68,9 +82,20 @@ const registrationSlice = createSlice({
     setSkillDraft(state, action: PayloadAction<RegistrationState['skill']>) {
       state.skill = action.payload
     },
-    // Очищает данные всех трёх шагов регистрации
-    resetRegistration() {
-      return initialState
+    // Источник регистрации: откуда пришёл пользователь и куда вернуть после success
+    setRegistrationSource(state, action: PayloadAction<RegistrationSource>) {
+      state.source = action.payload
+    },
+    // Сбрасывает источник (например, после закрытия success-страницы)
+    clearRegistrationSource(state) {
+      state.source = emptySource
+    },
+    // Очищает данные всех трёх шагов регистрации, но НЕ трогает source,
+    // иначе success-страница потеряет информацию о том, куда возвращаться
+    resetRegistration(state) {
+      state.credentials = initialState.credentials
+      state.profile = initialState.profile
+      state.skill = initialState.skill
     },
   },
 })
@@ -79,6 +104,8 @@ export const {
   setCredentials,
   setProfile,
   setSkillDraft,
+  setRegistrationSource,
+  clearRegistrationSource,
   resetRegistration,
 } = registrationSlice.actions
 

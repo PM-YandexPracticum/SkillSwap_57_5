@@ -17,7 +17,8 @@ import heartIcon from '@/shared/assets/icons/heart.svg'
 import logoutIcon from '@/shared/assets/icons/logout.svg'
 
 import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
-import { useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { setRegistrationSource } from '@/features/registration'
 import {
   selectIsAuthenticated,
   selectCurrentUser,
@@ -29,6 +30,7 @@ import styles from './Header.module.css'
 export function Header() {
   const navigate = useNavigate()
   const logoutHandler = useLogout()
+  const dispatch = useAppDispatch()
   const categories = useAppSelector((state) => state.categories.items)
 
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -48,6 +50,16 @@ export function Header() {
   const handleLogoutClick = () => {
     closePopover()
     logoutHandler()
+  }
+
+  const handleRegisterClick = () => {
+    dispatch(
+      setRegistrationSource({
+        from: 'header',
+        skillId: null,
+        backgroundLocation: '/',
+      }),
+    )
   }
 
   return (
@@ -153,7 +165,7 @@ export function Header() {
                 <Button variant="secondary">Войти</Button>
               </Link>
 
-              <Link to="/register" className={styles.authLink}>
+              <Link to="/register" onClick={handleRegisterClick} className={styles.authLink}>
                 <Button variant="primary">Зарегистрироваться</Button>
               </Link>
             </div>

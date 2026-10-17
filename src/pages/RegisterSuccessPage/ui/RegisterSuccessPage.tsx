@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { clearRegistrationSource } from '@/features/registration'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 import { Modal } from '@/shared/ui/Modal'
 import { Button } from '@/shared/ui/Button'
@@ -9,11 +11,14 @@ import styles from './RegisterSuccessPage.module.css'
 
 export default function RegisterSuccessPage() {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const source = useAppSelector((state) => state.registration.source)
   const [isOpen, setIsOpen] = useState(true)
 
   const handleClose = () => {
     setIsOpen(false)
-    navigate('/')
+    dispatch(clearRegistrationSource())
+    navigate(source.backgroundLocation ?? '/', { replace: true })
   }
 
   return (
