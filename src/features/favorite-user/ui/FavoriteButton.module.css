@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   align-self: flex-end;
-  gap: var(--space-xs);
+  gap: var(--space-4);
   min-width: 24px;
   min-height: 24px;
   flex-shrink: 0;

@@ -3,27 +3,29 @@ import { useCompleteRegistration } from '@/features/registration/model/useComple
 import { useRegistrationPreview } from '@/features/registration/model/useRegistrationPreview'
 import { Modal } from '@/shared/ui/Modal'
 import { OfferSkillPreview } from '@/widgets/OfferSkillPreview'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '@/store/hooks'
 
 export default function RegisterPreviewPage() {
   const data = useRegistrationPreview()
 
   const { completeRegistration, error } = useCompleteRegistration()
   const navigate = useNavigate()
-  const location = useLocation()
+  const source = useAppSelector((state) => state.registration.source)
 
   if (!data) {
     return null
   }
 
-  const handleConfirm = () => {
-    const success = completeRegistration()
+  const handleConfirm = async () => {
+    const success = await completeRegistration()
     if (success) {
+      // Открываем окно успеха поверх исходной страницы навыка или главной
       navigate('/register/success', {
-        state: { backgroundLocation: location.state?.backgroundLocation },
+        state: { backgroundLocation: { pathname: source.backgroundLocation ?? '/' } },
       })
     }
-    // при ошибке остаёмся здесь — error покажется ниже
+    // при ошибке остаёмся здесь, error покажется ниже
   }
 
   const handleClose = () => {
@@ -43,8 +45,8 @@ export default function RegisterPreviewPage() {
         categoryName={data.categoryName}
         subcategoryName={data.subcategoryName}
         imageUrls={data.imageUrls}
-        onEdit={handleClose}
-        onConfirm={handleConfirm}
+        onEditButton={handleClose}
+        onConfirmButton={handleConfirm}
       />
       {error && <p className={styles.error}>{error}</p>}
     </Modal>

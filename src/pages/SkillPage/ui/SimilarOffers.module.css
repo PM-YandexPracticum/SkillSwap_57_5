@@ -4,13 +4,13 @@
 }
 
 .title {
-  margin: 0 0 32px;
-  color: #253017;
-  font-family: Jost, sans-serif;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 28px;
-  letter-spacing: -0.011em;
+  margin: 0 0 var(--space-32);
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--letter-spacing-heading);
 }
 
 .prevButton,

@@ -16,6 +16,7 @@ interface RegistrationState {
   profile: {
     name: string
     avatarUrl: string
+    avatarKey: string | null
     birthDate: string
     gender: Gender | null
     cityId: string
@@ -28,6 +29,7 @@ interface RegistrationState {
     subcategoryId: string
     description: string
     imageUrls: string[]
+    imageKeys: string[]
   }
   source: RegistrationSource
 }
@@ -46,6 +48,7 @@ const initialState: RegistrationState = {
   profile: {
     name: '',
     avatarUrl: '',
+    avatarKey: null,
     birthDate: '',
     gender: null,
     cityId: '',
@@ -58,6 +61,7 @@ const initialState: RegistrationState = {
     subcategoryId: '',
     description: '',
     imageUrls: [],
+    imageKeys: [],
   },
   source: emptySource,
 }

@@ -1,0 +1,35 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { setSession } from '@/store/slices/usersSlice'
+import { saveAuthUser } from './authUtils'
+
+export const useLogin = () => {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const users = useAppSelector((state) => state.users.items)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+
+  const handleLogin = ({ email, password }: { email: string; password: string }) => {
+    setSubmitError(null)
+
+    // Запасной тестовый пользователь на случай пустого списка в Redux
+    const fallbackUsers = [{ id: 'user-001', email: 'anna@example.com', password: 'Password123' }]
+    const activeUsers = users.length > 0 ? users : fallbackUsers
+    const user = activeUsers.find((item) => item.email.toLowerCase() === email.trim().toLowerCase())
+
+    if (!user || user.password !== password) {
+      setSubmitError('Неверный email или пароль')
+      return
+    }
+
+    const authUser = saveAuthUser({ id: user.id, name: user.email, email: user.email })
+    dispatch(setSession({ userId: authUser.id, token: authUser.token }))
+    navigate('/profile')
+  }
+
+  const errors = submitError ? { password: submitError } : undefined
+
+  return { handleLogin, errors }
+}

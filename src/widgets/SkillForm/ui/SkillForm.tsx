@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import type { RegistrationSkillErrors, RegistrationSkillValues } from '@/features/registration'
 import { useAppSelector } from '@/store/hooks'
 import { FormField } from '@/shared/ui/FormField'
@@ -12,44 +12,47 @@ import easelIcon from '@/shared/assets/icons/easel-illustration.svg'
 import styles from './SkillForm.module.css'
 
 interface SkillFormProps {
+  // Данные и обработчики из useRegistrationSkill
   onSubmit: (data: RegistrationSkillValues) => Promise<boolean>
-  handleBack: () => void
   errors?: RegistrationSkillErrors
   savedValues?: RegistrationSkillValues
-  onSubmitSuccess?: () => void
+  skillImages: File[]
+  onSkillImagesChange: (files: File[]) => void
+
+  // Обработчик навигации для кнопки "Назад"
+  onBackButton: () => void
 }
 
 export function SkillForm({
+  // Данные и обработчики из useRegistrationSkill
   onSubmit,
-  handleBack,
   errors,
   savedValues,
-  onSubmitSuccess,
+  skillImages,
+  onSkillImagesChange,
+
+  // Обработчик навигации для кнопки "Назад"
+  onBackButton,
 }: SkillFormProps) {
-  const categories = useAppSelector((state) => state.categories.items)
   const [skillName, setSkillName] = useState(savedValues?.title ?? '')
   const [category, setCategory] = useState(savedValues?.categoryId ?? '')
   const [subCategory, setSubCategory] = useState(savedValues?.subcategoryId ?? '')
   const [description, setDescription] = useState(savedValues?.description ?? '')
 
-  useEffect(() => {
-    if (savedValues) {
-      setSkillName(savedValues.title)
-      setCategory(savedValues.categoryId)
-      setSubCategory(savedValues.subcategoryId)
-      setDescription(savedValues.description)
-    }
-  }, [savedValues])
+  const categories = useAppSelector((state) => state.categories.items)
 
+  // Формируем опции для поля выбора категории Combobox
   const categoryOptions = categories.map((item) => ({
     value: item.id,
     label: item.name,
   }))
 
+  // Оставляем выбранную категорию или все категории, если выбор ещё не сделан
   const availableCategories = category
     ? categories.filter((item) => item.id === category)
     : categories
 
+  // Формируем опции подкатегорий Combobox с учётом выбранной категории
   const subCategoryOptions = availableCategories.flatMap((item) =>
     item.subcategories.map((subcategory) => ({
       value: subcategory.id,
@@ -57,6 +60,7 @@ export function SkillForm({
     })),
   )
 
+  // Обновляем категорию и сбрасываем подкатегорию, если она относится к другой категории
   const handleCategoryChange = (categoryId: string) => {
     setCategory(categoryId)
 
@@ -66,6 +70,7 @@ export function SkillForm({
     }
   }
 
+  // Обновляем подкатегорию и выбираем соответствующую ей категорию
   const handleSubCategoryChange = (subcategoryId: string) => {
     setSubCategory(subcategoryId)
 
@@ -78,18 +83,15 @@ export function SkillForm({
     }
   }
 
+  // Собираем значения полей формы и передаём их в onSubmit
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const success = await onSubmit({
+    await onSubmit({
       title: skillName,
       categoryId: category,
       subcategoryId: subCategory,
       description,
     })
-
-    if (success) {
-      onSubmitSuccess?.()
-    }
   }
 
   return (
@@ -158,14 +160,19 @@ export function SkillForm({
             )}
           </FormField>
 
-          <SkillImagesUpload onFilesSelected={() => undefined} />
+          <SkillImagesUpload files={skillImages} onFilesChange={onSkillImagesChange} />
+          {errors?.images && (
+            <p className={styles.errorHint} role="alert">
+              {errors.images}
+            </p>
+          )}
 
           <div className={styles.buttonWrapper}>
             <Button
               type="button"
               variant="secondary"
               className={styles.button}
-              onClick={handleBack}
+              onClick={onBackButton}
             >
               Назад
             </Button>

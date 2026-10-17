@@ -12,9 +12,9 @@
   box-sizing: border-box;
   width: 100%;
   height: 48px;
-  padding: 12px 20px;
+  padding: var(--space-12) var(--space-20);
   border: 1px solid var(--color-caption);
-  border-radius: 12px;
+  border-radius: var(--radius-12);
   background: var(--color-surface);
   transition: border-color 0.2s ease;
 }
@@ -22,7 +22,7 @@
 .field.open {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  border-bottom-color: #e4e8df;
+  border-bottom-color: var(--color-disabled);
 }
 
 .input {
@@ -91,12 +91,12 @@
   width: 100%;
   max-height: calc(var(--visible-count) * 48px + 17px);
   margin: 0;
-  padding: 8px 0;
+  padding: var(--space-8) 0;
   overflow-y: auto;
   list-style: none;
   border: 1px solid var(--color-caption);
   border-top: 0;
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 var(--radius-12) var(--radius-12);
   background: var(--color-surface);
 }
 
@@ -105,7 +105,7 @@
   display: flex;
   align-items: center;
   min-height: 48px;
-  padding: 8px 20px;
+  padding: var(--space-8) var(--space-20);
   box-sizing: border-box;
 }
 

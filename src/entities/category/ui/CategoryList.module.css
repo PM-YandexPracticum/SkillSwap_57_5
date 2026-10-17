@@ -2,16 +2,16 @@
   display: flex;
   flex-flow: column wrap;
   align-content: flex-start;
-  gap: 40px;
+  gap: var(--space-40);
   width: 1014px;
   height: 920px;
-  color: #253017;
+  color: var(--color-text);
 }
 
 .category {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: var(--space-12);
   width: calc((100% - 40px) / 2);
 }
 
@@ -32,17 +32,18 @@
 }
 
 .title {
-  margin: 0 0 12px;
-  font-family: Jost, sans-serif;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 28px;
+  margin: 0 0 var(--space-12);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--letter-spacing-heading);
 }
 
 .subcategories {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-12);
   margin: 0;
   padding: 0;
   list-style: none;

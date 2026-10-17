@@ -8,6 +8,8 @@ import {
   type ActiveFilter,
   type UseCatalogFiltersResult,
 } from '@/features/filter-catalog'
+import { useAppSelector } from '@/store/hooks'
+import { selectIsAuthenticated } from '@/store/selectors/userSelectors'
 
 import { useFavoriteUsers, addFavoriteData } from '@/features/favorite-user'
 import { buildCatalogUser, type CatalogCardData } from '@/widgets/UserCard'
@@ -66,7 +68,7 @@ export function useFavoritesPage(): UseFavoritesPageResult {
   } = useCatalogFilters()
 
   const searchQuery = useSearchQuery()
-  const isAuthenticated = true
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
 
   const { likedUserIds, toggleFavoriteUser } = useFavoriteUsers(isAuthenticated)
   const [isSortedByNewest, setIsSortedByNewest] = useState(false)

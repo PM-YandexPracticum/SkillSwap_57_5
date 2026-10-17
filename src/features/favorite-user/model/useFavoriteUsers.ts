@@ -1,5 +1,7 @@
-import { useLocalStorage } from '@/shared/hooks/useLocalStorage'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { selectCurrentUser } from '@/store/selectors/userSelectors'
+import { updateUser } from '@/store/slices/usersSlice'
 
 interface UseFavoriteUsersResult {
   likedUserIds: string[]
@@ -9,25 +11,35 @@ interface UseFavoriteUsersResult {
 export function useFavoriteUsers(
   isAuthenticated: boolean,
 ): UseFavoriteUsersResult {
-  const [likedUserIds, setLikedUserIds] = useLocalStorage<string[]>(
-    LOCAL_STORAGE_KEYS.FAVORITES,
-    [],
-  )
+  const dispatch = useAppDispatch()
+  const users = useAppSelector((state) => state.users.items)
+  const currentUser = useAppSelector(selectCurrentUser)
+  const likedUserIds = currentUser?.favoriteUserIds ?? []
 
   const toggleFavoriteUser = (userId: string) => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !currentUser) {
       return
     }
 
-    setLikedUserIds((currentLikedUserIds) => {
-      if (currentLikedUserIds.includes(userId)) {
-        return currentLikedUserIds.filter(
-          (likedUserId) => likedUserId !== userId,
-        )
-      }
+    const favoriteUserIds = currentUser.favoriteUserIds.includes(userId)
+      ? currentUser.favoriteUserIds.filter((id) => id !== userId)
+      : [...currentUser.favoriteUserIds, userId]
 
-      return [...currentLikedUserIds, userId]
-    })
+    const updatedUser = {
+      ...currentUser,
+      favoriteUserIds,
+    }
+
+    dispatch(updateUser(updatedUser))
+
+    const updatedUsers = users.map((user) =>
+      user.id === updatedUser.id ? updatedUser : user,
+    )
+
+    localStorage.setItem(
+      LOCAL_STORAGE_KEYS.USERS,
+      JSON.stringify(updatedUsers),
+    )
   }
 
   return {

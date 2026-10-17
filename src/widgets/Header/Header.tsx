@@ -8,6 +8,7 @@ import { Logo } from '@/shared/ui/Logo'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Popover } from '@/shared/ui/Popover'
 import { useLogout } from '@/features/auth'
+import { Notifications } from '@/features/notifications'
 
 import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
 import moonIcon from '@/shared/assets/icons/moon.svg'
@@ -16,9 +17,13 @@ import heartIcon from '@/shared/assets/icons/heart.svg'
 import logoutIcon from '@/shared/assets/icons/logout.svg'
 
 import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
-import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import { selectIsAuthenticated, selectCurrentUserName } from '@/store/selectors/userSelectors'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setRegistrationSource } from '@/features/registration'
+import {
+  selectIsAuthenticated,
+  selectCurrentUser,
+  selectCurrentUserName,
+} from '@/store/selectors/userSelectors'
 
 import styles from './Header.module.css'
 
@@ -30,11 +35,7 @@ export function Header() {
 
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const userName = useAppSelector(selectCurrentUserName)
-
-  const currentUser = useAppSelector((state) => {
-    const userId = state.users.currentUserId
-    return state.users.items.find((u) => u.id === userId) || null
-  })
+  const currentUser = useAppSelector(selectCurrentUser)
 
   const closePopover = () => {
     const event = new MouseEvent('pointerdown', { bubbles: true })
@@ -94,8 +95,24 @@ export function Header() {
                   ariaLabel="Переключить тему"
                   onClick={() => console.log('Смена темы')}
                 />
-                <IconButton src={bellIcon} ariaLabel="Уведомления" onClick={() => {}} />
-                <IconButton src={heartIcon} ariaLabel="Избранное" onClick={() => {}} />
+                <Popover
+                  align="right"
+                  padding="0"
+                  trigger={
+                    <IconButton
+                      src={bellIcon}
+                      ariaLabel="Уведомления"
+                      onClick={() => {}}
+                    />
+                  }
+                >
+                  <Notifications />
+                </Popover>
+                <IconButton
+                  src={heartIcon}
+                  ariaLabel="Избранное"
+                  onClick={() => {}}
+                />
               </div>
 
               <Popover
@@ -104,7 +121,10 @@ export function Header() {
                 trigger={
                   <button type="button" className={styles.profileTrigger}>
                     <span className={styles.userName}>{userName || 'Пользователь'}</span>
-                    <Avatar src={currentUser?.avatarUrl || ''} name={userName || 'Пользователь'} />
+                    <Avatar
+                      src={currentUser?.avatarUrl || ''}
+                      name={userName || 'Пользователь'}
+                    />
                   </button>
                 }
               >

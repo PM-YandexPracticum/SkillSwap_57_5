@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import { nanoid } from '@reduxjs/toolkit'
+import { getImage } from '@/shared/lib/imageStorage'
 
 import type { Skill } from '@/entities/skill'
 import type { User } from '@/entities/user'
@@ -19,7 +20,7 @@ export function useCompleteRegistration() {
   const skills = useAppSelector((state) => state.skills.items)
   const [error, setError] = useState<string | null>(null)
 
-  const completeRegistration = useCallback(() => {
+  const completeRegistration = useCallback(async () => {
     setError(null)
 
     const email = credentials.email.trim()
@@ -57,12 +58,21 @@ export function useCompleteRegistration() {
       return false
     }
 
+    const avatarFile = profile.avatarKey ? await getImage(profile.avatarKey) : undefined
+    const avatarUrl = avatarFile ? URL.createObjectURL(avatarFile) : ''
+
+    const skillImageFiles = await Promise.all((skill.imageKeys ?? []).map((key) => getImage(key)))
+    const skillImageUrls = skillImageFiles
+      .filter((file): file is File => file !== undefined)
+      .map((file) => URL.createObjectURL(file))
+
     const newUser: User = {
       id: nanoid(),
       email,
       password,
       name,
-      avatarUrl: profile.avatarUrl,
+      avatarUrl,
+      avatarKey: profile.avatarKey ?? undefined,
       birthDate,
       gender,
       cityId,
@@ -80,7 +90,8 @@ export function useCompleteRegistration() {
       categoryId: skillCategoryId,
       subcategoryId: skillSubcategoryId,
       description: skillDescription,
-      imageUrls: skill.imageUrls,
+      imageUrls: skillImageUrls,
+      imageKeys: skill.imageKeys,
     }
 
     const nextUsers = [...users, newUser]

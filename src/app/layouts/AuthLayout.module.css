@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-16);
   padding: 36px 36px 0;
 }
 
@@ -27,8 +27,8 @@
 .closeButton {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 11px 24px;
+  gap: var(--space-8);
+  padding: 11px var(--space-24);
   font-weight: 400;
   background-color: var(--color-surface);
   cursor: pointer;

@@ -1,18 +1,18 @@
 .page {
   display: grid;
   grid-template-columns: 324px minmax(0, 1fr);
-  column-gap: 24px;
+  column-gap: var(--space-24);
   align-items: start;
   width: 100%;
   max-width: 1440px;
-  padding: 0 36px 48px;
+  padding: 0 36px var(--space-48);
   margin: 0 auto;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: var(--space-40);
   width: 100%;
   margin: 0 auto;
 }
@@ -20,14 +20,14 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: var(--space-32);
 }
 
 .sectionHead {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--space-16);
   min-height: 48px;
 }
 
@@ -36,24 +36,25 @@
   color: var(--color-text);
   font-family: var(--font-heading);
   font-size: var(--font-size-h1);
-  font-weight: 600;
-  line-height: var(--line-height-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--letter-spacing-heading);
 }
 
 .viewAllButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--space-8);
   min-height: 48px;
-  padding: 12px 24px;
+  padding: var(--space-12) var(--space-24);
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: var(--font-size-body);
   font-weight: 500;
   line-height: var(--line-height-body);
   background: var(--color-surface);
-  border-radius: 12px;
+  border-radius: var(--radius-12);
 }
 
 .viewAllButton:hover {
@@ -74,7 +75,7 @@
 .cardsGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: var(--space-24);
   margin: 0;
   padding: 0;
   list-style: none;

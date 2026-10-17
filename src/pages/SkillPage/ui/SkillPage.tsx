@@ -4,6 +4,7 @@ import { SkillInfo } from '@/widgets/SkillInfo'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useSkillPage } from '../model/useSkillPage'
 import { SimilarOffers } from './SimilarOffers'
+import NotFoundPage from '@/pages/NotFoundPage'
 import { useAppDispatch } from '@/store/hooks'
 import { setRegistrationSource } from '@/features/registration'
 
@@ -15,7 +16,7 @@ export default function SkillPage() {
   const { data, handleFavoriteToggle, isAuthenticated, likedUserIds } = useSkillPage(skillId)
   const isAuthorFavorite = likedUserIds?.includes(data?.author.id ?? '') ?? false
 
-  if (!skillId || !data) return null
+  if (!skillId || !data) return <NotFoundPage />
 
   const handleExchange = () => {
     if (isAuthenticated) {
@@ -28,11 +29,10 @@ export default function SkillPage() {
     dispatch(
       setRegistrationSource({
         from: 'skill',
-        skillId: skillId,
+        skillId,
         backgroundLocation: `/skill/${skillId}`,
       }),
     )
-
     navigate('/register')
   }
 
