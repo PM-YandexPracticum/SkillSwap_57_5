@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { DayPicker } from '@daypicker/react'
 import { ru } from '@daypicker/react/locale'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import 'react-day-picker/style.css'
 
 import { FormField } from '@/shared/ui/FormField'
@@ -15,45 +15,34 @@ import { Combobox } from '@/shared/ui/Combobox/Combobox'
 import EditIcon from '@/shared/assets/icons/edit.svg'
 import Calendar from '@/shared/assets/icons/calendar.svg'
 
-import styles from './PersonalDataForm.module.css'
+import { useAppSelector } from '@/store/hooks'
+import { selectCurrentUser } from '@/store/selectors/userSelectors'
 
-type City = {
-  id: string
-  name: string
-}
+import styles from './PersonalDataForm.module.css'
 
 type EditableField = 'email' | 'name' | 'about' | 'birthDate' | 'gender' | 'city'
 
 export function PersonalDataForm() {
-  const [email, setEmail] = useState('anna@example.com')
-  const [name, setName] = useState('Анна Иванова')
+  const currentUser = useAppSelector(selectCurrentUser)
+  const cities = useAppSelector((state) => state.cities.items)
+
+  const [email, setEmail] = useState(currentUser?.email ?? '')
+  const [name, setName] = useState(currentUser?.name ?? '')
   const [password, setPassword] = useState('')
   const [showPasswordField, setShowPasswordField] = useState(false)
 
-  const [birthDate, setBirthDate] = useState<Date | undefined>(new Date(1995, 5, 15))
-  const [gender, setGender] = useState('female')
-  const [city, setCity] = useState('')
-  const [citiesData, setCitiesData] = useState<City[]>([])
-
-  const [about, setAbout] = useState('Люблю узнавать новое, делиться опытом и путешествовать.')
+  const [birthDate, setBirthDate] = useState<Date | undefined>(() =>
+    currentUser?.birthDate ? parseISO(currentUser.birthDate) : undefined,
+  )
+  const [gender, setGender] = useState(currentUser?.gender ?? '')
+  const [city, setCity] = useState(currentUser?.cityId ?? '')
+  const [about, setAbout] = useState(currentUser?.about ?? '')
 
   const [editingField, setEditingField] = useState<EditableField | null>(null)
 
   const emailRef = useRef<HTMLInputElement>(null)
   const nameRef = useRef<HTMLInputElement>(null)
   const aboutRef = useRef<HTMLTextAreaElement>(null)
-
-  useEffect(() => {
-    fetch('./db/cities.json')
-      .then((res) => res.json())
-      .then((data: City[]) => {
-        setCitiesData(data)
-        if (data.length > 0) {
-          setCity(data[0].id)
-        }
-      })
-      .catch((err) => console.error('cities fetch error:', err))
-  }, [])
 
   useEffect(() => {
     const field =
@@ -75,7 +64,7 @@ export function PersonalDataForm() {
     }
   }, [editingField])
 
-  const cityOptions = citiesData.map((item) => ({
+  const cityOptions = cities.map((item) => ({
     value: item.id,
     label: item.name,
   }))
@@ -168,6 +157,7 @@ export function PersonalDataForm() {
                 id="birthDate"
                 type="button"
                 className={styles.dateTrigger}
+                disabled={editingField !== null}
                 aria-label={
                   birthDate
                     ? `Дата рождения: ${format(birthDate, 'dd.MM.yyyy')}`
@@ -187,6 +177,7 @@ export function PersonalDataForm() {
                 mode="single"
                 className={styles.calendar}
                 selected={birthDate}
+                defaultMonth={birthDate}
                 onSelect={setBirthDate}
                 captionLayout="dropdown"
                 locale={ru}
@@ -236,6 +227,7 @@ export function PersonalDataForm() {
           ]}
           value={gender}
           onChange={setGender}
+          disabled={editingField !== null}
           placeholder="Не выбрано"
         />
       </div>
@@ -246,6 +238,7 @@ export function PersonalDataForm() {
           value={city}
           options={cityOptions}
           onChange={setCity}
+          disabled={editingField !== null}
           placeholder="Выберите город"
           alwaysShowArrow={true}
           showClearButton={true}
