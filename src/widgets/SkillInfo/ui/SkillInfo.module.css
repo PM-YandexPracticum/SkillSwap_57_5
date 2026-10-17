@@ -11,7 +11,7 @@
 .header {
   display: flex;
   justify-content: flex-end;
-  gap: var(--space-16)
+  gap: var(--space-16);
 }
 
 .content {
@@ -59,4 +59,30 @@
 
 .gallery {
   border-radius: var(--radius-12);
+}
+
+.buttonInactive {
+  background-color: transparent;
+  color: var(--color-text-primary, var(--color-text));
+  border: 1px solid #abd27a;
+  padding: 8px 16px;
+  min-width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.buttonText {
+  display: block;
+  white-space: nowrap;
+  line-height: 1;
+  margin: 0;
 }

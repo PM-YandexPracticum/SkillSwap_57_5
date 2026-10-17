@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+import { useState } from 'react'
 import type { Skill } from '@/entities/skill'
 import type { User } from '@/entities/user'
 import { Button } from '@/shared/ui/Button'
@@ -6,6 +8,7 @@ import { FavoriteButton } from '@/features/favorite-user'
 
 import shareIcon from '@/shared/assets/icons/share.svg'
 import optionIcon from '@/shared/assets/icons/option.svg'
+import doneIcon from '@/shared/assets/icons/clock.svg'
 
 import { Gallery } from '@/shared/ui/Gallery'
 import styles from './SkillInfo.module.css'
@@ -35,6 +38,17 @@ export function SkillInfo({
   canProposeExchange,
   isAlreadyProposed,
 }: SkillInfoProps) {
+  const [isProposing, setIsProposing] = useState(false)
+
+  const handleExchange = () => {
+    if (isAlreadyProposed || isProposing) return
+    setIsProposing(true)
+    onExchange()
+  }
+
+  const isDisabled = isAuthenticated && !canProposeExchange
+  const isInactiveState = isAlreadyProposed || isProposing
+
   return (
     <section className={styles.container}>
       <div className={styles.header}>
@@ -63,17 +77,25 @@ export function SkillInfo({
             </p>
             <p className={styles.description}>{skill.description}</p>
           </div>
+
           <Button
-            className={styles.button}
-            onClick={onExchange}
-            disabled={isAuthenticated && !canProposeExchange}
+            className={clsx(styles.button, isInactiveState && styles.buttonInactive)}
+            onClick={handleExchange}
+            disabled={isDisabled || isInactiveState}
           >
-            {isAlreadyProposed ? 'Обмен предложен' : 'Предложить обмен'}
+            {isInactiveState ? (
+              <>
+                <img src={doneIcon} alt="" className={styles.buttonIcon} />
+                <span className={styles.buttonText}>Обмен предложен</span>
+              </>
+            ) : (
+              'Предложить обмен'
+            )}
           </Button>
         </div>
 
         <div className={styles.gallery}>
-          <Gallery imageUrls={skill.imageUrls} />
+          <Gallery imageUrls={skill.imageUrls ?? []} />
         </div>
       </div>
     </section>
