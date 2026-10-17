@@ -13,12 +13,11 @@
   margin-top: var(--space-32);
 }
 
-/* СТРОГО ПО ТЗ И МАКЕТУ ФИГМЫ: Заданы точные паддинги и скругление углов 12px */
 .button {
   width: 218px;
   height: 48px;
-  padding: 12px 24px !important;    /* Паддинги из Figma: 12px верх/низ, 24px лево/право */
-  border-radius: 12px !important;   /* Corner radius из Figma: 12px */
+  padding: var(--space-12) var(--space-24);
+  border-radius: var(--space-12);
   font-weight: 400;
   display: inline-flex;
   align-items: center;

@@ -140,23 +140,22 @@
   transform: rotate(45deg);
 }
 
-/* СТРОГО ПО МАКЕТУ: Идеально ровный и центрированный минус (Subtract) для родительской категории */
 .categoryRow .option input[type='checkbox'] {
   position: relative;
 }
 
 .categoryRow .option input[type='checkbox']:checked::after {
-  content: '' !important;
-  display: block !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  width: 9.5px !important;     /* Точная ширина из Figma */
-  height: 1.5px !important;    /* Точная высота из Figma */
-  margin: 0 !important;        /* Убираем дефолтный сдвиг margin-top у чекбокса */
-  border: none !important;     /* Полностью убираем дефолтную галочку */
-  background-color: var(--color-surface) !important; /* Белый цвет линии #FFFFFF */
-  transform: translate(-50%, -50%) !important;       /* Центрирование пиксель в пиксель */
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9.5px;
+  height: 1.5px;
+  margin: 0;
+  border: none;
+  background-color: var(--color-surface);
+  transform: translate(-50%, -50%);
 }
 
 .category {
