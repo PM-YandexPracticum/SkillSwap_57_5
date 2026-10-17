@@ -108,11 +108,15 @@ export function Header() {
                 >
                   <Notifications />
                 </Popover>
-                <IconButton
-                  src={heartIcon}
-                  ariaLabel="Избранное"
-                  onClick={() => {}}
-                />
+
+                {/* СТРОГО ПО ТЗ: Клик по иконке избранного у залогиненного пользователя ведет на favorites */}
+                <Link to="/favorites">
+                  <IconButton
+                    src={heartIcon}
+                    ariaLabel="Избранное"
+                    onClick={() => {}}
+                  />
+                </Link>
               </div>
 
               <Popover
