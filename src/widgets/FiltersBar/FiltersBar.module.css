@@ -140,6 +140,24 @@
   transform: rotate(45deg);
 }
 
+.categoryRow .option input[type='checkbox'] {
+  position: relative;
+}
+
+.categoryRow .option input[type='checkbox']:checked::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9.5px;
+  height: 1.5px;
+  margin: 0;
+  border: none;
+  background-color: var(--color-surface);
+  transform: translate(-50%, -50%);
+}
+
 .category {
   display: flex;
   flex-direction: column;

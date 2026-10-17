@@ -98,21 +98,14 @@ export function Header() {
                 <Popover
                   align="right"
                   padding="0"
-                  trigger={
-                    <IconButton
-                      src={bellIcon}
-                      ariaLabel="Уведомления"
-                      onClick={() => {}}
-                    />
-                  }
+                  trigger={<IconButton src={bellIcon} ariaLabel="Уведомления" onClick={() => {}} />}
                 >
                   <Notifications />
                 </Popover>
-                <IconButton
-                  src={heartIcon}
-                  ariaLabel="Избранное"
-                  onClick={() => {}}
-                />
+
+                <Link to="/favorites">
+                  <IconButton src={heartIcon} ariaLabel="Избранное" onClick={() => {}} />
+                </Link>
               </div>
 
               <Popover
@@ -121,10 +114,7 @@ export function Header() {
                 trigger={
                   <button type="button" className={styles.profileTrigger}>
                     <span className={styles.userName}>{userName || 'Пользователь'}</span>
-                    <Avatar
-                      src={currentUser?.avatarUrl || ''}
-                      name={userName || 'Пользователь'}
-                    />
+                    <Avatar src={currentUser?.avatarUrl || ''} name={userName || 'Пользователь'} />
                   </button>
                 }
               >
