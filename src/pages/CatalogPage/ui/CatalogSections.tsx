@@ -9,7 +9,6 @@ import { Loader } from '@/shared/ui/Loader'
 
 interface CatalogSectionsProps {
   sections: CatalogSection[]
-  isAuthenticated: boolean
   isRecommendedLoading: boolean
   setRecommendedLoadMoreElement: (element: HTMLDivElement | null) => void
   onToggleSection: (sectionId: CatalogSectionId) => void
@@ -18,7 +17,6 @@ interface CatalogSectionsProps {
 
 export function CatalogSections({
   sections,
-  isAuthenticated,
   isRecommendedLoading,
   setRecommendedLoadMoreElement,
   onToggleSection,
@@ -61,7 +59,6 @@ export function CatalogSections({
                   learnSkills={catalogUser.learnSkills}
                   isFavorite={catalogUser.isFavorite}
                   likeCount={catalogUser.displayedLikeCount}
-                  isAuthenticated={isAuthenticated}
                   onFavoriteToggle={() => onFavoriteToggle(catalogUser.user.id)}
                 />
               </li>

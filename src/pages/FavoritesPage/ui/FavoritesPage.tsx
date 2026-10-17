@@ -37,7 +37,6 @@ export default function FavoritesPage() {
     handleSortToggle,
 
     // Общие
-    isAuthenticated,
     handleFavoriteToggle,
   } = useFavoritesPage()
 
@@ -77,7 +76,6 @@ export default function FavoritesPage() {
           <FiltersResult
             activeFilters={activeFilters}
             users={sortedCatalogUsers}
-            isAuthenticated={isAuthenticated}
             resultCount={resultCount}
             isSortedByNewest={isSortedByNewest}
             onRemoveFilter={handleRemoveFilter}
@@ -88,7 +86,6 @@ export default function FavoritesPage() {
           <FavoritesList
             items={withFavoritesCatalogUsers}
             title="Избранное"
-            isAuthenticated={isAuthenticated}
             onFavoriteToggle={handleFavoriteToggle}
           />
         )}

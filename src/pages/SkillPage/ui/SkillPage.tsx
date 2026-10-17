@@ -6,7 +6,7 @@ import { useSkillPage } from '../model/useSkillPage'
 import { SimilarOffers } from './SimilarOffers'
 import NotFoundPage from '@/pages/NotFoundPage'
 import { useAppDispatch } from '@/store/hooks'
-import { setRegistrationSource } from '@/features/registration'
+import { setReturnPath } from '@/store/slices/usersSlice'
 import { useProposeExchange } from '@/features/exchange'
 
 export default function SkillPage() {
@@ -24,15 +24,10 @@ export default function SkillPage() {
   if (!skillId || !data) return <NotFoundPage />
 
   const handleExchange = () => {
+    // Сохраняем pathname навыка и отправляем гостя на регистрацию
     if (!isAuthenticated) {
-      dispatch(
-        setRegistrationSource({
-          from: 'skill',
-          skillId,
-          backgroundLocation: `/skill/${skillId}`,
-        }),
-      )
-      navigate('/login')
+      dispatch(setReturnPath(location.pathname))
+      navigate('/register')
       return
     }
 
@@ -71,7 +66,6 @@ export default function SkillPage() {
         <SimilarOffers
           items={data.similarOffers}
           title="Похожие предложения"
-          isAuthenticated={isAuthenticated}
           onFavoriteToggle={handleFavoriteToggle}
         />
       </div>

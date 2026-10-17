@@ -16,7 +16,6 @@ interface UserCardProps {
   learnSkills: Skill[]
   isFavorite?: boolean
   likeCount?: number
-  isAuthenticated?: boolean
   onFavoriteToggle?: () => void
 }
 
@@ -27,7 +26,6 @@ export function UserCard({
   learnSkills,
   isFavorite = false,
   likeCount = typeof user.likesCount === 'number' ? user.likesCount : 0,
-  isAuthenticated = false,
   onFavoriteToggle,
 }: UserCardProps) {
   const navigate = useNavigate()
@@ -45,7 +43,6 @@ export function UserCard({
             user={user}
             isFavorite={isFavorite}
             likeCount={likeCount}
-            isAuthenticated={isAuthenticated}
             onToggle={onFavoriteToggle}
           />
 

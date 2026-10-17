@@ -42,7 +42,6 @@ interface UseFavoritesPageResult {
   handleResetFilters: UseCatalogFiltersResult['handleResetFilters']
 
   withFavoritesCatalogUsers: CatalogCardData[]
-  isAuthenticated: boolean
   handleFavoriteToggle: (userId: string) => void
 
   sortedCatalogUsers: CatalogCardData[]
@@ -163,7 +162,6 @@ export function useFavoritesPage(): UseFavoritesPageResult {
     handleResetFilters,
 
     withFavoritesCatalogUsers,
-    isAuthenticated,
     handleFavoriteToggle: toggleFavoriteUser,
 
     sortedCatalogUsers,

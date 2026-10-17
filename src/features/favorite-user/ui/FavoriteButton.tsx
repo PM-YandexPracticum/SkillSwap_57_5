@@ -7,7 +7,6 @@ interface FavoriteButtonProps {
   user: User
   isFavorite: boolean
   likeCount: number
-  isAuthenticated: boolean
   onToggle?: () => void
   showCount?: boolean
 }
@@ -16,7 +15,6 @@ export function FavoriteButton({
   user,
   isFavorite,
   likeCount,
-  isAuthenticated,
   onToggle,
   showCount = true,
 }: FavoriteButtonProps) {
@@ -27,7 +25,6 @@ export function FavoriteButton({
       type="button"
       className={styles.button}
       onClick={onToggle}
-      disabled={!isAuthenticated}
       aria-pressed={isFavorite}
       aria-label={
         isFavorite

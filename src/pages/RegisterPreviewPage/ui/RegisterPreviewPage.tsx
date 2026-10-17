@@ -11,7 +11,7 @@ export default function RegisterPreviewPage() {
 
   const { completeRegistration, error } = useCompleteRegistration()
   const navigate = useNavigate()
-  const source = useAppSelector((state) => state.registration.source)
+  const returnPath = useAppSelector((state) => state.users.returnPath)
 
   if (!data) {
     return null
@@ -22,14 +22,15 @@ export default function RegisterPreviewPage() {
     if (success) {
       // Открываем окно успеха поверх исходной страницы навыка или главной
       navigate('/register/success', {
-        state: { backgroundLocation: { pathname: source.backgroundLocation ?? '/' } },
+        state: { backgroundLocation: { pathname: returnPath } },
       })
     }
     // при ошибке остаёмся здесь, error покажется ниже
   }
 
+  // Закрываем предпросмотр и возвращаемся к третьему шагу регистрации
   const handleClose = () => {
-    navigate(-1)
+    navigate('/register/skill', { replace: true })
   }
 
   return (

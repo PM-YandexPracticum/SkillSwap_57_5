@@ -6,9 +6,14 @@ import type { LogoProps } from './types'
 
 import styles from './Logo.module.css'
 
-export function Logo({ className }: LogoProps) {
+export function Logo({ className, onClick }: LogoProps) {
   return (
-    <Link to="/" className={clsx(styles.logoButton, className)} aria-label="SkillSwap">
+    <Link
+      to="/"
+      onClick={onClick}
+      className={clsx(styles.logoButton, className)}
+      aria-label="SkillSwap"
+    >
       <img src={logo} alt="SkillSwap" className={styles.logo} />
     </Link>
   )

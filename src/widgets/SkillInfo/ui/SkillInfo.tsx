@@ -56,7 +56,6 @@ export function SkillInfo({
           user={author}
           isFavorite={isFavorite}
           likeCount={author.likesCount}
-          isAuthenticated={isAuthenticated}
           onToggle={onFavoriteToggle}
           showCount={false}
         />

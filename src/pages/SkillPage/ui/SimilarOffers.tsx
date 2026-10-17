@@ -13,14 +13,12 @@ import styles from './SimilarOffers.module.css'
 interface SimilarOffersProps {
   items: CatalogCardData[]
   title: string
-  isAuthenticated: boolean
   onFavoriteToggle: (userId: string) => void
 }
 
 export function SimilarOffers({
   items,
   title,
-  isAuthenticated,
   onFavoriteToggle,
 }: SimilarOffersProps) {
   const hasItems = items.length > 0
@@ -50,7 +48,6 @@ export function SimilarOffers({
                     learnSkills={item.learnSkills}
                     isFavorite={item.isFavorite}
                     likeCount={item.displayedLikeCount}
-                    isAuthenticated={isAuthenticated}
                     onFavoriteToggle={() => onFavoriteToggle(item.user.id)}
                   />
                 </SwiperSlide>
