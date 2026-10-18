@@ -6,6 +6,7 @@ interface UsersState {
   items: User[]
   currentUserId: string | null
   token: string | null
+  returnPath: string
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error: string | null
 }
@@ -14,6 +15,7 @@ const initialState: UsersState = {
   items: [],
   currentUserId: null,
   token: null,
+  returnPath: '/',
   status: 'idle',
   error: null,
 }
@@ -53,6 +55,7 @@ const usersSlice = createSlice({
         state.items[userIndex] = action.payload
       }
     },
+
     // Сохраняет id вошедшего пользователя и его токен
     setSession(state, action: PayloadAction<{ userId: string; token: string }>) {
       state.currentUserId = action.payload.userId
@@ -62,6 +65,15 @@ const usersSlice = createSlice({
     logout(state) {
       state.currentUserId = null
       state.token = null
+    },
+
+    // Сохраняет адрес pathname для возврата после входа или регистрации
+    setReturnPath(state, action: PayloadAction<string>) {
+      state.returnPath = action.payload
+    },
+    // Сбрасывает адрес pathname возврата на главную
+    resetReturnPath(state) {
+      state.returnPath = '/'
     },
   },
   extraReducers: (builder) => {
@@ -84,6 +96,14 @@ const usersSlice = createSlice({
   },
 })
 
-export const { addUser, updateUser, setSession, logout, toggleFavoriteUser } = usersSlice.actions
+export const {
+  addUser,
+  updateUser,
+  setSession,
+  setReturnPath,
+  resetReturnPath,
+  logout,
+  toggleFavoriteUser,
+} = usersSlice.actions
 
 export default usersSlice.reducer

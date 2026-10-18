@@ -1,7 +1,8 @@
+import { useLocation, useNavigate } from 'react-router-dom'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { selectCurrentUser } from '@/store/selectors/userSelectors'
-import { updateUser } from '@/store/slices/usersSlice'
+import { setReturnPath, updateUser } from '@/store/slices/usersSlice'
 
 interface UseFavoriteUsersResult {
   likedUserIds: string[]
@@ -12,12 +13,17 @@ export function useFavoriteUsers(
   isAuthenticated: boolean,
 ): UseFavoriteUsersResult {
   const dispatch = useAppDispatch()
+  const location = useLocation()
+  const navigate = useNavigate()
   const users = useAppSelector((state) => state.users.items)
   const currentUser = useAppSelector(selectCurrentUser)
   const likedUserIds = currentUser?.favoriteUserIds ?? []
 
   const toggleFavoriteUser = (userId: string) => {
+    // Сохраняем pathname текущей страницы и отправляем гостя на регистрацию
     if (!isAuthenticated || !currentUser) {
+      dispatch(setReturnPath(location.pathname))
+      navigate('/register')
       return
     }
 

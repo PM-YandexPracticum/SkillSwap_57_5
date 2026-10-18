@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { clearRegistrationSource } from '@/features/registration'
+import { resetReturnPath } from '@/store/slices/usersSlice'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 import { Modal } from '@/shared/ui/Modal'
@@ -12,13 +12,13 @@ import styles from './RegisterSuccessPage.module.css'
 export default function RegisterSuccessPage() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const source = useAppSelector((state) => state.registration.source)
+  const returnPath = useAppSelector((state) => state.users.returnPath)
   const [isOpen, setIsOpen] = useState(true)
 
   const handleClose = () => {
     setIsOpen(false)
-    dispatch(clearRegistrationSource())
-    navigate(source.backgroundLocation ?? '/', { replace: true })
+    navigate(returnPath, { replace: true })
+    dispatch(resetReturnPath())
   }
 
   return (

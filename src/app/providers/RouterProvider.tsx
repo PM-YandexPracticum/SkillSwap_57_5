@@ -61,6 +61,14 @@ export function AppRouter() {
           <Route path={'/'} element={<CatalogPage />} />
           <Route path={'/about'} element={<AboutPage />} />
           <Route path={'/skill/:id'} element={<SkillPage />} />
+          <Route path={'/register/preview'} element={<Navigate to="/register/skill" replace />} />
+          <Route path={'/register/success'} element={<Navigate to="/" replace />} />
+          <Route
+            path={'/skill/:id/exchange'}
+            element={<Navigate to=".." relative="path" replace />}
+          />
+          <Route path={'/500'} element={<ServerErrorPage />} />
+          <Route path={'*'} element={<NotFoundPage />} />
           <Route
             path={'/profile'}
             element={
@@ -69,25 +77,86 @@ export function AppRouter() {
               </PrivateRoute>
             }
           />
-          <Route path={'/favorites'} element={<FavoritesPage />} />
-          <Route path={'/500'} element={<ServerErrorPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route
+            path={'/favorites'}
+            element={
+              <PrivateRoute>
+                <FavoritesPage />
+              </PrivateRoute>
+            }
+          />
         </Route>
 
         <Route element={<AuthLayout />}>
-          <Route path={'/login'} element={<LoginPage />} />
-          <Route path={'/register'} element={<Navigate to="/register/credentials" replace />} />
-          <Route path={'/register/credentials'} element={<RegisterCredentialsPage />} />
-          <Route path={'/register/profile'} element={<RegisterProfilePage />} />
-          <Route path={'/register/skill'} element={<RegisterSkillPage />} />
+          <Route
+            path={'/login'}
+            element={
+              <PrivateRoute guestOnly>
+                <LoginPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/register'}
+            element={
+              <PrivateRoute guestOnly>
+                <Navigate to="/register/credentials" replace />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/register/credentials'}
+            element={
+              <PrivateRoute guestOnly>
+                <RegisterCredentialsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/register/profile'}
+            element={
+              <PrivateRoute guestOnly>
+                <RegisterProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/register/skill'}
+            element={
+              <PrivateRoute guestOnly>
+                <RegisterSkillPage />
+              </PrivateRoute>
+            }
+          />
         </Route>
       </Routes>
 
       {backgroundLocation && (
         <Routes>
-          <Route path="/register/preview" element={<RegisterPreviewPage />} />
-          <Route path="/register/success" element={<RegisterSuccessPage />} />
-          <Route path="/skill/:id/exchange" element={<SkillExchangePage />} />
+          <Route
+            path={'/register/preview'}
+            element={
+              <PrivateRoute guestOnly>
+                <RegisterPreviewPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/register/success'}
+            element={
+              <PrivateRoute>
+                <RegisterSuccessPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={'/skill/:id/exchange'}
+            element={
+              <PrivateRoute>
+                <SkillExchangePage />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       )}
     </Suspense>

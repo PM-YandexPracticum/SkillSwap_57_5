@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { UserCard } from '@/widgets/UserCard'
 
 import styles from './FavoritesList.module.css'
@@ -6,7 +7,6 @@ import type { FavoritesListProps } from './types'
 export function FavoritesList({
   items,
   title,
-  isAuthenticated,
   onFavoriteToggle,
 }: FavoritesListProps) {
   return (
@@ -24,14 +24,18 @@ export function FavoritesList({
                 learnSkills={item.learnSkills}
                 isFavorite={item.isFavorite}
                 likeCount={item.displayedLikeCount}
-                isAuthenticated={isAuthenticated}
                 onFavoriteToggle={() => onFavoriteToggle(item.user.id)}
               />
             </li>
           ))}
         </ul>
       ) : (
-        <p className={styles.empty}>В избранном пока ничего нет</p>
+        <div className={styles.emptyState}>
+          <p className={styles.empty}>В избранном пока ничего нет</p>
+          <Link to="/" className={styles.catalogLink}>
+            Вернуться в каталог
+          </Link>
+        </div>
       )}
     </section>
   )

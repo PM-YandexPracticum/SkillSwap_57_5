@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { setSession } from '@/store/slices/usersSlice'
+import { resetReturnPath, setSession } from '@/store/slices/usersSlice'
 import { saveAuthUser } from './authUtils'
 
 export const useLogin = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const users = useAppSelector((state) => state.users.items)
+  const returnPath = useAppSelector((state) => state.users.returnPath)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
   const handleLogin = ({ email, password }: { email: string; password: string }) => {
@@ -26,7 +27,11 @@ export const useLogin = () => {
 
     const authUser = saveAuthUser({ id: user.id, name: user.email, email: user.email })
     dispatch(setSession({ userId: authUser.id, token: authUser.token }))
-    navigate('/profile')
+
+    // Возвращаем пользователя на сохранённую страницу и сбрасываем pathname возврата
+    navigate(returnPath, { replace: true })
+
+    dispatch(resetReturnPath())
   }
 
   const errors = submitError ? { password: submitError } : undefined

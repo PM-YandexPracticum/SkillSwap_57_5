@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '@/store/hooks'
-import { logout } from '@/store/slices/usersSlice'
+import { logout, resetReturnPath } from '@/store/slices/usersSlice'
 import { clearAuthUser } from './authUtils'
 
 export const useLogout = () => {
@@ -11,6 +11,7 @@ export const useLogout = () => {
   return async () => {
     clearAuthUser()
     dispatch(logout())
+    dispatch(resetReturnPath())
 
     navigate('/login')
   }

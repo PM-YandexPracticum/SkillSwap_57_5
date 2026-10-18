@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { Modal } from '@/shared/ui/Modal'
 import { Button } from '@/shared/ui/Button'
@@ -10,11 +10,13 @@ import styles from './SkillExchangePage.module.css'
 
 export default function SkillExchangePage() {
   const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>()
   const [isOpen, setIsOpen] = useState(true)
 
+  // Закрываем окно подтверждения и возвращаемся на страницу навыка
   const handleClose = () => {
     setIsOpen(false)
-    navigate(-1)
+    navigate(`/skill/${id}`, { replace: true })
   }
 
   return (

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 
 import { SearchSkills } from '@/features/search-skills'
@@ -18,7 +18,7 @@ import logoutIcon from '@/shared/assets/icons/logout.svg'
 
 import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { setRegistrationSource } from '@/features/registration'
+import { setReturnPath } from '@/store/slices/usersSlice'
 import {
   selectIsAuthenticated,
   selectCurrentUser,
@@ -29,6 +29,7 @@ import styles from './Header.module.css'
 
 export function Header() {
   const navigate = useNavigate()
+  const location = useLocation()
   const logoutHandler = useLogout()
   const dispatch = useAppDispatch()
   const categories = useAppSelector((state) => state.categories.items)
@@ -52,14 +53,9 @@ export function Header() {
     logoutHandler()
   }
 
-  const handleRegisterClick = () => {
-    dispatch(
-      setRegistrationSource({
-        from: 'header',
-        skillId: null,
-        backgroundLocation: '/',
-      }),
-    )
+  // Сохраняем pathname текущей страницы перед переходом на вход или регистрацию
+  const handleAuthClick = () => {
+    dispatch(setReturnPath(location.pathname))
   }
 
   return (
@@ -102,10 +98,11 @@ export function Header() {
                 >
                   <Notifications />
                 </Popover>
-
-                <Link to="/favorites">
-                  <IconButton src={heartIcon} ariaLabel="Избранное" onClick={() => {}} />
-                </Link>
+                <IconButton
+                  src={heartIcon}
+                  ariaLabel="Избранное"
+                  onClick={() => navigate('/favorites')}
+                />
               </div>
 
               <Popover
@@ -151,11 +148,11 @@ export function Header() {
                 ariaLabel="Переключить тему"
                 onClick={() => console.log('Смена темы')}
               />
-              <Link to="/login" className={styles.authLink}>
+              <Link to="/login" onClick={handleAuthClick} className={styles.authLink}>
                 <Button variant="secondary">Войти</Button>
               </Link>
 
-              <Link to="/register" onClick={handleRegisterClick} className={styles.authLink}>
+              <Link to="/register" onClick={handleAuthClick} className={styles.authLink}>
                 <Button variant="primary">Зарегистрироваться</Button>
               </Link>
             </div>

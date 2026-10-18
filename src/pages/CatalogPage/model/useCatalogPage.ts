@@ -60,7 +60,6 @@ interface UseCatalogPageResult {
   handleSortToggle: () => void
 
   // Для CatalogSections и FiltersResult
-  isAuthenticated: boolean
   handleFavoriteToggle: (userId: string) => void
 }
 
@@ -212,7 +211,6 @@ export function useCatalogPage(): UseCatalogPageResult {
     handleSortToggle,
 
     // Для CatalogSections и FiltersResult
-    isAuthenticated,
     handleFavoriteToggle: toggleFavoriteUser,
   }
 }
