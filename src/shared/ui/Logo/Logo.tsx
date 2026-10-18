@@ -14,7 +14,7 @@ export function Logo({ className, onClick }: LogoProps) {
       className={clsx(styles.logoButton, className)}
       aria-label="SkillSwap"
     >
-      <img src={logo} alt="SkillSwap" className={styles.logo} />
+      <img src={logo} alt="SkillSwap" width={159} height={40} className={styles.logo} />
     </Link>
   )
 }

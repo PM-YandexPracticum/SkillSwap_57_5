@@ -13,7 +13,7 @@ export function IconButton({ className, src, ariaLabel, disabled, onClick }: Ico
       aria-label={ariaLabel}
       onClick={onClick}
     >
-      <img src={src} className={styles.icon} />
+      <img src={src} alt="" aria-hidden="true" className={styles.icon} />
     </button>
   )
 }
