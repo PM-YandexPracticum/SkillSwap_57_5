@@ -12,9 +12,14 @@ import GalleryEditIcon from '@/shared/assets/icons/gallery-edit.svg'
 import { Avatar } from '@/shared/ui/Avatar'
 import { PersonalDataForm } from '@/widgets/PersonalData'
 
+import { useAppSelector } from '@/store/hooks'
+import { selectCurrentUser, selectCurrentUserName } from '@/store/selectors/userSelectors'
+
 import styles from './ProfilePage.module.css'
 
 export default function ProfilePage() {
+  const currentUser = useAppSelector(selectCurrentUser)
+  const userName = useAppSelector(selectCurrentUserName)
   const [avatarSrc, setAvatarSrc] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -71,12 +76,16 @@ export default function ProfilePage() {
 
       <div className={styles.content}>
         <section className={styles.personalData}>
-          <PersonalDataForm />
+          <PersonalDataForm key={currentUser?.id} />
         </section>
 
         <div className={styles.avatar}>
           <div className={styles.avatarContainer}>
-            <Avatar src={avatarSrc} name="Александр" className={styles.avatarImage} />
+            <Avatar
+              src={avatarSrc || currentUser?.avatarUrl || ''}
+              name={userName || 'Пользователь'}
+              className={styles.avatarImage}
+            />
 
             <input
               ref={fileInputRef}
