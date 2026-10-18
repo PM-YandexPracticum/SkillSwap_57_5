@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -11,33 +11,41 @@ import GalleryEditIcon from '@/shared/assets/icons/gallery-edit.svg'
 
 import { Avatar } from '@/shared/ui/Avatar'
 import { PersonalDataForm } from '@/widgets/PersonalData'
+import { useUpdateProfile } from '@/features/profile'
 
 import { useAppSelector } from '@/store/hooks'
-import { selectCurrentUser, selectCurrentUserName } from '@/store/selectors/userSelectors'
+import { selectCurrentUserName } from '@/store/selectors/userSelectors'
 
 import styles from './ProfilePage.module.css'
 
 export default function ProfilePage() {
-  const currentUser = useAppSelector(selectCurrentUser)
+  const { currentUser, errors, submitProfileUpdate, avatarFile, handleAvatarChange } = useUpdateProfile()
+
   const userName = useAppSelector(selectCurrentUserName)
+
   const [avatarSrc, setAvatarSrc] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
 
-    if (!file || !file.type.startsWith('image/')) return
-
-    const reader = new FileReader()
-
-    reader.onload = () => {
-      if (typeof reader.result === 'string') {
-        setAvatarSrc(reader.result)
-      }
+    if (file) {
+      handleAvatarChange(file)
     }
 
-    reader.readAsDataURL(file)
+    // Позволяем повторно выбрать тот же файл
+    event.target.value = ''
   }
+
+  // Показываем выбранное фото и освобождаем временный URL при замене
+  useEffect(() => {
+    if (!avatarFile) return
+
+    const previewUrl = URL.createObjectURL(avatarFile)
+    setAvatarSrc(previewUrl)
+
+    return () => URL.revokeObjectURL(previewUrl)
+  }, [avatarFile])
 
   return (
     <main className={styles.profile}>
@@ -76,7 +84,12 @@ export default function ProfilePage() {
 
       <div className={styles.content}>
         <section className={styles.personalData}>
-          <PersonalDataForm key={currentUser?.id} />
+          <PersonalDataForm
+            key={currentUser?.id}
+            currentUser={currentUser}
+            errors={errors}
+            onSubmit={submitProfileUpdate}
+          />
         </section>
 
         <div className={styles.avatar}>
@@ -90,9 +103,9 @@ export default function ProfilePage() {
             <input
               ref={fileInputRef}
               type="file"
-              accept="image/*"
+              accept="image/png,image/jpeg,image/webp"
               hidden
-              onChange={handleAvatarChange}
+              onChange={handleAvatarInputChange}
             />
 
             <button
@@ -104,6 +117,11 @@ export default function ProfilePage() {
               <img src={GalleryEditIcon} alt="" />
             </button>
           </div>
+          {errors.avatar && (
+            <p className={styles.avatarError} role="alert">
+              {errors.avatar}
+            </p>
+          )}
         </div>
       </div>
     </main>

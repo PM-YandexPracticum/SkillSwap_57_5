@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { DayPicker } from '@daypicker/react'
 import { ru } from '@daypicker/react/locale'
@@ -15,29 +16,37 @@ import { Combobox } from '@/shared/ui/Combobox/Combobox'
 import EditIcon from '@/shared/assets/icons/edit.svg'
 import Calendar from '@/shared/assets/icons/calendar.svg'
 
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { selectCurrentUser } from '@/store/selectors/userSelectors'
+import type { User } from '@/entities/user'
+import type { UpdateProfileValues, UpdateProfileErrors } from '@/features/profile'
+import { useAppSelector } from '@/store/hooks'
 
 import styles from './PersonalDataForm.module.css'
-import { updateUser } from '@/store/slices/usersSlice'
-import { Gender } from '@/entities/user/model/types'
+
+interface PersonalDataFormProps {
+  // Данные и обработчик из useUpdateProfile
+  currentUser: User | null
+  errors?: UpdateProfileErrors
+  onSubmit: (data: UpdateProfileValues) => Promise<void>
+}
 
 type EditableField = 'email' | 'name' | 'about' | 'birthDate' | 'gender' | 'city'
 
-export function PersonalDataForm() {
-  const dispatch = useAppDispatch()
-  const currentUser = useAppSelector(selectCurrentUser)
+export function PersonalDataForm({
+  // Данные и обработчик из useUpdateProfile
+  currentUser,
+  errors,
+  onSubmit,
+}: PersonalDataFormProps) {
   const cities = useAppSelector((state) => state.cities.items)
 
   const [email, setEmail] = useState(currentUser?.email ?? '')
   const [name, setName] = useState(currentUser?.name ?? '')
   const [password, setPassword] = useState('')
   const [showPasswordField, setShowPasswordField] = useState(false)
-
   const [birthDate, setBirthDate] = useState<Date | undefined>(() =>
     currentUser?.birthDate ? parseISO(currentUser.birthDate) : undefined,
   )
-  const [gender, setGender] = useState<Gender>(currentUser?.gender ?? 'male')
+  const [gender, setGender] = useState<string>(currentUser?.gender ?? '')
   const [city, setCity] = useState(currentUser?.cityId ?? '')
   const [about, setAbout] = useState(currentUser?.about ?? '')
 
@@ -47,32 +56,21 @@ export function PersonalDataForm() {
   const nameRef = useRef<HTMLInputElement>(null)
   const aboutRef = useRef<HTMLTextAreaElement>(null)
 
+  // После нажатия карандаша ставим фокус в выбранное поле
   useEffect(() => {
-    if (!currentUser) return
+    let field: HTMLInputElement | HTMLTextAreaElement | null = null
 
-    setEmail(currentUser.email)
-    setName(currentUser.name)
-    setGender(currentUser.gender)
-    setCity(currentUser.cityId)
-    setAbout(currentUser.about)
-
-    if (currentUser.birthDate) {
-      const parsed = new Date(currentUser.birthDate)
-      if (!Number.isNaN(parsed.getTime())) {
-        setBirthDate(parsed)
-      }
+    if (editingField === 'email') {
+      field = emailRef.current
     }
-  }, [currentUser])
 
-  useEffect(() => {
-    const field =
-      editingField === 'email'
-        ? emailRef.current
-        : editingField === 'name'
-          ? nameRef.current
-          : editingField === 'about'
-            ? aboutRef.current
-            : null
+    if (editingField === 'name') {
+      field = nameRef.current
+    }
+
+    if (editingField === 'about') {
+      field = aboutRef.current
+    }
 
     if (!field) return
 
@@ -94,23 +92,19 @@ export function PersonalDataForm() {
     document.dispatchEvent(event)
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  // Собираем значения полей и передаём их в хук
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!currentUser) return
 
-    const birthDateStr = birthDate ? format(birthDate, 'yyyy-MM-dd') : ''
-
-    const fullUser: typeof currentUser = {
-      ...currentUser,
+    await onSubmit({
       email,
+      password,
       name,
+      birthDate,
       gender,
-      cityId: city,
+      city,
       about,
-      birthDate: birthDateStr,
-    }
-    dispatch(updateUser(fullUser))
-    alert('Профиль обновлен!')
+    })
   }
 
   const handleFieldBlur = () => {
@@ -118,7 +112,7 @@ export function PersonalDataForm() {
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit} noValidate>
       <FormField id="email">
         <InputWithAction
           id="email"
@@ -136,8 +130,14 @@ export function PersonalDataForm() {
             onChange={setEmail}
             onBlur={handleFieldBlur}
             readOnly={editingField !== 'email'}
+            className={errors?.email ? styles.inputError : undefined}
           />
         </InputWithAction>
+        {errors?.email && (
+          <p className={styles.errorHint} role="alert">
+            {errors.email}
+          </p>
+        )}
       </FormField>
 
       <button
@@ -158,8 +158,19 @@ export function PersonalDataForm() {
             onAction={() => {}}
             showAction={false}
           >
-            <Input id="password" type="password" value={password} onChange={setPassword}></Input>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={setPassword}
+              className={errors?.password ? styles.inputError : undefined}
+            />
           </InputWithAction>
+          {errors?.password && (
+            <p className={styles.errorHint} role="alert">
+              {errors.password}
+            </p>
+          )}
         </FormField>
       )}
 
@@ -179,8 +190,14 @@ export function PersonalDataForm() {
             onChange={setName}
             onBlur={handleFieldBlur}
             readOnly={editingField !== 'name'}
+            className={errors?.name ? styles.inputError : undefined}
           />
         </InputWithAction>
+        {errors?.name && (
+          <p className={styles.errorHint} role="alert">
+            {errors.name}
+          </p>
+        )}
       </FormField>
 
       <div className={styles.rowInputs}>
@@ -191,7 +208,7 @@ export function PersonalDataForm() {
               <button
                 id="birthDate"
                 type="button"
-                className={styles.dateTrigger}
+                className={clsx(styles.dateTrigger, errors?.birthDate && styles.inputError)}
                 disabled={editingField !== null}
                 aria-label={
                   birthDate
@@ -250,21 +267,33 @@ export function PersonalDataForm() {
               </div>
             </div>
           </Popover>
+          {errors?.birthDate && (
+            <p className={styles.errorHint} role="alert">
+              {errors.birthDate}
+            </p>
+          )}
         </FormField>
 
-        <Select
-          id="gender"
-          label="Пол"
-          options={[
-            { value: '', label: 'Не указан' },
-            { value: 'male', label: 'Мужской' },
-            { value: 'female', label: 'Женский' },
-          ]}
-          value={gender}
-          onChange={(value) => setGender(value as Gender)}
-          disabled={editingField !== null}
-          placeholder="Не выбрано"
-        />
+        <div>
+          <Select
+            id="gender"
+            label="Пол"
+            options={[
+              { value: '', label: 'Не указан' },
+              { value: 'male', label: 'Мужской' },
+              { value: 'female', label: 'Женский' },
+            ]}
+            value={gender}
+            onChange={setGender}
+            disabled={editingField !== null}
+            placeholder="Не выбрано"
+          />
+          {errors?.gender && (
+            <p className={styles.errorHint} role="alert">
+              {errors.gender}
+            </p>
+          )}
+        </div>
       </div>
 
       <FormField id="city" label="Город">
@@ -279,6 +308,11 @@ export function PersonalDataForm() {
           showClearButton={true}
           showAllOnOpen={true}
         />
+        {errors?.city && (
+          <p className={styles.errorHint} role="alert">
+            {errors.city}
+          </p>
+        )}
       </FormField>
 
       <FormField id="about">

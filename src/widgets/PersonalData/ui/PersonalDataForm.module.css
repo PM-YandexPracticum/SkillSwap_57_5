@@ -7,6 +7,18 @@
   overflow: visible;
 }
 
+.errorHint {
+  margin-top: var(--space-4);
+  color: var(--color-error);
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+
+.inputError {
+  border-color: var(--color-error);
+}
+
 .aboutField {
   width: 100%;
   min-height: 120px;
