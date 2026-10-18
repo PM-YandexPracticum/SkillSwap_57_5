@@ -15,14 +15,17 @@ import { Combobox } from '@/shared/ui/Combobox/Combobox'
 import EditIcon from '@/shared/assets/icons/edit.svg'
 import Calendar from '@/shared/assets/icons/calendar.svg'
 
-import { useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { selectCurrentUser } from '@/store/selectors/userSelectors'
 
 import styles from './PersonalDataForm.module.css'
+import { updateUser } from '@/store/slices/usersSlice'
+import { Gender } from '@/entities/user/model/types'
 
 type EditableField = 'email' | 'name' | 'about' | 'birthDate' | 'gender' | 'city'
 
 export function PersonalDataForm() {
+  const dispatch = useAppDispatch()
   const currentUser = useAppSelector(selectCurrentUser)
   const cities = useAppSelector((state) => state.cities.items)
 
@@ -34,7 +37,7 @@ export function PersonalDataForm() {
   const [birthDate, setBirthDate] = useState<Date | undefined>(() =>
     currentUser?.birthDate ? parseISO(currentUser.birthDate) : undefined,
   )
-  const [gender, setGender] = useState(currentUser?.gender ?? '')
+  const [gender, setGender] = useState<Gender>(currentUser?.gender ?? 'male')
   const [city, setCity] = useState(currentUser?.cityId ?? '')
   const [about, setAbout] = useState(currentUser?.about ?? '')
 
@@ -43,6 +46,23 @@ export function PersonalDataForm() {
   const emailRef = useRef<HTMLInputElement>(null)
   const nameRef = useRef<HTMLInputElement>(null)
   const aboutRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    if (!currentUser) return
+
+    setEmail(currentUser.email)
+    setName(currentUser.name)
+    setGender(currentUser.gender)
+    setCity(currentUser.cityId)
+    setAbout(currentUser.about)
+
+    if (currentUser.birthDate) {
+      const parsed = new Date(currentUser.birthDate)
+      if (!Number.isNaN(parsed.getTime())) {
+        setBirthDate(parsed)
+      }
+    }
+  }, [currentUser])
 
   useEffect(() => {
     const field =
@@ -76,6 +96,21 @@ export function PersonalDataForm() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (!currentUser) return
+
+    const birthDateStr = birthDate ? format(birthDate, 'yyyy-MM-dd') : ''
+
+    const fullUser: typeof currentUser = {
+      ...currentUser,
+      email,
+      name,
+      gender,
+      cityId: city,
+      about,
+      birthDate: birthDateStr,
+    }
+    dispatch(updateUser(fullUser))
+    alert('Профиль обновлен!')
   }
 
   const handleFieldBlur = () => {
@@ -226,7 +261,7 @@ export function PersonalDataForm() {
             { value: 'female', label: 'Женский' },
           ]}
           value={gender}
-          onChange={setGender}
+          onChange={(value) => setGender(value as Gender)}
           disabled={editingField !== null}
           placeholder="Не выбрано"
         />
