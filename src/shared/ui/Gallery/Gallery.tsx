@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import type { Swiper as SwiperInstance } from 'swiper'
 import { Thumbs } from 'swiper/modules'
 
 import 'swiper/css'
@@ -16,8 +17,8 @@ const MAX_VISIBLE_THUMBS = 3
 export function Gallery({ imageUrls }: GalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const mainSwiperRef = useRef<any>(null)
-  const thumbsSwiperRef = useRef<any>(null)
+  const mainSwiperRef = useRef<SwiperInstance | null>(null)
+  const thumbsSwiperRef = useRef<SwiperInstance | null>(null)
 
   if (imageUrls.length === 0) {
     return <p className={styles.empty}>Нет фотографий</p>

@@ -7,7 +7,7 @@ import type { City } from '@/entities/city/model/types'
 import { useSimilarOffers } from './useSimilarOffer'
 import { useFavoriteUsers } from '@/features/favorite-user/model/useFavoriteUsers'
 import { addFavoriteData } from '@/features/favorite-user/lib/addFavoriteData'
-import { useProposeExchange } from '@/features/exchange'
+import { useProposeExchange } from '@/features/propose-exchange'
 import { useAppSelector } from '@/store/hooks'
 import { selectIsAuthenticated } from '@/store/selectors/userSelectors'
 
