@@ -41,7 +41,6 @@ export default function CatalogPage() {
     handleSortToggle,
 
     // Для CatalogSections и FiltersResult
-    isAuthenticated,
     handleFavoriteToggle,
   } = useCatalogPage()
 
@@ -81,7 +80,6 @@ export default function CatalogPage() {
           <FiltersResult
             activeFilters={activeFilters}
             users={sortedCatalogUsers}
-            isAuthenticated={isAuthenticated}
             resultCount={resultCount}
             isSortedByNewest={isSortedByNewest}
             onRemoveFilter={handleRemoveFilter}
@@ -91,7 +89,6 @@ export default function CatalogPage() {
         ) : (
           <CatalogSections
             sections={sections}
-            isAuthenticated={isAuthenticated}
             isRecommendedLoading={isRecommendedLoading}
             setRecommendedLoadMoreElement={setRecommendedLoadMoreElement}
             onToggleSection={toggleSection}

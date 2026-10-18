@@ -15,7 +15,6 @@ import styles from './FiltersResult.module.css'
 interface FiltersResultProps {
   activeFilters: ActiveFilter[]
   users: CatalogCardData[]
-  isAuthenticated: boolean
   resultCount: number
   isSortedByNewest: boolean
   onRemoveFilter: (filter: ActiveFilter) => void
@@ -26,7 +25,6 @@ interface FiltersResultProps {
 export function FiltersResult({
   activeFilters,
   users,
-  isAuthenticated,
   resultCount,
   isSortedByNewest,
   onRemoveFilter,
@@ -95,7 +93,6 @@ export function FiltersResult({
                 learnSkills={catalogUser.learnSkills}
                 isFavorite={catalogUser.isFavorite}
                 likeCount={catalogUser.displayedLikeCount}
-                isAuthenticated={isAuthenticated}
                 onFavoriteToggle={() =>
                   onFavoriteToggle(catalogUser.user.id)
                 }
