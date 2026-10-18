@@ -7,7 +7,7 @@ import { SimilarOffers } from './SimilarOffers'
 import NotFoundPage from '@/pages/NotFoundPage'
 import { useAppDispatch } from '@/store/hooks'
 import { setReturnPath } from '@/store/slices/usersSlice'
-import { useProposeExchange } from '@/features/exchange'
+import { useProposeExchange } from '@/features/propose-exchange'
 
 export default function SkillPage() {
   const skillId = useParams<{ id: string }>().id
