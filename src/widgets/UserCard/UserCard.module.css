@@ -87,7 +87,7 @@
   align-items: center;
   min-height: 32px;
   padding: var(--space-8) var(--space-12);
-  color: var(--color-caption);
+  color: var(--color-text);
   background-color: var(--color-tag-additional);
   border-radius: var(--radius-20);
   font-family: var(--font-body);
