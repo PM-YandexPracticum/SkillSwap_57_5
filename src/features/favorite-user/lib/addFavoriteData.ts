@@ -17,7 +17,7 @@ export function addFavoriteData<T extends UserWithLikes>(
     return {
       ...catalogUser,
       isFavorite,
-      displayedLikeCount: catalogUser.user.likesCount + (isFavorite ? 1 : 0),
+      displayedLikeCount: catalogUser.user.likesCount,
     }
   })
 }
