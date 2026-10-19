@@ -22,8 +22,6 @@ function getSkillTagClass(categoryId: string): string {
 
 export function SkillTag({ skill }: SkillTagProps) {
   return (
-    <span className={clsx(styles.skillTag, getSkillTagClass(skill.categoryId))}>
-      {skill.title}
-    </span>
+    <span className={clsx(styles.skillTag, getSkillTagClass(skill.categoryId))}>{skill.title}</span>
   )
 }

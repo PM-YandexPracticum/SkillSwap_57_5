@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import type { SearchInputProps } from './types';
-import { Input } from '../Input';
-import styles from './SearchInput.module.css';
+import type { SearchInputProps } from './types'
+import { Input } from '../Input'
+import styles from './SearchInput.module.css'
 
 export const SearchInput = ({
   id,
@@ -13,8 +13,7 @@ export const SearchInput = ({
   ariaLabel,
 }: SearchInputProps) => (
   <div className={clsx(styles.root, className)}>
-    <span className={styles.icon}>
-    </span>
+    <span className={styles.icon}></span>
     <Input
       id={id}
       className={styles.field}
@@ -26,4 +25,4 @@ export const SearchInput = ({
       ariaLabel={ariaLabel}
     />
   </div>
-);
+)

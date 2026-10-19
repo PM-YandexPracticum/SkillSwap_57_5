@@ -23,7 +23,12 @@ interface AuthCredentialsFormProps {
   errors?: { email?: string; password?: string }
 }
 
-export function AuthCredentialsForm({ variant, onSubmit, savedValues, errors }: AuthCredentialsFormProps) {
+export function AuthCredentialsForm({
+  variant,
+  onSubmit,
+  savedValues,
+  errors,
+}: AuthCredentialsFormProps) {
   const [email, setEmail] = useState(savedValues?.email || '')
   const [password, setPassword] = useState(savedValues?.password || '')
   const [showPassword, setShowPassword] = useState(false)

@@ -34,10 +34,7 @@ export function useFavoriteUsers(isAuthenticated: boolean): UseFavoriteUsersResu
     dispatch(toggleFavoriteUserAction(userId))
 
     // Сохраняем обновлённых пользователей в localStorage
-    localStorage.setItem(
-      LOCAL_STORAGE_KEYS.USERS,
-      JSON.stringify(store.getState().users.items),
-    )
+    localStorage.setItem(LOCAL_STORAGE_KEYS.USERS, JSON.stringify(store.getState().users.items))
   }
 
   return {

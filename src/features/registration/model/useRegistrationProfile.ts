@@ -43,7 +43,9 @@ export function useRegistrationProfile() {
   const [avatarFile, setAvatarFile] = useState<File | null>(null)
 
   // Создаём уникальный ключ аватара
-  const [avatarKey] = useState(() => savedValues.avatarKey ?? `${AVATAR_IMAGE_PREFIX}${generateId()}`)
+  const [avatarKey] = useState(
+    () => savedValues.avatarKey ?? `${AVATAR_IMAGE_PREFIX}${generateId()}`,
+  )
 
   const maxBirthDate = subYears(new Date(), 14)
 

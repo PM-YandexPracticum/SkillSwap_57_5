@@ -75,11 +75,7 @@ const registrationSlice = createSlice({
   },
 })
 
-export const {
-  setCredentials,
-  setProfile,
-  setSkillDraft,
-  resetRegistration,
-} = registrationSlice.actions
+export const { setCredentials, setProfile, setSkillDraft, resetRegistration } =
+  registrationSlice.actions
 
 export default registrationSlice.reducer

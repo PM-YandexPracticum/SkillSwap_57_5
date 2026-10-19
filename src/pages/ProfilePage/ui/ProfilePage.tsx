@@ -20,7 +20,8 @@ import { selectCurrentUserName } from '@/store/selectors/userSelectors'
 import styles from './ProfilePage.module.css'
 
 export default function ProfilePage() {
-  const { currentUser, errors, submitProfileUpdate, avatarFile, handleAvatarChange } = useUpdateProfile()
+  const { currentUser, errors, submitProfileUpdate, avatarFile, handleAvatarChange } =
+    useUpdateProfile()
 
   const userName = useAppSelector(selectCurrentUserName)
 

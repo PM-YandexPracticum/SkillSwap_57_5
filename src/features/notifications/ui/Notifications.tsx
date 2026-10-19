@@ -72,7 +72,9 @@ export function Notifications() {
                       <p className={styles.itemSubtext}>{NOTIFICATION_SUBTEXT}</p>
                     </div>
                   </div>
-                  <p className={styles.itemDate}>{formatNotificationDate(notification.createdAt)}</p>
+                  <p className={styles.itemDate}>
+                    {formatNotificationDate(notification.createdAt)}
+                  </p>
                 </div>
                 <Button
                   type="button"
@@ -107,7 +109,9 @@ export function Notifications() {
                       <p className={styles.itemSubtext}>{NOTIFICATION_SUBTEXT}</p>
                     </div>
                   </div>
-                  <p className={styles.itemDate}>{formatNotificationDate(notification.createdAt)}</p>
+                  <p className={styles.itemDate}>
+                    {formatNotificationDate(notification.createdAt)}
+                  </p>
                 </div>
               </article>
             ))}

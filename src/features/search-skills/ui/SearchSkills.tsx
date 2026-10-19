@@ -9,12 +9,7 @@ export function SearchSkills() {
 
   return (
     <div className={styles.searchWrapper}>
-      <img
-        src={searchIcon}
-        alt=""
-        aria-hidden="true"
-        className={styles.searchIcon}
-      />
+      <img src={searchIcon} alt="" aria-hidden="true" className={styles.searchIcon} />
 
       <input
         type="search"

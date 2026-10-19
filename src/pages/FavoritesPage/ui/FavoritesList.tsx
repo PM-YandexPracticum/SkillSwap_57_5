@@ -4,11 +4,7 @@ import { UserCard } from '@/widgets/UserCard'
 import styles from './FavoritesList.module.css'
 import type { FavoritesListProps } from './types'
 
-export function FavoritesList({
-  items,
-  title,
-  onFavoriteToggle,
-}: FavoritesListProps) {
+export function FavoritesList({ items, title, onFavoriteToggle }: FavoritesListProps) {
   return (
     <section className={styles.section}>
       <h2 className={styles.title}>{title}</h2>

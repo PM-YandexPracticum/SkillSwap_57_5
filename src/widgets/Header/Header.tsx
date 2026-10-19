@@ -104,9 +104,7 @@ export function Header() {
                     <IconButton
                       src={bellIcon}
                       ariaLabel={
-                        hasUnreadNotifications
-                          ? 'Уведомления: есть непрочитанные'
-                          : 'Уведомления'
+                        hasUnreadNotifications ? 'Уведомления: есть непрочитанные' : 'Уведомления'
                       }
                       className={clsx(
                         styles.notificationsButton,

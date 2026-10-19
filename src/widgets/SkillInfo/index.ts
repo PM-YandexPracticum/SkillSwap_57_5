@@ -1,1 +1,1 @@
-export {SkillInfo} from './ui/SkillInfo'
+export { SkillInfo } from './ui/SkillInfo'

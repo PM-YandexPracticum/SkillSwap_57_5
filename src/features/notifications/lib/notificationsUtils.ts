@@ -18,8 +18,5 @@ export function restoreNotifications(): NotificationsState | null {
 
 // Сохраняем уведомления и предложенные обмены в localStorage
 export function saveNotifications(notifications: NotificationsState): void {
-  localStorage.setItem(
-    LOCAL_STORAGE_KEYS.NOTIFICATIONS,
-    JSON.stringify(notifications),
-  )
+  localStorage.setItem(LOCAL_STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(notifications))
 }

@@ -5,7 +5,6 @@ import chevronDownIcon from '@/shared/assets/icons/chevron-down.svg'
 
 import styles from './CarouselButton.module.css'
 
-
 export function CarouselButton({
   direction,
   onClick,

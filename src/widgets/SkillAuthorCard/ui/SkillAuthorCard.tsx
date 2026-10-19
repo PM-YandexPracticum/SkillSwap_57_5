@@ -12,7 +12,12 @@ interface SkillAuthorCardProps {
   learnSkills: Skill[]
 }
 
-export function SkillAuthorCard({ user, cityName, teachSkills, learnSkills }: SkillAuthorCardProps) {
+export function SkillAuthorCard({
+  user,
+  cityName,
+  teachSkills,
+  learnSkills,
+}: SkillAuthorCardProps) {
   const age = getAgeFromBirthDate(user.birthDate)
 
   return (

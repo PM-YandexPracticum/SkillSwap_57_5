@@ -1,10 +1,6 @@
-import type {
-  ActiveFilter,
-} from '@/features/filter-catalog'
+import type { ActiveFilter } from '@/features/filter-catalog'
 
-import type {
-  CatalogCardData,
-} from '@/widgets/UserCard'
+import type { CatalogCardData } from '@/widgets/UserCard'
 
 import { UserCard } from '@/widgets/UserCard'
 
@@ -44,10 +40,7 @@ export function FiltersResult({
           >
             <span>{filter.label}</span>
 
-            <span
-              className={styles.removeIcon}
-              aria-hidden="true"
-            >
+            <span className={styles.removeIcon} aria-hidden="true">
               ×
             </span>
           </button>
@@ -55,37 +48,19 @@ export function FiltersResult({
       </div>
 
       <div className={styles.resultHead}>
-        <h1 className={styles.resultTitle}>
-          Подходящие предложения: {resultCount}
-        </h1>
+        <h1 className={styles.resultTitle}>Подходящие предложения: {resultCount}</h1>
 
-        <button
-          type="button"
-          className={styles.sortButton}
-          onClick={onSortToggle}
-        >
-          <img
-            src={sortIcon}
-            className={styles.sortIcon}
-            alt=""
-            aria-hidden="true"
-          />
+        <button type="button" className={styles.sortButton} onClick={onSortToggle}>
+          <img src={sortIcon} className={styles.sortIcon} alt="" aria-hidden="true" />
 
-          <span>
-            {isSortedByNewest
-              ? 'Сначала популярные'
-              : 'Сначала новые'}
-          </span>
+          <span>{isSortedByNewest ? 'Сначала популярные' : 'Сначала новые'}</span>
         </button>
       </div>
 
       {users.length > 0 ? (
         <ul className={styles.cardsGrid}>
           {users.map((catalogUser) => (
-            <li
-              key={catalogUser.user.id}
-              className={styles.cardItem}
-            >
+            <li key={catalogUser.user.id} className={styles.cardItem}>
               <UserCard
                 user={catalogUser.user}
                 cityName={catalogUser.cityName}
@@ -93,17 +68,13 @@ export function FiltersResult({
                 learnSkills={catalogUser.learnSkills}
                 isFavorite={catalogUser.isFavorite}
                 likeCount={catalogUser.displayedLikeCount}
-                onFavoriteToggle={() =>
-                  onFavoriteToggle(catalogUser.user.id)
-                }
+                onFavoriteToggle={() => onFavoriteToggle(catalogUser.user.id)}
               />
             </li>
           ))}
         </ul>
       ) : (
-        <p className={styles.emptyMessage}>
-          По выбранным фильтрам ничего не найдено
-        </p>
+        <p className={styles.emptyMessage}>По выбранным фильтрам ничего не найдено</p>
       )}
     </div>
   )

@@ -72,9 +72,7 @@ export function FavoriteButton({
         </svg>
       )}
 
-      {showCount && (
-        <span className={styles.likeCount}>{likeCount}</span>
-      )}
+      {showCount && <span className={styles.likeCount}>{likeCount}</span>}
     </button>
   )
 }

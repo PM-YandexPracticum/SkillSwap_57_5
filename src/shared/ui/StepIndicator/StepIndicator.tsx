@@ -1,14 +1,14 @@
-import clsx from 'clsx';
-import styles from './StepIndicator.module.css';
+import clsx from 'clsx'
+import styles from './StepIndicator.module.css'
 
 interface StepIndicatorProps {
-  currentStep: number;
-  totalSteps: number;
+  currentStep: number
+  totalSteps: number
 }
 
 export function StepIndicator({ currentStep, totalSteps }: StepIndicatorProps) {
   // Создаем массив длиной totalSteps для рендера полосочек
-  const stepsArray = Array.from({ length: totalSteps }, (_, index) => index + 1);
+  const stepsArray = Array.from({ length: totalSteps }, (_, index) => index + 1)
 
   return (
     <div className={styles.container}>
@@ -26,5 +26,5 @@ export function StepIndicator({ currentStep, totalSteps }: StepIndicatorProps) {
         ))}
       </div>
     </div>
-  );
+  )
 }

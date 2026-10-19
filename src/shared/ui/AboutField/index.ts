@@ -1,2 +1,2 @@
-export { AboutField } from './AboutField';
+export { AboutField } from './AboutField'
 export type { AboutFieldProps } from './types'

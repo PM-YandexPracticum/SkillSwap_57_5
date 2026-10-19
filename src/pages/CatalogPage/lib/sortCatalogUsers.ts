@@ -1,21 +1,12 @@
-import type {
-  CatalogCardData,
-  CatalogUser,
-} from '@/widgets/UserCard'
+import type { CatalogCardData, CatalogUser } from '@/widgets/UserCard'
 
-export function sortCatalogUsersByPopularity(
-  catalogUsers: CatalogCardData[],
-): CatalogCardData[] {
+export function sortCatalogUsersByPopularity(catalogUsers: CatalogCardData[]): CatalogCardData[] {
   return [...catalogUsers].sort(
-    (firstUser, secondUser) =>
-      secondUser.displayedLikeCount -
-      firstUser.displayedLikeCount,
+    (firstUser, secondUser) => secondUser.displayedLikeCount - firstUser.displayedLikeCount,
   )
 }
 
-export function sortCatalogUsersByNewestSkill<
-  T extends CatalogUser,
->(catalogUsers: T[]): T[] {
+export function sortCatalogUsersByNewestSkill<T extends CatalogUser>(catalogUsers: T[]): T[] {
   return [...catalogUsers].sort(
     (firstUser, secondUser) =>
       new Date(secondUser.latestSkillCreatedAt).getTime() -
@@ -23,12 +14,9 @@ export function sortCatalogUsersByNewestSkill<
   )
 }
 
-export function sortCatalogUsersByRegistrationDate<
-  T extends CatalogUser,
->(catalogUsers: T[]): T[] {
+export function sortCatalogUsersByRegistrationDate<T extends CatalogUser>(catalogUsers: T[]): T[] {
   return [...catalogUsers].sort(
     (firstUser, secondUser) =>
-      new Date(secondUser.user.createdAt).getTime() -
-      new Date(firstUser.user.createdAt).getTime(),
+      new Date(secondUser.user.createdAt).getTime() - new Date(firstUser.user.createdAt).getTime(),
   )
 }

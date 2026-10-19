@@ -4,7 +4,6 @@ import type { AvatarProps } from './types'
 import { useState, useEffect } from 'react'
 
 export function Avatar({ src, name, className }: AvatarProps) {
-  
   const [hasError, setHasError] = useState(false)
 
   useEffect(() => {

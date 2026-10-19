@@ -1,8 +1,8 @@
 import clsx from 'clsx'
-import { useRef } from 'react';
-import type { AboutFieldProps } from './types';
-import { Textarea } from '../Textarea';
-import styles from './AboutField.module.css';
+import { useRef } from 'react'
+import type { AboutFieldProps } from './types'
+import { Textarea } from '../Textarea'
+import styles from './AboutField.module.css'
 
 export const AboutField = ({
   id,
@@ -14,17 +14,14 @@ export const AboutField = ({
   maxLength,
   ariaLabel,
 }: AboutFieldProps) => {
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null)
 
   const handleEditClick = () => {
-    rootRef.current?.querySelector('textarea')?.focus();
-  };
+    rootRef.current?.querySelector('textarea')?.focus()
+  }
 
   return (
-    <div
-      ref={rootRef}
-      className={clsx(styles.root, className)}
-    >
+    <div ref={rootRef} className={clsx(styles.root, className)}>
       <Textarea
         id={id}
         className={styles.field}
@@ -41,8 +38,7 @@ export const AboutField = ({
         onClick={handleEditClick}
         disabled={disabled}
         aria-label="Редактировать"
-      >
-      </button>
+      ></button>
     </div>
-  );
-};
+  )
+}

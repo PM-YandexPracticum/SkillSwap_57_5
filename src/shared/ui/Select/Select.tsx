@@ -93,11 +93,7 @@ export function Select({
   }
 
   return (
-    <div
-      ref={containerRef}
-      className={clsx(styles.container, className)}
-      onKeyDown={handleKeyDown}
-    >
+    <div ref={containerRef} className={clsx(styles.container, className)} onKeyDown={handleKeyDown}>
       <span id={`${id}-label`} className={styles.label}>
         {label}
       </span>
@@ -120,9 +116,13 @@ export function Select({
             }}
           >
             <option value="" />
-            {options.filter((option) => option.value !== '').map((option) => (
-              <option key={option.value} value={option.value}>{option.label}</option>
-            ))}
+            {options
+              .filter((option) => option.value !== '')
+              .map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
           </select>
         )}
         <Button
@@ -160,9 +160,7 @@ export function Select({
                   type="button"
                   role="option"
                   aria-selected={option.value === value}
-                  className={clsx(
-                    styles.optionButton
-                  )}
+                  className={clsx(styles.optionButton)}
                   onClick={() => handleSelect(option.value)}
                 >
                   {option.label}
@@ -173,7 +171,9 @@ export function Select({
         )}
       </div>
       {hasRequiredError && (
-        <p id={`${id}-error`} className={styles.error} role="alert">Выберите вариант</p>
+        <p id={`${id}-error`} className={styles.error} role="alert">
+          Выберите вариант
+        </p>
       )}
     </div>
   )

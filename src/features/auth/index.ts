@@ -1,8 +1,4 @@
-export {
-  restoreAuthSession,
-  saveAuthUser,
-  clearAuthUser,
-} from './lib/authUtils'
+export { restoreAuthSession, saveAuthUser, clearAuthUser } from './lib/authUtils'
 
 export { PrivateRoute } from './ui/PrivateRoute'
 

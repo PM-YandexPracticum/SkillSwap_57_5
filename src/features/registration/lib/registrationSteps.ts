@@ -15,26 +15,23 @@ export function getRegistrationStepRoute(step: RegistrationStep): string {
 }
 
 export function isCredentialsFilled(registration: RegistrationState): boolean {
-  return Boolean(
-    registration.credentials.email.trim() &&
-      registration.credentials.password,
-  )
+  return Boolean(registration.credentials.email.trim() && registration.credentials.password)
 }
 
 export function isProfileFilled(registration: RegistrationState): boolean {
   return Boolean(
     registration.profile.name.trim() &&
-      registration.profile.birthDate &&
-      registration.profile.gender &&
-      registration.profile.cityId,
+    registration.profile.birthDate &&
+    registration.profile.gender &&
+    registration.profile.cityId,
   )
 }
 
 export function isSkillFilled(registration: RegistrationState): boolean {
   return Boolean(
     registration.skill.title.trim() &&
-      registration.skill.categoryId &&
-      registration.skill.subcategoryId,
+    registration.skill.categoryId &&
+    registration.skill.subcategoryId,
   )
 }
 

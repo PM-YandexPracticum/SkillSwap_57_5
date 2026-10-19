@@ -16,11 +16,7 @@ interface SimilarOffersProps {
   onFavoriteToggle: (userId: string) => void
 }
 
-export function SimilarOffers({
-  items,
-  title,
-  onFavoriteToggle,
-}: SimilarOffersProps) {
+export function SimilarOffers({ items, title, onFavoriteToggle }: SimilarOffersProps) {
   const hasItems = items.length > 0
 
   return (
