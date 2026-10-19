@@ -37,4 +37,5 @@ pnpm-debug.log*
 Thumbs.db
 
 # Docs
-docs
+docs/*
+!docs/Памятка по работе с Git.pdf
