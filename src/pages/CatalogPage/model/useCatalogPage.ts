@@ -29,7 +29,6 @@ import { selectIsAuthenticated } from '@/store/selectors/userSelectors'
 
 interface UseCatalogPageResult {
   // Для CatalogPage
-  isLoading: boolean
   errorMessage: string | null
   hasActiveFilters: boolean
 
@@ -180,7 +179,6 @@ export function useCatalogPage(): UseCatalogPageResult {
   // 18. Передаём CatalogPage готовые данные, состояния и обработчики
   return {
     // Для CatalogPage
-    isLoading: catalogData.isLoading ?? false,
     errorMessage: catalogData.errorMessage ?? null,
     hasActiveFilters,
 

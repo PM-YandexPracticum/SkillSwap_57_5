@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { useState } from 'react'
 import type { Skill } from '@/entities/skill'
 import type { User } from '@/entities/user'
 import { Button } from '@/shared/ui/Button'
@@ -38,16 +37,7 @@ export function SkillInfo({
   canProposeExchange,
   isAlreadyProposed,
 }: SkillInfoProps) {
-  const [isProposing, setIsProposing] = useState(false)
-
-  const handleExchange = () => {
-    if (isAlreadyProposed || isProposing) return
-    setIsProposing(true)
-    onExchange()
-  }
-
   const isDisabled = isAuthenticated && !canProposeExchange
-  const isInactiveState = isAlreadyProposed || isProposing
 
   return (
     <section className={styles.container}>
@@ -78,11 +68,11 @@ export function SkillInfo({
           </div>
 
           <Button
-            className={clsx(styles.button, isInactiveState && styles.buttonInactive)}
-            onClick={handleExchange}
-            disabled={isDisabled || isInactiveState}
+            className={clsx(styles.button, isAlreadyProposed && styles.buttonInactive)}
+            onClick={onExchange}
+            disabled={isDisabled || isAlreadyProposed}
           >
-            {isInactiveState ? (
+            {isAlreadyProposed ? (
               <>
                 <img src={doneIcon} alt="" className={styles.buttonIcon} />
                 <span className={styles.buttonText}>Обмен предложен</span>

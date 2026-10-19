@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import styles from './RegisterPreviewPage.module.css'
 import { useCompleteRegistration, useRegistrationPreview } from '@/features/registration'
 import { Modal } from '@/shared/ui/Modal'
@@ -6,25 +7,38 @@ import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '@/store/hooks'
 
 export default function RegisterPreviewPage() {
+  const navigate = useNavigate()
+
+  const returnPath = useAppSelector((state) => state.users.returnPath)
+
+  const isSubmittingRef = useRef(false)
+
   const data = useRegistrationPreview()
 
   const { completeRegistration, error } = useCompleteRegistration()
-  const navigate = useNavigate()
-  const returnPath = useAppSelector((state) => state.users.returnPath)
 
   if (!data) {
     return null
   }
 
   const handleConfirm = async () => {
-    const success = await completeRegistration()
-    if (success) {
-      // Открываем окно успеха поверх исходной страницы навыка или главной
-      navigate('/register/success', {
-        state: { backgroundLocation: { pathname: returnPath } },
-      })
+    // Защита от двойного срабатывания при подтверждении регистрации
+    if (isSubmittingRef.current) return
+
+    isSubmittingRef.current = true
+
+    try {
+      const success = await completeRegistration()
+      if (success) {
+        // Открываем окно успеха поверх исходной страницы навыка или главной
+        navigate('/register/success', {
+          state: { backgroundLocation: { pathname: returnPath } },
+        })
+      }
+      // при ошибке остаёмся здесь, error покажется ниже
+    } finally {
+      isSubmittingRef.current = false
     }
-    // при ошибке остаёмся здесь, error покажется ниже
   }
 
   // Закрываем предпросмотр и возвращаемся к третьему шагу регистрации

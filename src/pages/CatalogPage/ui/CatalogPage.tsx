@@ -5,12 +5,10 @@ import { FiltersBar } from '@/widgets/FiltersBar'
 import { FiltersResult } from './FiltersResult'
 
 import styles from './CatalogPage.module.css'
-import { Loader } from '@/shared/ui/Loader'
 
 export default function CatalogPage() {
   const {
     // Для CatalogPage
-    isLoading,
     errorMessage,
     hasActiveFilters,
 
@@ -43,14 +41,6 @@ export default function CatalogPage() {
     // Для CatalogSections и FiltersResult
     handleFavoriteToggle,
   } = useCatalogPage()
-
-  if (isLoading) {
-    return (
-      <main className={styles.page}>
-        <Loader text="Загружаем каталог навыков" />
-      </main>
-    )
-  }
 
   if (errorMessage) {
     return (

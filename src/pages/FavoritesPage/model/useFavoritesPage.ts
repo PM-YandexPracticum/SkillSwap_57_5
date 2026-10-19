@@ -25,7 +25,6 @@ import {
 } from '@/pages/CatalogPage/lib/sortCatalogUsers'
 
 interface UseFavoritesPageResult {
-  isLoading: boolean
   errorMessage: string | null
   hasFavorites: boolean
   hasActiveFilters: boolean
@@ -145,7 +144,6 @@ export function useFavoritesPage(): UseFavoritesPageResult {
   }
 
   return {
-    isLoading: catalogData.isLoading ?? false,
     errorMessage: catalogData.errorMessage ?? null,
     hasFavorites,
     hasActiveFilters,

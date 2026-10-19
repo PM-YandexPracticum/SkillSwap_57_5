@@ -53,7 +53,13 @@ export function AppRouter() {
   }
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense
+      fallback={
+        <div className={styles.centered}>
+          <Loader />
+        </div>
+      }
+    >
       <Routes location={backgroundLocation || location}>
         {UiReviewPage && <Route path="/dev" element={<UiReviewPage />} />}
 

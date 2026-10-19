@@ -2,14 +2,12 @@ import { useFavoritesPage } from '../model/useFavoritesPage'
 import { FavoritesList } from './FavoritesList'
 import { FiltersResult } from './FiltersResult'
 import { FiltersBar } from '@/widgets/FiltersBar'
-import { Loader } from '@/shared/ui/Loader'
 
 import styles from './FavoritesPage.module.css'
 
 export default function FavoritesPage() {
   const {
     // Для страницы
-    isLoading,
     errorMessage,
     hasActiveFilters,
 
@@ -39,14 +37,6 @@ export default function FavoritesPage() {
     // Общие
     handleFavoriteToggle,
   } = useFavoritesPage()
-
-  if (isLoading) {
-    return (
-      <main className={styles.page}>
-        <Loader text="Загружаем избранное" />
-      </main>
-    )
-  }
 
   if (errorMessage) {
     return (
