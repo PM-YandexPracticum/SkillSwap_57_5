@@ -3,16 +3,16 @@ import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 
 // Восстанавливаем сессию пользователя из localStorage
 export function restoreAuthSession(): AuthUser | null {
-  const raw = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)
-
-  if (!raw) {
-    return null
-  }
-
   try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)
+
+    if (!raw) {
+      return null
+    }
+
     const data = JSON.parse(raw) as AuthUser
 
-    if (!data.id || !data.email || !data.token) {
+    if (!data || !data.id || !data.email || !data.token) {
       return null
     }
 

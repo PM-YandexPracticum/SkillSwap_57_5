@@ -11,6 +11,10 @@ export async function fetchSkills(): Promise<Skill[]> {
     try {
       const skills = JSON.parse(storedSkills) as Skill[]
 
+      if (!Array.isArray(skills)) {
+        throw new Error('Некорректный список навыков')
+      }
+
       // Восстанавливаем фотографии из IndexedDB по ключам и создаём свежие URL для отображения
       return Promise.all(
         skills.map(async (skill) => {
@@ -33,7 +37,7 @@ export async function fetchSkills(): Promise<Skill[]> {
         }),
       )
     } catch {
-      localStorage.removeItem(LOCAL_STORAGE_KEYS.SKILLS)
+      throw new Error('Не удалось восстановить навыки')
     }
   }
 

@@ -54,10 +54,6 @@ export const Modal = ({ children, onClose, open, ariaLabel, className }: ModalPr
     }
   }
 
-  if (!open) {
-    return null
-  }
-
   return createPortal(
     <dialog
       ref={dialogRef}
