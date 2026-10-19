@@ -17,7 +17,7 @@
 }
 
 .modal::backdrop {
-  background: rgb(0 0 0 / 60%);
+  background: rgb(142 142 142 / 60%);
 }
 
 .noScroll {
