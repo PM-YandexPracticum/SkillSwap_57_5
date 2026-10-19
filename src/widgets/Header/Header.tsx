@@ -38,6 +38,12 @@ export function Header() {
   const userName = useAppSelector(selectCurrentUserName)
   const currentUser = useAppSelector(selectCurrentUser)
 
+  const hasUnreadNotifications = useAppSelector((state) =>
+    state.notifications.items.some(
+      (notification) => notification.recipientUserId === currentUser?.id && !notification.isRead,
+    ),
+  )
+
   const closePopover = () => {
     const event = new MouseEvent('pointerdown', { bubbles: true })
     document.dispatchEvent(event)
@@ -94,7 +100,21 @@ export function Header() {
                 <Popover
                   align="right"
                   padding="0"
-                  trigger={<IconButton src={bellIcon} ariaLabel="Уведомления" onClick={() => {}} />}
+                  trigger={
+                    <IconButton
+                      src={bellIcon}
+                      ariaLabel={
+                        hasUnreadNotifications
+                          ? 'Уведомления: есть непрочитанные'
+                          : 'Уведомления'
+                      }
+                      className={clsx(
+                        styles.notificationsButton,
+                        hasUnreadNotifications && styles.hasUnread,
+                      )}
+                      onClick={() => {}}
+                    />
+                  }
                 >
                   <Notifications />
                 </Popover>

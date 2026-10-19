@@ -18,7 +18,7 @@ export interface ProposedExchange {
   skillId: string
 }
 
-interface NotificationsState {
+export interface NotificationsState {
   // Сообщения под колокольчиком и красная точка для непрочитанных
   items: ExchangeNotification[]
   // Для кнопки «Обмен предложен». сохраняется при очистке уведомлений
@@ -49,6 +49,7 @@ const notificationsSlice = createSlice({
     addNotification(state, action: PayloadAction<ExchangeNotification>) {
       state.items.push(action.payload)
     },
+
     // Получает id уведомления и отмечает только его прочитанным
     markAsRead(state, action: PayloadAction<string>) {
       const notification = state.items.find((item) => item.id === action.payload)
@@ -71,10 +72,17 @@ const notificationsSlice = createSlice({
         (notification) => notification.recipientUserId !== action.payload || !notification.isRead,
       )
     },
+
+    // Записывает восстановленные уведомления и предложенные обмены в Redux
+    setNotifications(state, action: PayloadAction<NotificationsState>) {
+      state.items = action.payload.items
+      state.proposedExchanges = action.payload.proposedExchanges
+    },
   },
 })
 
 export const {
+  setNotifications,
   addProposedExchange,
   addNotification,
   markAsRead,

@@ -15,4 +15,5 @@ export const LOCAL_STORAGE_KEYS = {
   THEME: 'skillswap_theme',
   USERS: 'skillswap_users',
   SKILLS: 'skillswap_skills',
+  NOTIFICATIONS: 'skillswap_notifications',
 } as const

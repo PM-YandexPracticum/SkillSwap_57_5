@@ -1,5 +1,4 @@
 export {
-  getAuthUser,
   restoreAuthSession,
   saveAuthUser,
   clearAuthUser,
