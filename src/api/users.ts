@@ -11,6 +11,10 @@ export async function fetchUsers(): Promise<User[]> {
     try {
       const users = JSON.parse(storedUsers) as User[]
 
+      if (!Array.isArray(users)) {
+        throw new Error('Некорректный список пользователей')
+      }
+
       // Восстанавливаем аватары из IndexedDB по ключам и создаём свежие URL для отображения
       return Promise.all(
         users.map(async (user) => {
@@ -25,7 +29,7 @@ export async function fetchUsers(): Promise<User[]> {
         }),
       )
     } catch {
-      localStorage.removeItem(LOCAL_STORAGE_KEYS.USERS)
+      throw new Error('Не удалось восстановить пользователей')
     }
   }
 

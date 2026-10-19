@@ -10,7 +10,13 @@ export function restoreNotifications(): NotificationsState | null {
       return null
     }
 
-    return JSON.parse(savedNotifications) as NotificationsState
+    const data = JSON.parse(savedNotifications) as NotificationsState
+
+    if (!data || !Array.isArray(data.items) || !Array.isArray(data.proposedExchanges)) {
+      return null
+    }
+
+    return data
   } catch {
     return null
   }

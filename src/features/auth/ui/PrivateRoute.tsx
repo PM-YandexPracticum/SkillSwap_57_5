@@ -1,6 +1,7 @@
 import { useEffect, type FC, type ReactElement } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { selectIsAuthenticated } from '@/store/selectors/userSelectors'
 import { setReturnPath } from '@/store/slices/usersSlice'
 import { useAppData } from '@/store/useAppData'
 import { Loader } from '@/shared/ui/Loader'
@@ -14,7 +15,7 @@ export const PrivateRoute: FC<TProtectedRouteProps> = ({ children, guestOnly = f
   const dispatch = useAppDispatch()
   const location = useLocation()
 
-  const user = useAppSelector((state) => state.users.currentUserId)
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const returnPath = useAppSelector((state) => state.users.returnPath)
   const { isLoading } = useAppData()
 
@@ -23,10 +24,10 @@ export const PrivateRoute: FC<TProtectedRouteProps> = ({ children, guestOnly = f
   useEffect(() => {
     if (isLoading) return
 
-    if (!guestOnly && !user) {
+    if (!guestOnly && !isAuthenticated) {
       dispatch(setReturnPath(location.pathname))
     }
-  }, [isLoading, guestOnly, user, location.pathname, dispatch])
+  }, [isLoading, guestOnly, isAuthenticated, location.pathname, dispatch])
 
   // Данные приложения ещё загружаются
   if (isLoading) {
@@ -34,12 +35,12 @@ export const PrivateRoute: FC<TProtectedRouteProps> = ({ children, guestOnly = f
   }
 
   // Страница для авторизованных, но пользователь не вошёл
-  if (!guestOnly && !user) {
+  if (!guestOnly && !isAuthenticated) {
     return <Navigate replace to="/register" />
   }
 
   // Страница для неавторизованных, но пользователь уже вошёл, по умолчанию returnPath: '/'
-  if (guestOnly && user) {
+  if (guestOnly && isAuthenticated) {
     return <Navigate replace to={returnPath} />
   }
 
