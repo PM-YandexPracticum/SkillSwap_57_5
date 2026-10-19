@@ -7,7 +7,7 @@ import { Combobox } from '@/shared/ui/Combobox'
 import { Textarea } from '@/shared/ui/Textarea'
 import { Button } from '@/shared/ui/Button'
 import { InfoBlock } from '@/shared/ui/InfoBlock'
-import { SkillImagesUpload } from '@/widgets/SkillImagesUpload'
+import { ImagesUpload } from '@/shared/ui/ImagesUpload'
 import easelIcon from '@/shared/assets/icons/easel-illustration.svg'
 import styles from './SkillRegistrationForm.module.css'
 
@@ -162,7 +162,7 @@ export function SkillRegistrationForm({
             )}
           </FormField>
 
-          <SkillImagesUpload files={skillImages} onFilesChange={onSkillImagesChange} />
+          <ImagesUpload files={skillImages} onFilesChange={onSkillImagesChange} />
           {errors?.images && (
             <p className={styles.errorHint} role="alert">
               {errors.images}

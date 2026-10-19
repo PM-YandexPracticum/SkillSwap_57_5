@@ -106,13 +106,23 @@ export function useRegistrationSkill() {
         keys.push(key)
       }
 
-      // Удаляем записи, которые больше не входят в выбранный список фотографий
+      // Запоминаем ключи прежних фотографий для удаления
       const unusedKeys = imageKeys.filter((key) => !keys.includes(key))
-      await Promise.all(unusedKeys.map((key) => deleteImage(key)))
 
-      // Обновляем фотографии для предпросмотра и их ключи
+      // Обновляем предпросмотр и локальные ключи
       setFiles(newFiles)
       setImageKeys(keys)
+
+      // Сразу сохраняем актуальные ключи в черновике регистрации
+      dispatch(
+        setSkillDraft({
+          ...savedValues,
+          imageKeys: keys,
+        }),
+      )
+
+      // Удаляем прежние файлы после обновления черновика
+      await Promise.all(unusedKeys.map((key) => deleteImage(key)))
 
       // Очищаем предыдущую ошибку, если была
       setErrors((prev) => ({ ...prev, images: undefined }))

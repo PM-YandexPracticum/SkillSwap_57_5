@@ -41,7 +41,10 @@ export default function ProfilePage() {
 
   // Показываем выбранное фото и освобождаем временный URL при замене
   useEffect(() => {
-    if (!avatarFile) return
+    if (!avatarFile) {
+      setAvatarSrc('')
+      return
+    }
 
     const previewUrl = URL.createObjectURL(avatarFile)
     setAvatarSrc(previewUrl)

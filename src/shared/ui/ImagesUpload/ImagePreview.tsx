@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 
 import CrossIcon from '@/shared/assets/icons/cross.svg'
 
-import styles from './SkillImagePreview.module.css'
+import styles from './ImagePreview.module.css'
 
-interface SkillImagePreviewProps {
+interface ImagePreviewProps {
   file: File
   onRemove: () => void
 }
 
-export function SkillImagePreview({ file, onRemove }: SkillImagePreviewProps) {
+export function ImagePreview({ file, onRemove }: ImagePreviewProps) {
   const [previewUrl, setPreviewUrl] = useState('')
 
   useEffect(() => {

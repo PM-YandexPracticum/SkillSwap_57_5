@@ -15,10 +15,7 @@ export const useLogin = () => {
   const handleLogin = ({ email, password }: { email: string; password: string }) => {
     setSubmitError(null)
 
-    // Запасной тестовый пользователь на случай пустого списка в Redux
-    const fallbackUsers = [{ id: 'user-001', email: 'anna@example.com', password: 'Password123' }]
-    const activeUsers = users.length > 0 ? users : fallbackUsers
-    const user = activeUsers.find((item) => item.email.toLowerCase() === email.trim().toLowerCase())
+    const user = users.find((item) => item.email.toLowerCase() === email.trim().toLowerCase())
 
     if (!user || user.password !== password) {
       setSubmitError('Неверный email или пароль')

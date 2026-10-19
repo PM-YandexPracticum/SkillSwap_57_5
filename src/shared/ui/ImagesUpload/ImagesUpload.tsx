@@ -1,17 +1,17 @@
 import clsx from 'clsx'
 import { useRef, useState } from 'react'
 
-import { SkillImagePreview } from './SkillImagePreview'
-import galleryAddIcon from '../../../shared/assets/icons/gallery-add.svg'
+import { ImagePreview } from './ImagePreview'
+import galleryAddIcon from '@/shared/assets/icons/gallery-add.svg'
 
-import styles from './SkillImagesUpload.module.css'
+import styles from './ImagesUpload.module.css'
 
-interface SkillImagesUploadProps {
+interface ImagesUploadProps {
   files: File[]
   onFilesChange: (files: File[]) => void
 }
 
-export function SkillImagesUpload({ files, onFilesChange }: SkillImagesUploadProps) {
+export function ImagesUpload({ files, onFilesChange }: ImagesUploadProps) {
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -78,7 +78,7 @@ export function SkillImagesUpload({ files, onFilesChange }: SkillImagesUploadPro
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        <p>Перетащите или выберите изображение навыка</p>
+        <p>Перетащите или выберите изображения</p>
 
         <button type="button" className={styles.selectImages} onClick={handleUploadClick}>
           <img src={galleryAddIcon} alt="" />
@@ -90,11 +90,7 @@ export function SkillImagesUpload({ files, onFilesChange }: SkillImagesUploadPro
         <>
           <div className={styles.previews}>
             {files.map((file, index) => (
-              <SkillImagePreview
-                key={index}
-                file={file}
-                onRemove={() => handleRemoveImage(index)}
-              />
+              <ImagePreview key={index} file={file} onRemove={() => handleRemoveImage(index)} />
             ))}
           </div>
 

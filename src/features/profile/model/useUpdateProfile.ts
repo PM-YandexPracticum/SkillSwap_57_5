@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import type { Gender, User } from '@/entities/user'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import { passwordSchema } from '@/shared/lib/passwordValidation'
-import { AVATAR_IMAGE_PREFIX, saveImage } from '@/shared/lib/imageStorage'
+import { AVATAR_IMAGE_PREFIX, saveImage, deleteImage } from '@/shared/lib/imageStorage'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { selectCurrentUser } from '@/store/selectors/userSelectors'
 import { updateUser } from '@/store/slices/usersSlice'
@@ -144,6 +144,15 @@ export function useUpdateProfile() {
 
       // Обновляем пользователя в redux после сохранения
       dispatch(updateUser(updatedUser))
+
+      // Файл уже сохранён, повторно записывать его не нужно
+      setAvatarFile(null)
+
+      // После успешной замены удаляем прежний файл
+      if (avatarFile && currentUser.avatarKey) {
+        await deleteImage(currentUser.avatarKey)
+      }
+
       // Заглушка успешного изменения данных
       alert('Профиль обновлён!')
     } catch {
