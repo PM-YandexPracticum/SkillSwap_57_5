@@ -2,8 +2,10 @@ import { useNavigate } from 'react-router-dom'
 import { isToday, isYesterday, format } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
+import { store } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { markAllAsRead, clearReadNotifications } from '@/store/slices/notificationsSlice'
+import { saveNotifications } from '../lib/saveNotifications'
 
 import { Button } from '@/shared/ui/Button'
 import hugeIcon from '@/shared/assets/icons/hugeicons.svg'
@@ -33,11 +35,13 @@ export function Notifications() {
   const handleMarkAllAsRead = () => {
     if (!currentUserId) return
     dispatch(markAllAsRead(currentUserId))
+    saveNotifications(store.getState().notifications)
   }
 
   const handleClearRead = () => {
     if (!currentUserId) return
     dispatch(clearReadNotifications(currentUserId))
+    saveNotifications(store.getState().notifications)
   }
 
   const handleGoToSkill = (skillId: string) => {

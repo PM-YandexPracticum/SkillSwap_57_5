@@ -27,20 +27,30 @@ const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    // Добавляет пользователя из карточки в избранное текущего авторизованного пользователя или убирает его
+    // Добавляет или убирает пользователя из избранного и обновляет его счётчик лайков
     toggleFavoriteUser(state, action: PayloadAction<string>) {
       const currentUser = state.items.find((user) => user.id === state.currentUserId)
+      const targetUser = state.items.find((user) => user.id === action.payload)
 
-      if (!currentUser) {
+      if (!currentUser || !targetUser) {
         return
       }
 
-      const favoriteIndex = currentUser.favoriteUserIds.indexOf(action.payload)
+      // Проверяем есть ли выбранный пользователь в избранном текущего пользователя
+      const isFavorite = currentUser.favoriteUserIds.includes(action.payload)
 
-      if (favoriteIndex === -1) {
-        currentUser.favoriteUserIds.push(action.payload)
+      if (isFavorite) {
+        // Удаляем выбранного пользователя из избранного текущего пользователя
+        currentUser.favoriteUserIds = currentUser.favoriteUserIds.filter(
+          (id) => id !== action.payload,
+        )
+        // Уменьшаем количество лайков выбранного пользователя, но не ниже нуля
+        targetUser.likesCount = Math.max(0, targetUser.likesCount - 1)
       } else {
-        currentUser.favoriteUserIds.splice(favoriteIndex, 1)
+        // Добавляем выбранного пользователя в избранное текущего пользователя
+        currentUser.favoriteUserIds.push(action.payload)
+        // Увеличиваем количество лайков выбранного пользователя
+        targetUser.likesCount += 1
       }
     },
     // Добавляет нового пользователя в список

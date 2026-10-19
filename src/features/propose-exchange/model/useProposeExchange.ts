@@ -1,5 +1,7 @@
 import type { Skill } from '@/entities/skill'
+import { saveNotifications } from '@/features/notifications'
 
+import { store } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { addProposedExchange, addNotification } from '@/store/slices/notificationsSlice'
 
@@ -40,6 +42,9 @@ export const useProposeExchange = (skill: Skill | undefined) => {
         isRead: false,
       }),
     )
+
+    // Сохраняем в localStorage обновлённые уведомления и предложенные обмены из Redux
+    saveNotifications(store.getState().notifications)
   }
   return { proposeExchange, canProposeExchange, isAlreadyProposed }
 }

@@ -1,15 +1,6 @@
 import type { AuthUser } from '@/shared/types'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 
-export function getAuthUser(): AuthUser | null {
-  try {
-    const raw = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)
-    return raw ? (JSON.parse(raw) as AuthUser) : null
-  } catch {
-    return null
-  }
-}
-
 export function restoreAuthSession(): AuthUser | null {
   const raw = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)
 
