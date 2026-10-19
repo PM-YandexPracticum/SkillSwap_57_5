@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
+import { passwordSchema } from '@/shared/lib/passwordValidation'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setCredentials } from '@/store/slices/registrationSlice'
 
@@ -28,9 +29,7 @@ export function useRegistrationCredentials() {
     email: Yup.string()
       .email('Введите корректный email')
       .required('Email обязателен для заполнения'),
-    password: Yup.string()
-      .min(8, 'Пароль должен содержать минимум 8 символов')
-      .required('Пароль обязателен для заполнения'),
+    password: passwordSchema.required('Пароль обязателен для заполнения'),
   })
 
   // По кнопке "Далее" валидируем поля, проверяем email, сохраняем данные в Redux и открываем второй шаг

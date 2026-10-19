@@ -83,19 +83,6 @@ export function useCatalogSections(catalogUsers: CatalogCardData[]): UseCatalogS
 
   const visibleRecommendedUsers = recommendedUsers.slice(0, recommendedVisibleCount)
 
-  // УБРАН СБРОС ЗАГРУЗКИ ПРИ ИЗМЕНЕНИИ catalogUsers:
-  // лайк не должен сворачивать список или прерывать показ следующих карточек.
-  // useEffect(() => {
-  //   setRecommendedVisibleCount(INITIAL_RECOMMENDED_SIZE)
-  //   setIsRecommendedLoading(false)
-  //   recommendedLoadingRef.current = false
-
-  //   if (recommendedLoadingTimerRef.current !== null) {
-  //     clearTimeout(recommendedLoadingTimerRef.current)
-  //     recommendedLoadingTimerRef.current = null
-  //   }
-  // }, [catalogUsers])
-
   useEffect(() => {
     if (!recommendedLoadMoreElement || recommendedVisibleCount >= recommendedUsers.length) {
       return

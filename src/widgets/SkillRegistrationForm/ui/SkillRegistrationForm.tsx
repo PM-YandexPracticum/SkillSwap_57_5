@@ -104,10 +104,12 @@ export function SkillRegistrationForm({
               value={skillName}
               onChange={setSkillName}
               placeholder="Введите название вашего навыка"
+              aria-invalid={Boolean(errors?.title)}
+              aria-describedby={errors?.title ? 'skill-title-error' : undefined}
               className={errors?.title ? styles.inputError : undefined}
             />
             {errors?.title && (
-              <p className={styles.errorHint} role="alert">
+              <p id="skill-title-error" className={styles.errorHint} role="alert">
                 {errors.title}
               </p>
             )}
