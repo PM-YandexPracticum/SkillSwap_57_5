@@ -89,7 +89,7 @@ export function useCatalogPage(): UseCatalogPageResult {
   // 4. Проверяем, авторизован ли пользователь
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
 
-  // 5. Получаем ID избранных пользователей из localStorage и функцию переключения
+  // 5. Получаем избранное текущего пользователя из Redux и функцию переключения
   const { likedUserIds, toggleFavoriteUser } = useFavoriteUsers(isAuthenticated)
   // 6. Храним режим сортировки результатов: true — по новизне, false — по популярности
   const [isSortedByNewest, setIsSortedByNewest] = useState(false)

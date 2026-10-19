@@ -29,6 +29,7 @@ export const Popover = ({
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsOpen(false)
+        popoverRef.current?.querySelector<HTMLButtonElement>('button')?.focus()
       }
     }
 

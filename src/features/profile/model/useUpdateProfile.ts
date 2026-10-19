@@ -4,6 +4,7 @@ import { format, subYears } from 'date-fns'
 import * as Yup from 'yup'
 import type { Gender, User } from '@/entities/user'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
+import { passwordSchema } from '@/shared/lib/passwordValidation'
 import { AVATAR_IMAGE_PREFIX, saveImage } from '@/shared/lib/imageStorage'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { selectCurrentUser } from '@/store/selectors/userSelectors'
@@ -67,11 +68,7 @@ export function useUpdateProfile() {
   // Правила валидации Yup
   const validationSchema = Yup.object({
     email: Yup.string().trim().email('Введите корректный email').required('Укажите email'),
-    password: Yup.string().test(
-      'password-length',
-      'Пароль должен содержать минимум 8 символов',
-      (value) => !value || value.length >= 8,
-    ),
+    password: passwordSchema.transform((value) => (value === '' ? undefined : value)).optional(),
     name: Yup.string()
       .trim()
       .min(2, 'Имя должно содержать минимум 2 символа')

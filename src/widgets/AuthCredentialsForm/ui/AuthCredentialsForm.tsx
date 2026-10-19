@@ -7,6 +7,7 @@ import { Button } from '@/shared/ui/Button'
 import { Input } from '@/shared/ui/Input'
 import { InputWithAction } from '@/shared/ui/InputWithAction'
 import { FormField } from '@/shared/ui/FormField'
+import { passwordSchema } from '@/shared/lib/passwordValidation'
 
 import LightBulb from '@/shared/assets/icons/light-bulb.svg'
 import AppleIcon from '@/shared/assets/icons/Apple.svg'
@@ -40,7 +41,7 @@ export function AuthCredentialsForm({
     }
   }, [savedValues])
 
-  const isPasswordValid = password.length >= 8
+  const isPasswordValid = passwordSchema.isValidSync(password)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -78,6 +79,15 @@ export function AuthCredentialsForm({
                 value={email}
                 onChange={setEmail}
                 placeholder="Введите email"
+                autoComplete="email"
+                aria-invalid={Boolean(errors?.email || (variant === 'login' && errors?.password))}
+                aria-describedby={
+                  errors?.email
+                    ? 'auth-email-error'
+                    : variant === 'login' && errors?.password
+                      ? 'auth-password-error'
+                      : undefined
+                }
                 className={
                   errors?.email || (variant === 'login' && errors?.password)
                     ? styles.inputError
@@ -86,7 +96,7 @@ export function AuthCredentialsForm({
               />
             </FormField>
             {errors?.email && (
-              <p className={styles.errorHint} role="alert">
+              <p id="auth-email-error" className={styles.errorHint} role="alert">
                 {errors.email}
               </p>
             )}
@@ -106,6 +116,15 @@ export function AuthCredentialsForm({
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={setPassword}
+                autoComplete={variant === 'login' ? 'current-password' : 'new-password'}
+                aria-invalid={Boolean(errors?.password)}
+                aria-describedby={
+                  errors?.password
+                    ? 'auth-password-error'
+                    : variant === 'registration'
+                      ? 'auth-password-hint'
+                      : undefined
+                }
                 className={errors?.password ? styles.inputError : undefined}
                 placeholder={
                   variant === 'registration' ? 'Придумайте надёжный пароль' : 'Введите пароль'
@@ -113,14 +132,16 @@ export function AuthCredentialsForm({
               />
             </InputWithAction>
             {errors?.password && (
-              <p className={styles.errorHint} role="alert">
+              <p id="auth-password-error" className={styles.errorHint} role="alert">
                 {errors.password}
               </p>
             )}
 
             {variant === 'registration' && !errors?.password && (
-              <p className={styles.hint}>
-                {isPasswordValid ? 'Надёжный пароль' : 'Пароль должен содержать минимум 8 символов'}
+              <p id="auth-password-hint" className={styles.hint}>
+                {isPasswordValid
+                  ? 'Надёжный пароль'
+                  : 'Минимум 8 символов, строчные и заглавные латинские буквы, цифры и спецсимволы'}
               </p>
             )}
           </div>

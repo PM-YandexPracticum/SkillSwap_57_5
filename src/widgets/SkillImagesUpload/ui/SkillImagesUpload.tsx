@@ -19,7 +19,9 @@ export function SkillImagesUpload({ files, onFilesChange }: SkillImagesUploadPro
   const addFiles = (selectedFiles: FileList | null) => {
     if (!selectedFiles) return
 
-    const newFiles = Array.from(selectedFiles).filter((file) => file.type.startsWith('image/'))
+    const newFiles = Array.from(selectedFiles).filter((file) =>
+      ['image/png', 'image/jpeg', 'image/webp'].includes(file.type),
+    )
 
     onFilesChange([...files, ...newFiles])
   }

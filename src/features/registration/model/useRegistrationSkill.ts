@@ -71,6 +71,14 @@ export function useRegistrationSkill() {
 
   // При выборе фотографий валидируем файлы, сохраняем их в IndexedDB и обновляем предпросмотр
   const handleSkillImagesChange = async (newFiles: File[]) => {
+    if (newFiles.length > 6) {
+      setErrors((prev) => ({
+        ...prev,
+        images: 'Можно загрузить не больше 6 фотографий',
+      }))
+      return
+    }
+
     // Каждый файл не более 2 МБ
     const MAX_SIZE = 2 * 1024 * 1024
 

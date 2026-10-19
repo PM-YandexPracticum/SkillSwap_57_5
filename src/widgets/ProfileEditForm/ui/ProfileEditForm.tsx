@@ -120,11 +120,14 @@ export function ProfileEditForm({
             onChange={setEmail}
             onBlur={handleFieldBlur}
             readOnly={editingField !== 'email'}
+            autoComplete="email"
+            aria-invalid={Boolean(errors?.email)}
+            aria-describedby={errors?.email ? 'profile-email-error' : undefined}
             className={errors?.email ? styles.inputError : undefined}
           />
         </InputWithAction>
         {errors?.email && (
-          <p className={styles.errorHint} role="alert">
+          <p id="profile-email-error" className={styles.errorHint} role="alert">
             {errors.email}
           </p>
         )}
@@ -153,11 +156,14 @@ export function ProfileEditForm({
               type="password"
               value={password}
               onChange={setPassword}
+              autoComplete="new-password"
+              aria-invalid={Boolean(errors?.password)}
+              aria-describedby={errors?.password ? 'profile-password-error' : undefined}
               className={errors?.password ? styles.inputError : undefined}
             />
           </InputWithAction>
           {errors?.password && (
-            <p className={styles.errorHint} role="alert">
+            <p id="profile-password-error" className={styles.errorHint} role="alert">
               {errors.password}
             </p>
           )}
@@ -180,11 +186,14 @@ export function ProfileEditForm({
             onChange={setName}
             onBlur={handleFieldBlur}
             readOnly={editingField !== 'name'}
+            autoComplete="given-name"
+            aria-invalid={Boolean(errors?.name)}
+            aria-describedby={errors?.name ? 'profile-name-error' : undefined}
             className={errors?.name ? styles.inputError : undefined}
           />
         </InputWithAction>
         {errors?.name && (
-          <p className={styles.errorHint} role="alert">
+          <p id="profile-name-error" className={styles.errorHint} role="alert">
             {errors.name}
           </p>
         )}

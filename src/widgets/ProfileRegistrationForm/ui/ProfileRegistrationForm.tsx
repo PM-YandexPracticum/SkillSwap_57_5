@@ -149,9 +149,21 @@ export function ProfileRegistrationForm({
 
           <div>
             <FormField id="name" label="Имя">
-              <Input id="name" value={name} onChange={setName} placeholder="Введите ваше имя" />
+              <Input
+                id="name"
+                value={name}
+                onChange={setName}
+                placeholder="Введите ваше имя"
+                autoComplete="given-name"
+                aria-invalid={Boolean(errors?.name)}
+                aria-describedby={errors?.name ? 'registration-name-error' : undefined}
+              />
             </FormField>
-            {errors?.name && <p className={styles.errorHint}>{errors.name}</p>}
+            {errors?.name && (
+              <p id="registration-name-error" className={styles.errorHint} role="alert">
+                {errors.name}
+              </p>
+            )}
           </div>
 
           <div className={styles.rowInputs}>
