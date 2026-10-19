@@ -1,4 +1,4 @@
-/** Форматирует дату в читаемый вид */
+// Форматируем дату на русском языке с днём, месяцем и годом
 export function formatDate(dateString: string): string {
   return new Intl.DateTimeFormat('ru-RU', {
     day: 'numeric',
@@ -7,17 +7,38 @@ export function formatDate(dateString: string): string {
   }).format(new Date(dateString))
 }
 
-/** Обрезает строку до maxLength символов */
+// Обрезаем длинный текст и добавляем многоточие
 export function truncate(str: string, maxLength: number): string {
   if (str.length <= maxLength) return str
   return str.slice(0, maxLength).trimEnd() + '...'
 }
 
-/** Генерирует уникальный id */
+// Создаём уникальный идентификатор
 export function generateId(): string {
   return crypto.randomUUID()
 }
 
+// Выбираем склонение возраста: год, года или лет
+export function getAgeLabel(age: number): string {
+  const lastTwoDigits = age % 100
+  const lastDigit = age % 10
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+    return 'лет'
+  }
+
+  if (lastDigit === 1) {
+    return 'год'
+  }
+
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return 'года'
+  }
+
+  return 'лет'
+}
+
+// Вычисляем возраст в полных годах по дате рождения
 export function getAgeFromBirthDate(birthDate: string | Date): number {
   let birth: Date
 

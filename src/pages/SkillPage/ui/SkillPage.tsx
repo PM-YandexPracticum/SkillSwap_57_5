@@ -1,10 +1,10 @@
 import styles from './SkillPage.module.css'
-import { SkillAuthor } from '@/widgets/SkillAuthor'
+import { SkillAuthorCard } from '@/widgets/SkillAuthorCard'
 import { SkillInfo } from '@/widgets/SkillInfo'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useSkillPage } from '../model/useSkillPage'
 import { SimilarOffers } from './SimilarOffers'
-import NotFoundPage from '@/pages/NotFoundPage'
+import { NotFoundError } from '@/widgets/NotFoundError'
 import { useAppDispatch } from '@/store/hooks'
 import { setReturnPath } from '@/store/slices/usersSlice'
 import { useProposeExchange } from '@/features/propose-exchange'
@@ -21,7 +21,13 @@ export default function SkillPage() {
 
   const isAuthorFavorite = likedUserIds?.includes(data?.author.id ?? '') ?? false
 
-  if (!skillId || !data) return <NotFoundPage />
+  if (!skillId || !data) {
+    return (
+      <main className={styles.errorPage}>
+        <NotFoundError />
+      </main>
+    )
+  }
 
   const handleExchange = () => {
     // Сохраняем pathname навыка и отправляем гостя на регистрацию
@@ -44,7 +50,7 @@ export default function SkillPage() {
     <>
       <div className={styles.page}>
         <section className={styles.skillSection}>
-          <SkillAuthor
+          <SkillAuthorCard
             user={data.author}
             cityName={data.city.name}
             teachSkills={data.authorTeachSkills}

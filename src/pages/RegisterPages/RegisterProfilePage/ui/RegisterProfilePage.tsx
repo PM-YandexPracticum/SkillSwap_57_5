@@ -1,7 +1,7 @@
 import styles from './RegisterProfilePage.module.css'
 import { useNavigate } from 'react-router-dom'
 
-import { ProfileForm } from '@/widgets/ProfileForm'
+import { ProfileRegistrationForm } from '@/widgets/ProfileRegistrationForm'
 import { useRegistrationProfile } from '@/features/registration'
 import { StepIndicator } from '@/shared/ui/StepIndicator'
 
@@ -19,7 +19,7 @@ export default function RegisterProfilePage() {
       <div className={styles.steps}>
         <StepIndicator currentStep={2} totalSteps={3} />
       </div>
-      <ProfileForm
+      <ProfileRegistrationForm
         onSubmit={submitRegistrationProfile}
         errors={errors}
         savedValues={savedValues}

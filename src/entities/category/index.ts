@@ -1,4 +1,5 @@
 export { CategoryList } from './ui/CategoryList'
+export { CategoryPopover } from './ui/CategoryPopover'
 
 export type {
   SkillCategory,

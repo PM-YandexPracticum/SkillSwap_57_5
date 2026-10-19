@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useRef, useState } from 'react'
 
 import { SkillImagePreview } from './SkillImagePreview'
@@ -63,25 +64,24 @@ export function SkillImagesUpload({ files, onFilesChange }: SkillImagesUploadPro
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/png,image/jpeg,image/webp"
         multiple
         onChange={handleFileChange}
         hidden
       />
 
       <div
-        className={`${styles.dropzone} ${isDragging ? styles.active : ''}`}
-        onClick={handleUploadClick}
+        className={clsx(styles.dropzone, isDragging && styles.active)}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
         <p>Перетащите или выберите изображение навыка</p>
 
-        <span className={styles.selectImages}>
+        <button type="button" className={styles.selectImages} onClick={handleUploadClick}>
           <img src={galleryAddIcon} alt="" />
           Выбрать изображения
-        </span>
+        </button>
       </div>
 
       {files.length > 0 && (

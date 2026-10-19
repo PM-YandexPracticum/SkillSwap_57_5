@@ -2,7 +2,7 @@ export {
   restoreAuthSession,
   saveAuthUser,
   clearAuthUser,
-} from './model/authUtils'
+} from './lib/authUtils'
 
 export { PrivateRoute } from './ui/PrivateRoute'
 

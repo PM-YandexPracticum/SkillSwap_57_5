@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { nanoid } from '@reduxjs/toolkit'
+import { generateId } from '@/shared/lib/helpers'
 import * as Yup from 'yup'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import type { SkillCategoryId, SkillSubcategoryId } from '@/entities/category'
 import { setProfile } from '@/store/slices/registrationSlice'
-import { format } from 'date-fns'
+import { format, subYears } from 'date-fns'
 import type { Gender } from '@/entities/user'
 import { useRegistrationGuard } from '../lib/useRegistrationGuard'
 
@@ -43,7 +43,9 @@ export function useRegistrationProfile() {
   const [avatarFile, setAvatarFile] = useState<File | null>(null)
 
   // Создаём уникальный ключ аватара
-  const [avatarKey] = useState(() => savedValues.avatarKey ?? `${AVATAR_IMAGE_PREFIX}${nanoid()}`)
+  const [avatarKey] = useState(() => savedValues.avatarKey ?? `${AVATAR_IMAGE_PREFIX}${generateId()}`)
+
+  const maxBirthDate = subYears(new Date(), 14)
 
   // Правила валидации Yup
   const validationSchema = Yup.object({
@@ -51,7 +53,10 @@ export function useRegistrationProfile() {
       .trim()
       .min(2, 'Имя должно содержать минимум 2 символа')
       .required('Укажите имя'),
-    birthDate: Yup.date().typeError('Неверный формат даты').required('Укажите дату рождения'),
+    birthDate: Yup.date()
+      .typeError('Неверный формат даты')
+      .max(maxBirthDate, 'Возраст должен быть не меньше 14 лет')
+      .required('Укажите дату рождения'),
     gender: Yup.string().oneOf(['male', 'female'], 'Выберите пол').required('Выберите пол'),
     city: Yup.string().required('Выберите город'),
     categories: Yup.array()
@@ -66,12 +71,12 @@ export function useRegistrationProfile() {
 
   // При выборе аватара валидируем файл, сохраняем его в IndexedDB и передаём файл для предпросмотра
   const handleAvatarChange = async (file: File) => {
-    // Файл не более 5 МБ
-    const MAX_SIZE = 5 * 1024 * 1024
+    // Файл не более 2 МБ
+    const MAX_SIZE = 2 * 1024 * 1024
 
     // Валидируем размер файла
     if (file.size > MAX_SIZE) {
-      setErrors((prev) => ({ ...prev, avatar: 'Файл не должен превышать 5 МБ' }))
+      setErrors((prev) => ({ ...prev, avatar: 'Файл не должен превышать 2 МБ' }))
       return
     }
 

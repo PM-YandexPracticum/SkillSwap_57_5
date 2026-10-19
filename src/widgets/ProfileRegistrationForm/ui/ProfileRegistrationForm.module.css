@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  gap: var(--space-24);
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1136px;
+}
+
+.contentContainer {
+  padding: var(--space-40) 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  min-height: 692px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-12);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.buttonContainer {
+  margin-top: var(--space-16);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-20);
+}
+
+.button {
+  padding: 11px var(--space-24);
+  font-weight: 400;
+}
+
+.rowInputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-24);
+}
+
+.errorHint {
+  margin-top: var(--space-4);
+  color: var(--color-error);
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: 0.02em;
+}
+
+.avatarButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-8);
+}

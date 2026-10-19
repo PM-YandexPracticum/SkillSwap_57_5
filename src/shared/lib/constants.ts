@@ -1,13 +1,3 @@
-export const ROUTES = {
-  HOME: '/',
-  SKILL: '/skill/:id',
-  PROFILE: '/profile',
-  FAVORITES: '/favorites',
-  CREATE: '/create',
-  LOGIN: '/login',
-  REGISTER: '/register',
-} as const
-
 export const LOCAL_STORAGE_KEYS = {
   AUTH_USER: 'skillswap_auth_user',
   FAVORITES: 'skillswap_favorites',

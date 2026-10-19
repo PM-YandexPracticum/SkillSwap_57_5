@@ -1,4 +1,4 @@
-import { CatalogCardData, CatalogUser } from '@/widgets/UserCard/model/types'
+import type { CatalogCardData, CatalogUser } from '@/widgets/UserCard'
 import { useMemo } from 'react'
 
 export function useSimilarOffers(

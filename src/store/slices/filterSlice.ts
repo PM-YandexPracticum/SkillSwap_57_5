@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 import type { Gender } from '@/entities/user'
 
-import type { CatalogFilterMode, CatalogFilters } from '@/features/filter-catalog/model/types'
+import type { CatalogFilterMode, CatalogFilters } from '@/features/filter-catalog'
 
 const initialState: CatalogFilters = {
   mode: 'all',

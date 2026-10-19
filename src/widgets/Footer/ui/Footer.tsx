@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Logo } from '@/shared/ui/Logo'
 
-import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
+import { CategoryPopover } from '@/entities/category'
 import { useAppSelector } from '@/store/hooks'
 
 import styles from './Footer.module.css'

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { nanoid } from '@reduxjs/toolkit'
+import { generateId } from '@/shared/lib/helpers'
 import { getImage } from '@/shared/lib/imageStorage'
 
 import type { Skill } from '@/entities/skill'
@@ -67,7 +67,7 @@ export function useCompleteRegistration() {
       .map((file) => URL.createObjectURL(file))
 
     const newUser: User = {
-      id: nanoid(),
+      id: generateId(),
       email,
       password,
       name,
@@ -84,7 +84,7 @@ export function useCompleteRegistration() {
     }
 
     const newSkill: Skill = {
-      id: nanoid(),
+      id: generateId(),
       authorId: newUser.id,
       title: skillTitle,
       categoryId: skillCategoryId,

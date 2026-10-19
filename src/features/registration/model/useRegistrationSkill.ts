@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { nanoid } from '@reduxjs/toolkit'
+import { generateId } from '@/shared/lib/helpers'
 import * as Yup from 'yup'
 import type { RootState } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -71,13 +71,13 @@ export function useRegistrationSkill() {
 
   // При выборе фотографий валидируем файлы, сохраняем их в IndexedDB и обновляем предпросмотр
   const handleSkillImagesChange = async (newFiles: File[]) => {
-    // Каждый файл не более 5 МБ
-    const MAX_SIZE = 5 * 1024 * 1024
+    // Каждый файл не более 2 МБ
+    const MAX_SIZE = 2 * 1024 * 1024
 
     for (const file of newFiles) {
       // Валидируем размер файла
       if (file.size > MAX_SIZE) {
-        setErrors((prev) => ({ ...prev, images: 'Файл не должен превышать 5 МБ' }))
+        setErrors((prev) => ({ ...prev, images: 'Файл не должен превышать 2 МБ' }))
         return
       }
 
@@ -93,7 +93,7 @@ export function useRegistrationSkill() {
 
       // Сохраняем каждую фотографию под уникальным ключом
       for (let index = 0; index < newFiles.length; index++) {
-        const key = `${SKILL_IMAGE_PREFIX}${nanoid()}`
+        const key = `${SKILL_IMAGE_PREFIX}${generateId()}`
         await saveImage(key, newFiles[index])
         keys.push(key)
       }

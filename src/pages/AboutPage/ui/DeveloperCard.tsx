@@ -1,5 +1,5 @@
 
-import { Avatar } from '@/shared/ui/Avatar/Avatar'
+import { Avatar } from '@/shared/ui/Avatar'
 import type { Developer } from './developers'
 import styles from './DeveloperCard.module.css'
 

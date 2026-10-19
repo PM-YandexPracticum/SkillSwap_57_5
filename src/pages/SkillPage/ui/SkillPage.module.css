@@ -5,6 +5,13 @@
   padding: var(--space-12) 36px 60px;
 }
 
+.errorPage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .skillSection {
   display: grid;
   grid-template-columns: 324px 1fr;

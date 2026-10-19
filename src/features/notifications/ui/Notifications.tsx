@@ -5,7 +5,7 @@ import { ru } from 'date-fns/locale'
 import { store } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { markAllAsRead, clearReadNotifications } from '@/store/slices/notificationsSlice'
-import { saveNotifications } from '../lib/saveNotifications'
+import { saveNotifications } from '../lib/notificationsUtils'
 
 import { Button } from '@/shared/ui/Button'
 import hugeIcon from '@/shared/assets/icons/hugeicons.svg'

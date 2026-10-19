@@ -6,7 +6,7 @@ import { SkillTag } from '@/entities/skill'
 import { Avatar } from '@/shared/ui/Avatar'
 import { useNavigate } from 'react-router-dom'
 
-import { getAgeFromBirthDate } from '@/shared/lib/helpers'
+import { getAgeFromBirthDate, getAgeLabel } from '@/shared/lib/helpers'
 import styles from './UserCard.module.css'
 
 interface UserCardProps {
@@ -29,6 +29,7 @@ export function UserCard({
   onFavoriteToggle,
 }: UserCardProps) {
   const navigate = useNavigate()
+  const age = getAgeFromBirthDate(user.birthDate)
   const visibleTeachSkills = teachSkills.slice(0, 1)
   const visibleLearnSkills = learnSkills.slice(0, 2)
   const additionalLearnSkillsCount = learnSkills.length - visibleLearnSkills.length
@@ -49,7 +50,7 @@ export function UserCard({
           <div className={styles.userNameRow}>
             <h2 className={styles.name}>{user.name}</h2>
             <p className={styles.location}>
-              {cityName}, {getAgeFromBirthDate(user.birthDate)} лет
+              {cityName}, {age} {getAgeLabel(age)}
             </p>
           </div>
         </div>

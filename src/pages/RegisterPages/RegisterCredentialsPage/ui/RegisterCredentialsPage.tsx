@@ -1,11 +1,11 @@
-import { CredentialsForm } from '@/widgets/CredentialsForm'
+import { AuthCredentialsForm } from '@/widgets/AuthCredentialsForm'
 import { useRegistrationCredentials } from '@/features/registration'
 import { StepIndicator } from '@/shared/ui/StepIndicator'
 
 import styles from './RegisterCredentialsPage.module.css'
 
 export default function RegisterCredentialsPage() {
-  const { processRegistrationStep1, errors, savedValues } = useRegistrationCredentials()
+  const { submitRegistrationCredentials, errors, savedValues } = useRegistrationCredentials()
 
   return (
     <main className={styles.page}>
@@ -13,9 +13,9 @@ export default function RegisterCredentialsPage() {
         <StepIndicator currentStep={1} totalSteps={3} />
       </div>
 
-      <CredentialsForm
+      <AuthCredentialsForm
         variant="registration"
-        onSubmit={processRegistrationStep1}
+        onSubmit={submitRegistrationCredentials}
         savedValues={savedValues}
         errors={errors}
       />

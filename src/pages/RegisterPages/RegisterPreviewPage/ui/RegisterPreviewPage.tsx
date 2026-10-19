@@ -1,8 +1,7 @@
 import styles from './RegisterPreviewPage.module.css'
-import { useCompleteRegistration } from '@/features/registration/model/useCompleteRegistration'
-import { useRegistrationPreview } from '@/features/registration/model/useRegistrationPreview'
+import { useCompleteRegistration, useRegistrationPreview } from '@/features/registration'
 import { Modal } from '@/shared/ui/Modal'
-import { OfferSkillPreview } from '@/widgets/OfferSkillPreview'
+import { OfferRegistrationPreview } from '@/widgets/OfferRegistrationPreview'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '@/store/hooks'
 
@@ -40,7 +39,7 @@ export default function RegisterPreviewPage() {
       ariaLabel="Предпросмотр предложения"
       className={styles.previewModal}
     >
-      <OfferSkillPreview
+      <OfferRegistrationPreview
         title={data.title}
         description={data.description}
         categoryName={data.categoryName}

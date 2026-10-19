@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { nanoid } from '@reduxjs/toolkit'
-import { format } from 'date-fns'
+import { generateId } from '@/shared/lib/helpers'
+import { format, subYears } from 'date-fns'
 import * as Yup from 'yup'
 import type { Gender, User } from '@/entities/user'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
@@ -40,12 +40,12 @@ export function useUpdateProfile() {
 
   // Проверяем выбранный аватар и передаём файл для предпросмотра
   const handleAvatarChange = (file: File) => {
-    const MAX_SIZE = 5 * 1024 * 1024
+    const MAX_SIZE = 2 * 1024 * 1024
 
     if (file.size > MAX_SIZE) {
       setErrors((prev) => ({
         ...prev,
-        avatar: 'Файл не должен превышать 5 МБ',
+        avatar: 'Файл не должен превышать 2 МБ',
       }))
       return
     }
@@ -62,6 +62,8 @@ export function useUpdateProfile() {
     setErrors((prev) => ({ ...prev, avatar: undefined }))
   }
 
+  const maxBirthDate = subYears(new Date(), 14)
+
   // Правила валидации Yup
   const validationSchema = Yup.object({
     email: Yup.string().trim().email('Введите корректный email').required('Укажите email'),
@@ -74,7 +76,10 @@ export function useUpdateProfile() {
       .trim()
       .min(2, 'Имя должно содержать минимум 2 символа')
       .required('Укажите имя'),
-    birthDate: Yup.date().typeError('Неверный формат даты').required('Укажите дату рождения'),
+    birthDate: Yup.date()
+      .typeError('Неверный формат даты')
+      .max(maxBirthDate, 'Возраст должен быть не меньше 14 лет')
+      .required('Укажите дату рождения'),
     gender: Yup.string().oneOf(['male', 'female'], 'Выберите пол').required('Выберите пол'),
     city: Yup.string().required('Выберите город'),
   })
@@ -127,7 +132,7 @@ export function useUpdateProfile() {
     try {
       // Сохраняем новое фото только при нажатии "Сохранить"
       if (avatarFile) {
-        const avatarKey = `${AVATAR_IMAGE_PREFIX}${nanoid()}`
+        const avatarKey = `${AVATAR_IMAGE_PREFIX}${generateId()}`
 
         await saveImage(avatarKey, avatarFile)
 

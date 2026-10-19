@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useRegistrationSkill } from '@/features/registration'
-import { StepIndicator } from '@/shared/ui/StepIndicator/StepIndicator'
-import { SkillForm } from '@/widgets/SkillForm'
+import { StepIndicator } from '@/shared/ui/StepIndicator'
+import { SkillRegistrationForm } from '@/widgets/SkillRegistrationForm'
 import styles from './RegisterSkillPage.module.css'
 
 export default function RegisterSkillPage() {
@@ -16,7 +16,7 @@ export default function RegisterSkillPage() {
   return (
     <main className={styles.page}>
       <StepIndicator currentStep={3} totalSteps={3} />
-      <SkillForm
+      <SkillRegistrationForm
         onSubmit={submitRegistrationSkill}
         errors={errors}
         savedValues={savedValues}

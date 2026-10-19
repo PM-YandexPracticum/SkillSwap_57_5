@@ -16,7 +16,7 @@ import bellIcon from '@/shared/assets/icons/bell.svg'
 import heartIcon from '@/shared/assets/icons/heart.svg'
 import logoutIcon from '@/shared/assets/icons/logout.svg'
 
-import { CategoryPopover } from '@/entities/category/ui/CategoryPopover'
+import { CategoryPopover } from '@/entities/category'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setReturnPath } from '@/store/slices/usersSlice'
 import {

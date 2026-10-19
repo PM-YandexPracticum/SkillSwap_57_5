@@ -1,13 +1,11 @@
 import { useMemo } from 'react'
 import { buildCatalogUser, type CatalogCardData } from '@/widgets/UserCard'
 import { useAppData } from '@/store/useAppData'
-import type { Skill, SkillId } from '@/entities/skill/model/types'
-import type { User } from '@/entities/user/model/types'
-import type { City } from '@/entities/city/model/types'
+import type { Skill, SkillId } from '@/entities/skill'
+import type { User } from '@/entities/user'
+import type { City } from '@/entities/city'
 import { useSimilarOffers } from './useSimilarOffer'
-import { useFavoriteUsers } from '@/features/favorite-user/model/useFavoriteUsers'
-import { addFavoriteData } from '@/features/favorite-user/lib/addFavoriteData'
-import { useProposeExchange } from '@/features/propose-exchange'
+import { useFavoriteUsers, addFavoriteData } from '@/features/favorite-user'
 import { useAppSelector } from '@/store/hooks'
 import { selectIsAuthenticated } from '@/store/selectors/userSelectors'
 
@@ -39,7 +37,6 @@ export function useSkillPage(id: SkillId | undefined) {
   }, [users, skills, cities, allSubcategories, categories])
 
   const skill = id ? skills.find((s) => s.id === id) : undefined
-  const { proposeExchange, canProposeExchange, isAlreadyProposed } = useProposeExchange(skill)
   const author = skill ? users.find((u) => u.id === skill.authorId) : undefined
   const subcategoryId = skill?.subcategoryId ?? ''
 
@@ -79,8 +76,5 @@ export function useSkillPage(id: SkillId | undefined) {
     handleFavoriteToggle: toggleFavoriteUser,
     isAuthenticated,
     likedUserIds,
-    proposeExchange,
-    canProposeExchange,
-    isAlreadyProposed,
   }
 }

@@ -1,1 +1,0 @@
-export {OfferSkillPreview} from './ui/OfferSkillPreview'

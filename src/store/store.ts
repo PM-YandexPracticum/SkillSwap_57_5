@@ -6,7 +6,6 @@ import registrationReducer from './slices/registrationSlice'
 import categoriesReducer from './slices/categoriesSlice'
 import notificationsReducer from './slices/notificationsSlice'
 import citiesReducer from './slices/citiesSlice'
-import themeReducer from './slices/themeSlice'
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +15,6 @@ export const store = configureStore({
     categories: categoriesReducer,
     notifications: notificationsReducer,
     cities: citiesReducer,
-    theme: themeReducer,
     catalogFilters: filterReducer,
   },
 })

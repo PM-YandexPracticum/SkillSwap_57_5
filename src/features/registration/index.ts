@@ -1,4 +1,8 @@
 export { useRegistrationCredentials } from './model/useRegistrationCredentials'
+export type {
+  RegistrationCredentialsValues,
+  RegistrationCredentialsErrors,
+} from './model/useRegistrationCredentials'
 export { useRegistrationProfile } from './model/useRegistrationProfile'
 export type {
   RegistrationProfileValues,

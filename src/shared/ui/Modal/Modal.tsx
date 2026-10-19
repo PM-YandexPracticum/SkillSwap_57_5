@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useEffect, useRef, type MouseEvent, type SyntheticEvent } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -60,7 +61,7 @@ export const Modal = ({ children, onClose, open, ariaLabel, className }: ModalPr
   return createPortal(
     <dialog
       ref={dialogRef}
-      className={[styles.modal, className].filter(Boolean).join(' ')}
+      className={clsx(styles.modal, className)}
       aria-label={ariaLabel}
       onCancel={handleCancel}
       onClick={handleClick}

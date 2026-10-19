@@ -16,7 +16,7 @@ import {
 import type { CatalogCardData } from '@/widgets/UserCard'
 import type { CatalogSection, CatalogSectionId } from './types'
 
-const RECOMMENDED_LOADING_DELAY = 1000
+const RECOMMENDED_LOADING_DELAY = 500
 
 interface UseCatalogSectionsResult {
   sections: CatalogSection[]

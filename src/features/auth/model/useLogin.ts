@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { resetReturnPath, setSession } from '@/store/slices/usersSlice'
-import { saveAuthUser } from './authUtils'
+import { saveAuthUser } from '../lib/authUtils'
 
 export const useLogin = () => {
   const navigate = useNavigate()

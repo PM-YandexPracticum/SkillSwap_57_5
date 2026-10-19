@@ -1,5 +1,6 @@
 import type { Skill } from '@/entities/skill'
 import { saveNotifications } from '@/features/notifications'
+import { generateId } from '@/shared/lib/helpers'
 
 import { store } from '@/store'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -34,7 +35,7 @@ export const useProposeExchange = (skill: Skill | undefined) => {
 
     dispatch(
       addNotification({
-        id: crypto.randomUUID(),
+        id: generateId(),
         recipientUserId: currentUserId,
         skillId: skill.id,
         text: `Вы предложили обмен навыком '${skill.title}'`,

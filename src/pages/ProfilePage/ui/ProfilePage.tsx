@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
@@ -10,7 +11,7 @@ import UserIcon from '@/shared/assets/icons/user.svg'
 import GalleryEditIcon from '@/shared/assets/icons/gallery-edit.svg'
 
 import { Avatar } from '@/shared/ui/Avatar'
-import { PersonalDataForm } from '@/widgets/PersonalData'
+import { ProfileEditForm } from '@/widgets/ProfileEditForm'
 import { useUpdateProfile } from '@/features/profile'
 
 import { useAppSelector } from '@/store/hooks'
@@ -73,7 +74,7 @@ export default function ProfilePage() {
 
           <button
             type="button"
-            className={`${styles.navItem} ${styles.navItemActive}`}
+            className={clsx(styles.navItem, styles.navItemActive)}
             aria-current="page"
           >
             <img src={UserIcon} alt="" className={styles.navIcon} />
@@ -84,7 +85,7 @@ export default function ProfilePage() {
 
       <div className={styles.content}>
         <section className={styles.personalData}>
-          <PersonalDataForm
+          <ProfileEditForm
             key={currentUser?.id}
             currentUser={currentUser}
             errors={errors}
