@@ -3,12 +3,18 @@ import react from '@vitejs/plugin-react'
 import svgr from 'vite-plugin-svgr'
 import { resolve } from 'path'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
+
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
     },
+  },
+  // Запускаем фронт по http на порту 5173, если порт занят сообщаем об ошибке
+  server: {
+    host: 'localhost',
+    port: 5173,
+    strictPort: true,
   },
 })

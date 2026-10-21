@@ -1,6 +1,6 @@
-# SkillSwap
+# SkillSwap — шаблон проекта
 
-Платформа обмена навыками.
+Платформа обмена навыками. Это **темплейт-репозиторий** — не форкай, а нажимай «Use this template».
 
 ---
 
@@ -55,7 +55,7 @@ public/
 
 ## Моки данных
 
-Файлы `public/db/skills.json` и `public/db/users.json` **пустые**.
+Файлы `public/db/skills.json` и `public/db/users.json` **пустые** — студенты заполняют сами.
 
 Структура объектов описана в `src/shared/types/index.ts`.
 

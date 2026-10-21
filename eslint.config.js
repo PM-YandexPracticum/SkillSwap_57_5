@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules', 'coverage'] },
+  { ignores: ['**/dist/**', '**/node_modules/**', 'coverage', '.certs/**', '.local/**'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
@@ -31,6 +31,13 @@ export default tseslint.config(
       react: {
         version: 'detect',
       },
+    },
+  },
+  {
+    // В серверных файлах доступны объекты Node.js, например process.
+    files: ['server/**/*.ts'],
+    languageOptions: {
+      globals: globals.node,
     },
   },
   eslintConfigPrettier,
