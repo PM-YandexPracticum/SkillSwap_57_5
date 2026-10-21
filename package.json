@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "postinstall": "npm --prefix server install",
     "dev": "vite",
-    "dev:server": "npm --prefix server run dev",
     "build": "tsc -b && vite build",
+    "dev:server": "npm --prefix server run dev",
     "build:server": "npm --prefix server run build",
     "start:server": "npm --prefix server run start",
     "lint": "eslint . && stylelint \"src/**/*.{css,scss}\"",

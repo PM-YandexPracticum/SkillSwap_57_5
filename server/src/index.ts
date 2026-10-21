@@ -15,7 +15,7 @@ if (!Number.isInteger(port) || port < 1 || port > 65535) {
   throw new Error('PORT должен быть целым числом от 1 до 65535')
 }
 
-// 4. Начинаем принимать запросы и выводим адрес сервера
+// 4. Начинаем принимать запросы и уведомляем о запуске сервера
 const server = app.listen(port, host, () => {
   console.log(`Сервер запущен: http://${host}:${port}`)
 })

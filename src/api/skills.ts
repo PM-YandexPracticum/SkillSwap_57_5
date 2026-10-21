@@ -1,8 +1,7 @@
 import type { Skill } from '@/entities/skill'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import { getImage } from '@/shared/lib/imageStorage'
-
-const BASE_URL = '/db'
+import { API_URL, getImageUrl } from './config'
 
 export async function fetchSkills(): Promise<Skill[]> {
   const storedSkills = localStorage.getItem(LOCAL_STORAGE_KEYS.SKILLS)
@@ -18,7 +17,10 @@ export async function fetchSkills(): Promise<Skill[]> {
       // Восстанавливаем фотографии из IndexedDB по ключам и создаём свежие URL для отображения
       return Promise.all(
         skills.map(async (skill) => {
-          if (!skill.imageKeys?.length) return skill
+          // Для фотографий без ключей IndexedDB формируем адреса бэкенда
+          if (!skill.imageKeys?.length) {
+            return { ...skill, imageUrls: skill.imageUrls.map(getImageUrl) }
+          }
 
           const imageUrls: string[] = []
 
@@ -41,16 +43,15 @@ export async function fetchSkills(): Promise<Skill[]> {
     }
   }
 
-  const response = await fetch(`${BASE_URL}/skills.json`)
-  if (!response.ok) throw new Error('Failed to fetch skills')
+  // Получаем навыки с бэкенда
+  const response = await fetch(`${API_URL}/api/skills`)
+  if (!response.ok) throw new Error('Не удалось загрузить навыки')
 
   const skills = (await response.json()) as Skill[]
+
+  // Сохраняем исходные данные с относительными путями фотографий
   localStorage.setItem(LOCAL_STORAGE_KEYS.SKILLS, JSON.stringify(skills))
 
-  return skills
-}
-
-export async function fetchSkillById(id: string): Promise<Skill | undefined> {
-  const skills = await fetchSkills()
-  return skills.find((skill) => skill.id === id)
+  // Для отображения возвращаем полные адреса фотографий
+  return skills.map((skill) => ({ ...skill, imageUrls: skill.imageUrls.map(getImageUrl) }))
 }

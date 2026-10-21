@@ -1,8 +1,7 @@
 import type { User } from '@/entities/user'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import { getImage } from '@/shared/lib/imageStorage'
-
-const BASE_URL = '/db'
+import { API_URL, getImageUrl } from './config'
 
 export async function fetchUsers(): Promise<User[]> {
   const storedUsers = localStorage.getItem(LOCAL_STORAGE_KEYS.USERS)
@@ -18,7 +17,10 @@ export async function fetchUsers(): Promise<User[]> {
       // Восстанавливаем аватары из IndexedDB по ключам и создаём свежие URL для отображения
       return Promise.all(
         users.map(async (user) => {
-          if (!user.avatarKey) return user
+          // Для фотографии без ключа IndexedDB формируем адрес бэкенда
+          if (!user.avatarKey) {
+            return { ...user, avatarUrl: getImageUrl(user.avatarUrl) }
+          }
 
           const file = await getImage(user.avatarKey)
 
@@ -33,16 +35,15 @@ export async function fetchUsers(): Promise<User[]> {
     }
   }
 
-  const response = await fetch(`${BASE_URL}/users.json`)
-  if (!response.ok) throw new Error('Failed to fetch users')
+  // Получаем пользователей с бэка
+  const response = await fetch(`${API_URL}/api/users`)
+  if (!response.ok) throw new Error('Не удалось загрузить пользователей')
 
   const users = (await response.json()) as User[]
+
+  // Сохраняем исходные данные с относительными путями фотографий
   localStorage.setItem(LOCAL_STORAGE_KEYS.USERS, JSON.stringify(users))
 
-  return users
-}
-
-export async function fetchUserById(id: string): Promise<User | undefined> {
-  const users = await fetchUsers()
-  return users.find((user) => user.id === id)
+  // Для отображения возвращаем полные адреса фотографий
+  return users.map((user) => ({ ...user, avatarUrl: getImageUrl(user.avatarUrl) }))
 }

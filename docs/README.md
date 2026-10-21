@@ -13,22 +13,42 @@
 
 ## Технологии
 
+### Фронтенд
+
 - Основа: React, TypeScript, Vite, Redux Toolkit, React Router
 - Интерфейс и формы: CSS Modules, Yup, Swiper, React DayPicker, date-fns
 - Хранение фотографий: IndexedDB через idb
 - Инструменты: Vitest, Testing Library, ESLint, Stylelint, Prettier
 
+### Бэкенд
+
+- Основа: Node.js, TypeScript, Express
+- Переменные окружения: dotenv
+- Инструменты: tsx, tsc, ESLint, Prettier
+
 ## Запуск и работа с проектом
 
 | Команда | Назначение |
 | --- | --- |
-| `npm install` | Установка зависимостей |
-| `npm run dev` | Запуск для разработки |
-| `npm run build` | Проверка TypeScript и сборка в `dist` |
+| `npm install` | Установка зависимостей фронтенда и бэкенда |
+| `npm run dev` | Запуск фронтенда для разработки |
+| `npm run build` | Проверка TypeScript и сборка фронтенда в `dist` |
+| `npm run dev:server` | Запуск бэкенда для разработки |
+| `npm run build:server` | Проверка TypeScript и сборка бэкенда в `server/dist` |
+| `npm run start:server` | Запуск собранного бэкенда после `npm run build:server` |
 | `npm run preview` | Локальный просмотр сборки |
 | `npm run lint` | Проверка ESLint и Stylelint |
 | `npm run format` | Форматирование проекта через Prettier |
 | `npm run test` | Запуск тестов |
+
+Все команды выполняются из корня проекта.
+
+Фронтенд и бэкенд запускаются в отдельных терминалах:
+
+- фронтенд доступен на `http://localhost:5173`
+- бэкенд доступен на `http://127.0.0.1:3001`
+
+Бэкенд находится в папке `server`, отдаёт JSON-моки из `server/data` и фотографии из `server/images`.
 
 ## Архитектура
 
@@ -271,7 +291,7 @@ Redux Toolkit используем для общего состояния, ко�
 
 Данные сохраняются в localStorage, фотографии в IndexedDB через библиотеку idb. 
 При запуске приложение восстанавливает их и заполняет Redux. 
-Начальные данные берутся из JSON-моков в public/db.
+Начальные данные загружаются через локальный API из JSON-моков в server/data. Фотографии моков отдаёт бэкенд из server/images.
 
 Сохранённые пользователи и навыки, сессия, избранное, лайки, уведомления и предложенные обмены **сохраняются в localStorage браузера, поэтому не теряются после перезагрузки страницы**. При запуске приложение считывает их из localStorage и восстанавливает в Redux.
 
